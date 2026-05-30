@@ -1,0 +1,213 @@
+{% extends "_layout.html" %}
+{% block title %}Category Tree{% endblock %}
+{% block main %}
+<div class="px-4 sm:px-6 py-6 max-w-7xl">
+  <header class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">Category Tree</h1>
+      <p class="text-sm text-slate-500 mt-1">Адмін-керовані групи + ungrouped категорії CRM</p>
+    </div>
+  </header>
+
+  {# ── Groups (top-level) ── #}
+  {% if top_groups %}
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Групи ({{ top_groups | length }})</h2>
+    <div class="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      {% for g in top_groups %}
+      <a href="/admin/category-tree/group/{{ g.id }}"
+         class="flex items-center justify-between px-5 py-3 hover:bg-slate-50 transition">
+        <div class="flex items-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"/>
+          </svg>
+          <span class="font-medium text-slate-900">{{ g.name }}</span>
+        </div>
+        <span class="text-xs text-slate-500">Level {{ g.group_level }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {# ── Ungrouped categories ── #}
+  <section>
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-lg font-semibold text-slate-900">
+        Категорії без групи ({{ ungrouped_categories | length }})
+      </h2>
+      <div class="flex items-center gap-2">
+        {% if top_groups %}
+        <button type="button" id="bulk-add-to-group"
+                class="px-3 py-1.5 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition disabled:opacity-50"
+                disabled>
+          Додати до групи (<span id="selected-count-add">0</span>)
+        </button>
+        {% endif %}
+        <button type="button" id="bulk-create-group"
+                class="px-3 py-1.5 bg-violet-600 text-white text-sm font-medium rounded-lg hover:bg-violet-700 transition disabled:opacity-50"
+                disabled>
+          Створити групу (<span id="selected-count">0</span>)
+        </button>
+      </div>
+    </div>
+
+    <form id="category-form" method="post" action="/admin/category-tree/groups">
+      <input type="hidden" name="member_type" value="parent_category">
+      <input type="hidden" name="member_ids" id="member-ids-input" value="">
+
+      {# Бар створення нової групи #}
+      <div id="create-group-bar" class="mb-3 hidden bg-violet-50 border border-violet-200 rounded-xl px-4 py-3 flex items-center gap-3">
+        <input type="text" name="name" placeholder="Назва нової групи"
+               class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500">
+        <button type="submit"
+                class="px-4 py-2 bg-violet-600 text-white text-sm font-medium rounded-lg hover:bg-violet-700 transition">
+          Створити
+        </button>
+        <button type="button" id="cancel-create"
+                class="px-3 py-2 text-slate-600 text-sm hover:text-slate-900">
+          Cancel
+        </button>
+      </div>
+
+      {# Бар додавання до існуючої групи #}
+      {% if top_groups %}
+      <div id="add-to-group-bar" class="mb-3 hidden bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 flex items-center gap-3">
+        <span class="text-sm text-slate-700 font-medium">Додати до:</span>
+        <select id="existing-group-select"
+                class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <option value="">— оберіть групу —</option>
+          {% for g in top_groups %}
+          <option value="{{ g.id }}">{{ g.name }}</option>
+          {% endfor %}
+        </select>
+        <button type="button" id="add-to-group-submit"
+                class="px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition disabled:opacity-50"
+                disabled>
+          Додати
+        </button>
+        <button type="button" id="cancel-add"
+                class="px-3 py-2 text-slate-600 text-sm hover:text-slate-900">
+          Cancel
+        </button>
+      </div>
+      {% endif %}
+
+      <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50">
+            <tr class="text-left text-xs uppercase text-slate-500 tracking-wide">
+              <th class="px-4 py-3 w-10">
+                <input type="checkbox" id="select-all" class="rounded border-slate-300">
+              </th>
+              <th class="px-4 py-3">Категорія</th>
+              <th class="px-4 py-3">Салонів</th>
+              <th class="px-4 py-3">Sub-cats</th>
+              <th class="px-4 py-3">Послуг</th>
+              <th class="px-4 py-3">Країни</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            {% for cat in ungrouped_categories %}
+            <tr class="hover:bg-slate-50">
+              <td class="px-4 py-3">
+                <input type="checkbox" class="cat-checkbox rounded border-slate-300"
+                       data-ids='{{ cat.category_ids | tojson }}'>
+              </td>
+              <td class="px-4 py-3 font-medium text-slate-900">{{ cat.name_normalized }}</td>
+              <td class="px-4 py-3 text-slate-600">{{ cat.salon_ids | length }}</td>
+              <td class="px-4 py-3 text-slate-600">{{ cat.subcategory_count }}</td>
+              <td class="px-4 py-3 text-slate-600">{{ cat.service_count }}</td>
+              <td class="px-4 py-3">
+                {% for c in cat.countries %}
+                <span class="inline-block px-2 py-0.5 bg-slate-100 text-slate-700 text-xs rounded uppercase">{{ c }}</span>
+                {% endfor %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </form>
+  </section>
+</div>
+
+<script>
+(function() {
+  const checkboxes = document.querySelectorAll('.cat-checkbox');
+  const selectAll = document.getElementById('select-all');
+  const countSpan = document.getElementById('selected-count');
+  const countAddSpan = document.getElementById('selected-count-add');
+  const createBtn = document.getElementById('bulk-create-group');
+  const addBtn = document.getElementById('bulk-add-to-group');
+  const createBar = document.getElementById('create-group-bar');
+  const addBar = document.getElementById('add-to-group-bar');
+  const idsInput = document.getElementById('member-ids-input');
+  const cancelBtn = document.getElementById('cancel-create');
+  const cancelAddBtn = document.getElementById('cancel-add');
+  const groupSelect = document.getElementById('existing-group-select');
+  const addSubmit = document.getElementById('add-to-group-submit');
+
+  let currentIds = [];
+
+  function updateState() {
+    let allIds = [];
+    checkboxes.forEach(cb => {
+      if (cb.checked) {
+        const ids = JSON.parse(cb.dataset.ids || '[]');
+        allIds = allIds.concat(ids);
+      }
+    });
+    const selected = Array.from(checkboxes).filter(c => c.checked).length;
+    countSpan.textContent = selected;
+    if (countAddSpan) countAddSpan.textContent = selected;
+    createBtn.disabled = allIds.length === 0;
+    if (addBtn) addBtn.disabled = allIds.length === 0;
+    idsInput.value = JSON.stringify(allIds);
+    currentIds = allIds;
+  }
+
+  checkboxes.forEach(cb => cb.addEventListener('change', updateState));
+  selectAll.addEventListener('change', e => {
+    checkboxes.forEach(cb => cb.checked = e.target.checked);
+    updateState();
+  });
+
+  createBtn.addEventListener('click', () => {
+    if (addBar) addBar.classList.add('hidden');
+    createBar.classList.remove('hidden');
+    createBar.querySelector('input[name=name]').focus();
+  });
+  cancelBtn.addEventListener('click', () => createBar.classList.add('hidden'));
+
+  if (addBtn && addBar) {
+    addBtn.addEventListener('click', () => {
+      createBar.classList.add('hidden');
+      addBar.classList.remove('hidden');
+      groupSelect.focus();
+    });
+    cancelAddBtn.addEventListener('click', () => addBar.classList.add('hidden'));
+    groupSelect.addEventListener('change', () => {
+      addSubmit.disabled = !groupSelect.value;
+    });
+    addSubmit.addEventListener('click', async () => {
+      const gid = groupSelect.value;
+      if (!gid || currentIds.length === 0) return;
+      addSubmit.disabled = true;
+      const formData = new FormData();
+      formData.append('member_type', 'parent_category');
+      formData.append('member_ids', JSON.stringify(currentIds));
+      const resp = await fetch(`/admin/category-tree/groups/${gid}/add-members`, {
+        method: 'POST', body: formData
+      });
+      if (resp.ok) {
+        location.href = `/admin/category-tree/group/${gid}`;
+      } else {
+        alert('Не вдалося додати. Status: ' + resp.status);
+        addSubmit.disabled = false;
+      }
+    });
+  }
+})();
+</script>
+{% endblock %}

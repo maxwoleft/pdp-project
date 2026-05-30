@@ -1,0 +1,26 @@
+[
+  {
+    "nameLocation": "Oxford circus",
+    "name": "67, Mortimer Street",
+    "codeLocation": "W1W7SE, London",
+    "database_code": "776611",
+    "address": {
+      "line": "67, Mortimer Street, London, W1W7SE",
+      "phone_display": "07907707767",
+      "phone_link": "447907707767",
+      "email": "office@p-de-p.co.uk"
+    }
+  },
+  {
+  "nameLocation": "South Kensington",
+  "folder": "salon2",
+  "name": "62 Old Brompton Road",
+  "codeLocation": "SW7 3LQ, London",
+  "address": {
+    "line": "62 Old Brompton Road, London, SW7 3LQ",
+    "phone_display": "+44 07775 449715",
+    "phone_link": "4407775449715",
+    "email": "office@p-de-p.co.uk"
+    }
+}
+]

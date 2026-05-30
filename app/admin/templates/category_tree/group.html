@@ -1,0 +1,284 @@
+{% extends "_layout.html" %}
+{% block title %}{{ group.name }}{% endblock %}
+{% block main %}
+<div class="px-4 sm:px-6 py-6 max-w-7xl">
+  <header class="mb-6">
+    <nav class="text-sm text-slate-500 mb-2">
+      <a href="/admin/category-tree" class="hover:text-slate-900">Category Tree</a>
+      {% if group.parent_group_id %}
+        / <a href="/admin/category-tree/group/{{ group.parent_group_id }}" class="hover:text-slate-900">↑ Up</a>
+      {% endif %}
+    </nav>
+    <div class="flex items-center justify-between">
+      <h1 class="text-2xl font-semibold text-slate-900">{{ group.name }}</h1>
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-slate-500">Level {{ group.group_level }}</span>
+        <form method="post" action="/admin/category-tree/groups/{{ group.id }}/delete" class="inline"
+              onsubmit="return confirm('Видалити групу {{ group.name }}? Це не видаляє послуги, лише розгрупує.')">
+          <button type="submit" class="px-3 py-1.5 text-red-600 text-sm hover:bg-red-50 rounded-lg">
+            Видалити групу
+          </button>
+        </form>
+      </div>
+    </div>
+    {% if group.notes %}
+    <p class="text-sm text-slate-600 mt-2">{{ group.notes }}</p>
+    {% endif %}
+  </header>
+
+  {# ── Child groups (subgroups) ── #}
+  {% if child_groups %}
+  <section class="mb-6">
+    <h2 class="text-base font-semibold text-slate-900 mb-2">Підгрупи ({{ child_groups | length }})</h2>
+    <div class="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
+      {% for cg in child_groups %}
+      <a href="/admin/category-tree/group/{{ cg.id }}"
+         class="flex items-center justify-between px-5 py-3 hover:bg-slate-50 transition">
+        <span class="font-medium text-slate-900">{{ cg.name }}</span>
+        <span class="text-xs text-slate-500">Level {{ cg.group_level }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% set has_filters = parents or subcategories %}
+  {% if has_filters %}
+  <section class="mb-6">
+    <details class="bg-white rounded-xl border border-slate-200" {% if active_subcat_filter or active_parent_filter %}open{% endif %}>
+      <summary class="px-5 py-3 cursor-pointer flex items-center justify-between">
+        <span class="font-semibold text-slate-900">
+          Фільтри
+        </span>
+        {% if active_subcat_filter or active_parent_filter %}
+          <span class="text-xs text-emerald-600">
+            Активних: {{ (active_subcat_filter | length) + (active_parent_filter | length) }}
+          </span>
+        {% endif %}
+      </summary>
+      <form method="get" action="/admin/category-tree/group/{{ group.id }}" class="px-5 py-3 border-t border-slate-100 space-y-4">
+
+        {# Parent categories filter — корисно для категорій без підкатегорій #}
+        {% if parents %}
+        <div>
+          <h3 class="text-xs uppercase font-semibold text-slate-500 mb-2">
+            Категорії групи ({{ parents | length }})
+          </h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {% for p in parents %}
+            <label class="flex items-center gap-2 text-sm">
+              <input type="checkbox" name="parent_filter" value="{{ p.name_normalized }}"
+                     class="rounded border-slate-300"
+                     {% if p.name_normalized in active_parent_filter %}checked{% endif %}>
+              <span class="text-slate-700">{{ p.name_normalized }}</span>
+              <span class="text-xs text-slate-400">
+                {% if p.direct_service_count > 0 %}({{ p.direct_service_count }} прямо){% endif %}
+              </span>
+            </label>
+            {% endfor %}
+          </div>
+          <p class="text-xs text-slate-500 mt-2">
+            Вибір категорії додає всі її послуги (включно з sub-cats).
+          </p>
+        </div>
+        {% endif %}
+
+        {% if subcategories %}
+        <div>
+          <h3 class="text-xs uppercase font-semibold text-slate-500 mb-2">
+            Підкатегорії ({{ subcategories | length }})
+          </h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {% for sub in subcategories %}
+            <label class="flex items-center gap-2 text-sm">
+              <input type="checkbox" name="subcat_filter" value="{{ sub.name_normalized }}"
+                     class="rounded border-slate-300"
+                     {% if sub.name_normalized in active_subcat_filter %}checked{% endif %}>
+              <span class="text-slate-700">{{ sub.name_normalized }}</span>
+              <span class="text-xs text-slate-400">({{ sub.service_count }})</span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="flex items-center gap-2 pt-2">
+          <button type="submit"
+                  class="px-3 py-1.5 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition">
+            Застосувати фільтр
+          </button>
+          <a href="/admin/category-tree/group/{{ group.id }}"
+             class="text-sm text-slate-600 hover:text-slate-900">Скинути</a>
+        </div>
+      </form>
+    </details>
+  </section>
+  {% endif %}
+
+  {# ── Canonical keys (main view) ── #}
+  <section>
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-lg font-semibold text-slate-900">
+        Канонічні ключі ({{ canonical_keys | length }})
+      </h2>
+      <div class="flex items-center gap-2">
+        {% if all_profiles %}
+        <button type="button" id="bulk-add-to-profile"
+                class="px-3 py-1.5 bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-amber-700 transition disabled:opacity-50"
+                disabled>
+          До існуючого профілю (<span id="add-count">0</span>)
+        </button>
+        {% endif %}
+        <button type="button" id="bulk-create-profile"
+                class="px-3 py-1.5 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition disabled:opacity-50"
+                disabled>
+          Новий профіль (<span id="key-count">0</span>)
+        </button>
+      </div>
+    </div>
+
+    {# Bar для нового profile #}
+    <form id="create-form" method="post" action="/admin/category-tree/groups/{{ group.id }}/create-profile"
+          class="hidden mb-3 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 flex items-center gap-3">
+      <input type="hidden" name="canonical_keys" id="keys-input-create" value="">
+      <input type="text" name="profile_name" placeholder="Назва нового профілю"
+             class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+      <button type="submit"
+              class="px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition">
+        Створити
+      </button>
+      <button type="button" id="cancel-create"
+              class="px-3 py-2 text-slate-600 text-sm hover:text-slate-900">Cancel</button>
+    </form>
+
+    {# Bar для add-to-existing #}
+    {% if all_profiles %}
+    <form id="add-form" method="post" action="/admin/category-tree/groups/{{ group.id }}/add-to-profile"
+          class="hidden mb-3 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-center gap-3">
+      <input type="hidden" name="canonical_keys" id="keys-input-add" value="">
+      <select name="profile_id" required
+              class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+        <option value="">— оберіть профіль —</option>
+        {% for p in all_profiles %}
+        <option value="{{ p.id }}">{{ p.name }} ({{ p.canonical_key }})</option>
+        {% endfor %}
+      </select>
+      <button type="submit"
+              class="px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-amber-700 transition">
+        Додати
+      </button>
+      <button type="button" id="cancel-add"
+              class="px-3 py-2 text-slate-600 text-sm hover:text-slate-900">Cancel</button>
+    </form>
+    {% endif %}
+
+    {% if canonical_keys %}
+    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50">
+          <tr class="text-left text-xs uppercase text-slate-500 tracking-wide">
+            <th class="px-4 py-3 w-10">
+              <input type="checkbox" id="select-all-keys" class="rounded border-slate-300">
+            </th>
+            <th class="px-4 py-3">Canonical key</th>
+            <th class="px-4 py-3">Brand</th>
+            <th class="px-4 py-3">Sample names</th>
+            <th class="px-4 py-3">Послуг</th>
+            <th class="px-4 py-3">Країни</th>
+            <th class="px-4 py-3">Профіль</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          {% for ck in canonical_keys %}
+          <tr class="hover:bg-slate-50">
+            <td class="px-4 py-3">
+              <input type="checkbox" class="key-checkbox rounded border-slate-300"
+                     data-key="{{ ck.canonical_key }}">
+            </td>
+            <td class="px-4 py-3 font-mono text-xs text-slate-700">{{ ck.canonical_key }}</td>
+            <td class="px-4 py-3 text-slate-600">{{ ck.brand or '—' }}</td>
+            <td class="px-4 py-3 text-slate-600 text-xs">
+              {% for n in ck.sample_names %}{{ n }}<br>{% endfor %}
+            </td>
+            <td class="px-4 py-3 text-slate-600">{{ ck.service_count }}</td>
+            <td class="px-4 py-3">
+              {% for c in ck.countries %}
+              <span class="inline-block px-2 py-0.5 bg-slate-100 text-slate-700 text-xs rounded uppercase">{{ c }}</span>
+              {% endfor %}
+            </td>
+            <td class="px-4 py-3">
+              {% if ck.has_profile %}
+              <span class="inline-block px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs rounded">✓ є</span>
+              {% else %}
+              <span class="inline-block px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded">—</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="text-slate-500 italic py-12 text-center bg-white border border-slate-200 rounded-xl">
+      Немає канонічних ключів. {% if active_subcat_filter %}Скиньте фільтр щоб побачити все.{% endif %}
+    </p>
+    {% endif %}
+  </section>
+</div>
+
+<script>
+(function() {
+  // Canonical keys bulk
+  const keyCbs = document.querySelectorAll('.key-checkbox');
+  const keySelectAll = document.getElementById('select-all-keys');
+  const keyCount = document.getElementById('key-count');
+  const addCount = document.getElementById('add-count');
+  const createBtn = document.getElementById('bulk-create-profile');
+  const addBtn = document.getElementById('bulk-add-to-profile');
+  const createForm = document.getElementById('create-form');
+  const addForm = document.getElementById('add-form');
+  const inputCreate = document.getElementById('keys-input-create');
+  const inputAdd = document.getElementById('keys-input-add');
+  const cancelCreate = document.getElementById('cancel-create');
+  const cancelAdd = document.getElementById('cancel-add');
+
+  function updateState() {
+    const selected = Array.from(keyCbs).filter(c => c.checked).map(c => c.dataset.key);
+    if (keyCount) keyCount.textContent = selected.length;
+    if (addCount) addCount.textContent = selected.length;
+    if (createBtn) createBtn.disabled = selected.length === 0;
+    if (addBtn) addBtn.disabled = selected.length === 0;
+    if (inputCreate) inputCreate.value = JSON.stringify(selected);
+    if (inputAdd) inputAdd.value = JSON.stringify(selected);
+  }
+  keyCbs.forEach(cb => cb.addEventListener('change', updateState));
+  if (keySelectAll) keySelectAll.addEventListener('change', e => {
+    keyCbs.forEach(cb => cb.checked = e.target.checked);
+    updateState();
+  });
+
+  if (createBtn) createBtn.addEventListener('click', () => {
+    addForm && addForm.classList.add('hidden');
+    createForm.classList.remove('hidden');
+    createForm.classList.add('flex');
+    createForm.querySelector('input[name=profile_name]').focus();
+  });
+  if (cancelCreate) cancelCreate.addEventListener('click', () => {
+    createForm.classList.add('hidden');
+    createForm.classList.remove('flex');
+  });
+
+  if (addBtn) addBtn.addEventListener('click', () => {
+    createForm.classList.add('hidden');
+    createForm.classList.remove('flex');
+    addForm.classList.remove('hidden');
+    addForm.classList.add('flex');
+    addForm.querySelector('select[name=profile_id]').focus();
+  });
+  if (cancelAdd) cancelAdd.addEventListener('click', () => {
+    addForm.classList.add('hidden');
+    addForm.classList.remove('flex');
+  });
+})();
+</script>
+{% endblock %}

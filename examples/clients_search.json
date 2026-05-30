@@ -1,0 +1,31 @@
+[
+    {
+        "id": "88dd9d19-0223-f3a5-527b-aa256a9654b4",
+        "name": "Марія",
+        "title": "",
+        "gender": "female",
+        "birthday": null,
+        "balance": 0.0,
+        "bonus": 0.0,
+        "card_number": [],
+        "phone": [
+            "975379991"
+        ],
+        "email": [],
+        "categories": [],
+        "categories_names": [],
+        "first_visit": null,
+        "first_visit_description": "",
+        "last_visit": null,
+        "last_visit_description": "",
+        "feedback": null,
+        "additional_fields": null,
+        "deposit_client": null,
+        "referral_source": null,
+        "referral_source_name": "",
+        "status": "Potential",
+        "comments": "Дані візитів Zenoti:\n• Візит 1, загалом: $80.0\n  - Erika Pipash: Ukrainian Gel Manicure ($60.0), Add-On Nail strengthening (with base coat/acrylic powder)(30 minutes) ($20.0)",
+        "archive": false,
+        "history": []
+    }
+]

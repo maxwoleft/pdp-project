@@ -1,0 +1,242 @@
+{% extends "_layout.html" %}
+{% block title %}Профілі послуг{% endblock %}
+{% block main %}
+<div class="px-4 sm:px-6 py-6 w-full">
+  <header class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">Service Profiles</h1>
+      <p class="text-sm text-slate-500 mt-1">
+        {{ stats.total }} профілів · {{ stats.translations }} перекладів · {{ stats.variants }} A/B варіантів
+      </p>
+    </div>
+    <a href="/admin/profiles/new"
+       class="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium rounded-lg transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+      </svg>
+      Створити профіль
+    </a>
+  </header>
+
+  <!-- Coverage cards -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-6">
+    <!-- Global coverage -->
+    <div class="md:col-span-1 bg-gradient-to-br from-violet-500 to-pink-500 rounded-xl px-5 py-4 text-white">
+      <div class="text-xs font-semibold uppercase opacity-80">Coverage</div>
+      <div class="text-3xl font-bold mt-1">{{ coverage.global.coverage_pct }}%</div>
+      <div class="text-xs opacity-90 mt-1">
+        {{ coverage.global.services_with_profile }} / {{ coverage.global.total_services }} послуг
+      </div>
+      <div class="text-[10px] opacity-75 mt-2">
+        {{ coverage.global.canonical_keys_with_profile }} / {{ coverage.global.total_canonical_keys }} канонічних
+      </div>
+    </div>
+
+    <!-- Per country -->
+    {% for c in ['ua', 'pl', 'gb'] %}
+      {% set cdata = coverage.per_country[c] %}
+      {% set kdata = coverage.canonical_keys[c] %}
+      <div class="bg-white rounded-xl border border-slate-200 px-5 py-4">
+        <div class="flex items-center justify-between mb-1">
+          <div class="text-xs font-semibold uppercase
+                {% if c == 'ua' %}text-yellow-700
+                {% elif c == 'pl' %}text-red-700
+                {% else %}text-blue-700{% endif %}">
+            {{ c }}
+          </div>
+          <div class="text-xs font-bold text-slate-900">{{ cdata.coverage_pct }}%</div>
+        </div>
+        <!-- Progress bar -->
+        <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-2">
+          <div class="h-full
+                {% if c == 'ua' %}bg-yellow-500
+                {% elif c == 'pl' %}bg-red-500
+                {% else %}bg-blue-500{% endif %}"
+               style="width: {{ cdata.coverage_pct }}%"></div>
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-emerald-700 font-medium">{{ cdata.with_profile }} ✓</span>
+          <span class="text-slate-400">{{ cdata.without_profile }} no profile</span>
+        </div>
+        <div class="text-[10px] text-slate-500 mt-1">
+          {{ kdata.with_profile }} / {{ kdata.total }} канонічних
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Missing alert -->
+  {% if coverage.global.canonical_keys_without_profile > 0 %}
+  <a href="/admin/profiles/missing"
+     class="block mb-5 px-5 py-3 rounded-lg border border-amber-200 bg-amber-50 hover:bg-amber-100 transition">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-amber-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-amber-900">
+          {{ coverage.global.canonical_keys_without_profile }} канонічних послуг ще без профілю
+        </div>
+        <div class="text-xs text-amber-700 mt-0.5">
+          Це {{ coverage.global.services_without_profile }} реальних послуг по всіх країнах. AI-агент не зможе рекомендувати їх через концерн-пошук.
+        </div>
+      </div>
+      <div class="text-xs font-medium text-amber-800">
+        Заповнити →
+      </div>
+    </div>
+  </a>
+  {% endif %}
+
+  <!-- Country tabs -->
+  <div class="mb-5 flex items-center gap-2">
+    {% for c, label, flag in [('ua', 'Україна', '🇺🇦'), ('pl', 'Польща', '🇵🇱'), ('gb', 'Великобританія', '🇬🇧')] %}
+    <a href="/admin/profiles?country={{ c }}{% if search %}&search={{ search }}{% endif %}"
+       class="px-4 py-2 text-sm font-medium rounded-lg transition border
+              {% if country == c %}bg-violet-600 text-white border-violet-600{% else %}bg-white text-slate-700 border-slate-300 hover:border-violet-400{% endif %}">
+      {{ flag }} {{ label }}
+    </a>
+    {% endfor %}
+  </div>
+
+  <!-- Summary -->
+  <div class="grid grid-cols-3 gap-3 mb-5">
+    <div class="bg-white border border-slate-200 rounded-lg px-4 py-3">
+      <div class="text-xs text-slate-500 uppercase font-medium">Профілів</div>
+      <div class="text-2xl font-bold text-slate-900 mt-1">{{ rows_data|length }}</div>
+    </div>
+    <div class="bg-white border border-slate-200 rounded-lg px-4 py-3">
+      <div class="text-xs text-slate-500 uppercase font-medium">Унікальних ключів</div>
+      <div class="text-2xl font-bold text-violet-700 mt-1">{{ total_keys }}</div>
+    </div>
+    <div class="bg-white border border-slate-200 rounded-lg px-4 py-3">
+      <div class="text-xs text-slate-500 uppercase font-medium">
+        Послуг покрито{% if salon_id %} <span class="text-amber-600">(salon)</span>{% endif %}
+      </div>
+      <div class="flex items-baseline gap-2 mt-1">
+        <div class="text-2xl font-bold text-emerald-700">{{ total_services_covered }}</div>
+        <div class="text-sm text-slate-400">/ {{ total_services_all }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white rounded-xl border border-slate-200 px-5 py-4 mb-5">
+    <form method="get" class="flex flex-wrap items-center gap-3">
+      <input type="hidden" name="country" value="{{ country }}">
+      <div class="flex-1 min-w-[200px] relative">
+        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+        </svg>
+        <input type="text" name="search" value="{{ search or '' }}" placeholder="Пошук по назві профілю"
+               class="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-100 outline-none transition">
+      </div>
+      <select name="salon_id" class="px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none min-w-[220px]">
+        <option value="">Всі салони ({{ salons|length }})</option>
+        {% for s in salons %}
+        <option value="{{ s.id }}" {% if salon_id == s.id %}selected{% endif %}>
+          {% if s.city %}{{ s.city }} · {% endif %}{{ s.name }}
+        </option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition">
+        Фільтр
+      </button>
+      {% if search or salon_id %}
+      <a href="/admin/profiles?country={{ country }}" class="text-sm text-slate-500 hover:text-slate-700">Скинути</a>
+      {% endif %}
+    </form>
+  </div>
+
+  <!-- List -->
+  <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    {% if rows_data %}
+    <div class="overflow-x-auto">
+    <table class="w-full text-xs table-fixed">
+      <thead class="bg-slate-50 text-[10px] font-medium text-slate-500 uppercase tracking-wide">
+        <tr>
+          <th class="text-left px-2 py-2.5">Name</th>
+          <th class="text-center px-2 py-2.5 w-32">Canonical keys</th>
+          <th class="text-left px-2 py-2.5 w-16">Country</th>
+          <th class="text-center px-2 py-2.5 w-24">Services</th>
+          <th class="text-center px-2 py-2.5 w-12">A/B</th>
+          <th class="text-left px-2 py-2.5 w-20">Status</th>
+          <th class="w-36"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        {% for row in rows_data %}
+        {% set p = row.profile %}
+        <tr class="hover:bg-slate-50 transition group">
+          <td class="px-2 py-2 align-middle min-w-0">
+            <a href="/admin/profiles/{{ p.id }}" class="font-medium text-slate-900 hover:text-violet-700 truncate block" title="{{ p.name }}">
+              {{ p.name }}
+            </a>
+          </td>
+          <td class="px-2 py-2 text-center align-middle">
+            <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-violet-50 text-violet-700 text-xs font-semibold">
+              {{ row.keys_count }}
+            </span>
+          </td>
+          <td class="px-2 py-2 align-middle">
+            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase
+                  {% if p.country == 'ua' %}bg-yellow-100 text-yellow-800
+                  {% elif p.country == 'pl' %}bg-red-100 text-red-800
+                  {% else %}bg-blue-100 text-blue-800{% endif %}">
+              {{ p.country }}
+            </span>
+          </td>
+          <td class="px-2 py-2 text-center align-middle">
+            <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full
+                  {% if row.services_count > 0 %}bg-emerald-50 text-emerald-700{% else %}bg-slate-100 text-slate-400{% endif %} text-xs font-semibold">
+              {{ row.services_count }}
+            </span>
+          </td>
+          <td class="px-2 py-2 text-center text-xs text-slate-600 align-middle">{{ p.variants|length }}</td>
+          <td class="px-2 py-2 align-middle">
+            {% if p.enabled %}
+            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-medium">
+              <span class="w-1 h-1 bg-emerald-500 rounded-full"></span>
+              Active
+            </span>
+            {% else %}
+            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[10px] font-medium">
+              <span class="w-1 h-1 bg-slate-400 rounded-full"></span>
+              Off
+            </span>
+            {% endif %}
+          </td>
+          <td class="px-2 py-2 text-right align-middle">
+            <div class="flex gap-1 justify-end">
+              <a href="/admin/profiles/{{ p.id }}"
+                 class="text-[10px] px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded transition">
+                Open
+              </a>
+              <button hx-delete="/admin/profiles/{{ p.id }}"
+                      hx-confirm="Видалити профіль '{{ p.name }}'?"
+                      hx-target="closest tr"
+                      hx-swap="outerHTML swap:300ms"
+                      class="text-[10px] px-2 py-1 bg-red-50 hover:bg-red-100 text-red-700 rounded transition">
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    {% else %}
+    <div class="px-8 py-16 text-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-slate-300 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"/>
+      </svg>
+      <p class="text-slate-500 text-sm mb-3">Жодного профілю</p>
+      <a href="/admin/profiles/new" class="text-violet-600 hover:text-violet-700 text-sm font-medium">+ Створити перший</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

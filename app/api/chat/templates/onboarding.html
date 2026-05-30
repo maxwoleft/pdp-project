@@ -1,0 +1,69 @@
+{% extends "_base.html" %}
+{% block title %}Mira — оберіть країну{% endblock %}
+{% block body %}
+<div class="min-h-full flex items-center justify-center px-4 py-10 bg-gradient-to-br from-slate-50 to-slate-200">
+  <div class="w-full max-w-md" x-data="onboarding()">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-7">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-11 h-11 rounded-full bg-slate-900 text-white flex items-center justify-center font-semibold">M</div>
+        <div>
+          <div class="font-semibold text-slate-900">Mira</div>
+          <div class="text-xs text-slate-500">AI помічник салону краси</div>
+        </div>
+      </div>
+
+      <h1 class="text-xl font-semibold mb-2">Вітаємо</h1>
+      <p class="text-sm text-slate-600 mb-6">Оберіть регіон, у якому шукаєте салон, — і Mira підкаже найкращий варіант.</p>
+
+      <div class="space-y-2">
+        <template x-for="c in countries" :key="c.code">
+          <button type="button"
+                  @click="select(c.code)"
+                  :disabled="loading"
+                  class="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-slate-200 hover:border-slate-900 hover:bg-slate-50 transition disabled:opacity-50">
+            <span class="flex items-center gap-3">
+              <span class="text-2xl" x-text="c.flag"></span>
+              <span class="font-medium text-slate-900" x-text="c.name"></span>
+            </span>
+            <span class="text-xs text-slate-400" x-text="c.hint"></span>
+          </button>
+        </template>
+      </div>
+
+      <p x-show="error" x-cloak class="mt-4 text-sm text-rose-600" x-text="error"></p>
+      <p class="mt-6 text-[11px] text-slate-400 text-center">Натискаючи кнопку, ви погоджуєтесь на обробку повідомлень для надання консультацій.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function onboarding() {
+  const supported = {{ countries|tojson }};
+  const meta = {
+    ua: { name: 'Україна', flag: '🇺🇦', hint: 'Київ та інші міста' },
+    pl: { name: 'Польща', flag: '🇵🇱', hint: 'Warszawa' },
+    gb: { name: 'United Kingdom', flag: '🇬🇧', hint: 'London' },
+  };
+  return {
+    loading: false,
+    error: '',
+    countries: supported.map(code => ({ code, ...(meta[code] || { name: code.toUpperCase(), flag: '🌍', hint: '' }) })),
+    async select(code) {
+      this.error = '';
+      this.loading = true;
+      try {
+        const fd = new FormData();
+        fd.append('country', code);
+        const r = await fetch('/api/chat/country', { method: 'POST', body: fd, credentials: 'same-origin' });
+        if (!r.ok) throw new Error('Не вдалося зберегти вибір');
+        const data = await r.json();
+        window.location.href = data.redirect || '/chat/c';
+      } catch (e) {
+        this.error = e.message || 'Помилка';
+        this.loading = false;
+      }
+    },
+  };
+}
+</script>
+{% endblock %}

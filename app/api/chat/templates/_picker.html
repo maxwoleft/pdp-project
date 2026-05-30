@@ -1,0 +1,38 @@
+{# Стільник вибору — переюзовний для city та salon onboarding кроків. #}
+{% extends "_base.html" %}
+{% block body %}
+<div class="min-h-full flex items-center justify-center px-4 py-10 bg-gradient-to-br from-slate-50 to-slate-200">
+  <div class="w-full max-w-md" x-data="picker()">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-7">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-11 h-11 rounded-full bg-slate-900 text-white flex items-center justify-center font-semibold">M</div>
+        <div>
+          <div class="font-semibold text-slate-900">Mira</div>
+          <div class="text-xs text-slate-500">AI помічник салону краси</div>
+        </div>
+      </div>
+
+      <!-- Stepper -->
+      <div class="flex items-center gap-1.5 mb-4 text-[11px] text-slate-400">
+        {% for i in range(1, 3) %}
+          <span class="w-7 h-1.5 rounded-full {% if i <= step %}bg-slate-900{% else %}bg-slate-200{% endif %}"></span>
+        {% endfor %}
+        <span class="ml-1">Крок {{ step }} з 2</span>
+      </div>
+
+      <h1 class="text-xl font-semibold mb-1">{{ title }}</h1>
+      <p class="text-sm text-slate-600 mb-5">{{ subtitle }}</p>
+
+      {% block items %}{% endblock %}
+
+      <p x-show="error" x-cloak class="mt-4 text-sm text-rose-600" x-text="error"></p>
+
+      <div class="mt-5 flex items-center justify-between text-xs">
+        <a href="{{ back_url }}" class="text-slate-500 hover:text-slate-900">← Назад</a>
+        <span class="text-slate-400">Mira UA / PL / UK</span>
+      </div>
+    </div>
+  </div>
+</div>
+{% block picker_script %}{% endblock %}
+{% endblock %}

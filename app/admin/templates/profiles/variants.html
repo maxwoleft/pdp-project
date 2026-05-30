@@ -1,0 +1,123 @@
+{% extends "_layout.html" %}
+{% block title %}A/B Variants — {{ profile.name }}{% endblock %}
+{% block main %}
+<div class="px-4 sm:px-6 py-6 w-full">
+  <header class="flex items-center gap-3 mb-6">
+    <a href="/admin/profiles/{{ profile.id }}" class="text-slate-400 hover:text-slate-600 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+      </svg>
+    </a>
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">A/B Variants</h1>
+      <p class="text-sm text-slate-500 mt-1">{{ profile.name }} · {{ variants|length }} варіантів</p>
+    </div>
+  </header>
+
+  <div class="bg-white rounded-xl border border-slate-200 overflow-hidden mb-6">
+    {% if variants %}
+    <div class="overflow-x-auto">
+    <table class="w-full text-xs table-fixed">
+      <thead class="bg-slate-50 text-[10px] text-slate-500 uppercase">
+        <tr>
+          <th class="text-left px-2 py-2.5">Label</th>
+          <th class="text-left px-2 py-2.5 w-12">Lang</th>
+          <th class="text-left px-2 py-2.5 w-14">Weight</th>
+          <th class="text-left px-2 py-2.5 w-16">Impr.</th>
+          <th class="text-left px-2 py-2.5 w-16">Conv.</th>
+          <th class="text-left px-2 py-2.5 w-14">CR</th>
+          <th class="text-left px-2 py-2.5 w-16">Status</th>
+          <th class="w-10"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        {% for v in variants %}
+        <tr class="hover:bg-slate-50">
+          <td class="px-2 py-2 align-middle min-w-0">
+            <div class="font-medium text-slate-900 text-xs truncate" title="{{ v.label }}">{{ v.label }}</div>
+            <div class="text-[10px] text-slate-500 mt-0.5 truncate" title="{{ v.short_description }}">{{ v.short_description }}</div>
+          </td>
+          <td class="px-2 py-2 text-slate-600 align-middle text-[11px]">{{ v.language }}</td>
+          <td class="px-2 py-2 text-slate-600 align-middle text-[11px]">{{ v.weight }}</td>
+          <td class="px-2 py-2 text-slate-700 font-mono align-middle text-[11px]">{{ v.impressions }}</td>
+          <td class="px-2 py-2 text-slate-700 font-mono align-middle text-[11px]">{{ v.conversions }}</td>
+          <td class="px-2 py-2 align-middle">
+            {% if v.impressions > 0 %}
+              <span class="text-violet-700 font-semibold text-[11px]">{{ "%.1f"|format(v.conversions / v.impressions * 100) }}%</span>
+            {% else %}
+              <span class="text-slate-400">—</span>
+            {% endif %}
+          </td>
+          <td class="px-2 py-2 align-middle">
+            {% if v.status == 'active' %}
+            <span class="px-1.5 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-medium rounded">active</span>
+            {% else %}
+            <span class="px-1.5 py-0.5 bg-slate-100 text-slate-500 text-[10px] font-medium rounded">{{ v.status }}</span>
+            {% endif %}
+          </td>
+          <td class="px-2 py-2 text-right align-middle">
+            <button hx-delete="/admin/profiles/{{ profile.id }}/variants/{{ v.id }}"
+                    hx-confirm="Видалити варіант '{{ v.label }}'?"
+                    hx-target="closest tr"
+                    hx-swap="outerHTML"
+                    class="text-[11px] px-1.5 py-0.5 bg-red-50 hover:bg-red-100 text-red-700 rounded">×</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    {% else %}
+    <div class="px-8 py-10 text-center text-sm text-slate-400">
+      Жодного A/B варіанту. Додай нижче щоб тестувати різні описи.
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Add new variant -->
+  <div class="bg-white rounded-xl border border-slate-200 px-6 py-5">
+    <h2 class="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-4">Створити новий варіант</h2>
+    <form method="post" action="/admin/profiles/{{ profile.id }}/variants/new"
+          x-data="{addresses_problems: [], benefits: [], keywords: [], newProblem: '', newBenefit: '', newKeyword: ''}" class="space-y-4">
+      <div class="grid grid-cols-3 gap-3">
+        <div>
+          <label class="block text-xs text-slate-600 mb-1">Label</label>
+          <input type="text" name="label" required placeholder="control / variant_b"
+                 class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none">
+        </div>
+        <div>
+          <label class="block text-xs text-slate-600 mb-1">Language</label>
+          <select name="language" class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none">
+            {% for lang in languages %}
+            <option value="{{ lang }}">{{ language_names[lang] }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs text-slate-600 mb-1">Weight (0-100)</label>
+          <input type="number" name="weight" value="50" min="0" max="100"
+                 class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none">
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs text-slate-600 mb-1">Short description</label>
+        <textarea name="short_description" required rows="2"
+                  class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none"></textarea>
+      </div>
+      <div>
+        <label class="block text-xs text-slate-600 mb-1">Sales pitch</label>
+        <textarea name="sales_pitch" rows="2"
+                  class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none"></textarea>
+      </div>
+      <input type="hidden" name="addresses_problems" :value="JSON.stringify(addresses_problems)">
+      <input type="hidden" name="benefits" :value="JSON.stringify(benefits)">
+      <input type="hidden" name="keywords" :value="JSON.stringify(keywords)">
+
+      <button type="submit"
+              class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium rounded-lg transition">
+        Створити варіант
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

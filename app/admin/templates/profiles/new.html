@@ -1,0 +1,267 @@
+{% extends "_layout.html" %}
+{% block title %}Новий профіль{% endblock %}
+{% block main %}
+<div class="px-8 py-7 max-w-3xl">
+  <header class="flex items-center gap-3 mb-6">
+    <a href="/admin/profiles" class="text-slate-400 hover:text-slate-600 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+      </svg>
+    </a>
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">Створити профіль</h1>
+      <p class="text-sm text-slate-500 mt-1">Канонічний концепт послуги — один профіль покриває всі варіанти (довжина, рівень, салон)</p>
+    </div>
+  </header>
+
+  {% if error %}
+  <div class="mb-5 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="/admin/profiles/new"
+        x-data='profileForm({{ (form or {})|tojson }})' class="space-y-5">
+
+    <!-- Basic info -->
+    <div class="bg-white rounded-xl border border-slate-200 px-6 py-5">
+      <h2 class="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-4">Загальне</h2>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Name <span class="text-red-500">*</span></label>
+        <input type="text" name="name" x-model="name" @input.debounce.500="updateCanonicalKey()" required
+               placeholder="Lebel Absolute Happiness Treatment"
+               class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-100 outline-none transition">
+      </div>
+
+      <div class="mt-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Canonical key <span class="text-red-500">*</span></label>
+        <div class="flex gap-2">
+          <input type="text" name="canonical_key" x-model="canonical_key" required pattern="[a-z0-9_]+"
+                 @input.debounce.500="previewCanonicalKey()"
+                 placeholder="lebel_absolute_happiness"
+                 class="flex-1 px-3 py-2 text-sm font-mono rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-100 outline-none transition">
+          <button type="button" @click="updateCanonicalKey()"
+                  class="px-3 py-2 text-xs bg-slate-100 hover:bg-slate-200 rounded-lg">Згенерувати з name</button>
+        </div>
+        <!-- Preview: кількість + список послуг -->
+        <div x-show="canonicalPreview" class="mt-2">
+          <p class="text-xs text-slate-500">
+            <span x-show="canonicalPreview && canonicalPreview.total > 0" class="text-emerald-700 font-medium">
+              ✓ Покриє <strong x-text="canonicalPreview.total"></strong> послуг:
+              <span x-text="`UA ${canonicalPreview.by_country.ua} · PL ${canonicalPreview.by_country.pl} · GB ${canonicalPreview.by_country.gb}`"></span>
+            </span>
+            <span x-show="canonicalPreview && canonicalPreview.total === 0" class="text-amber-600">
+              ⚠ Цей key не матчиться з жодною послугою. Перевір name або введи key вручну.
+            </span>
+          </p>
+
+          <!-- Список послуг -->
+          <div x-show="canonicalPreview && canonicalPreview.services && canonicalPreview.services.length > 0"
+               class="mt-2 bg-slate-50 border border-slate-200 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
+            <div class="px-3 py-1.5 bg-slate-100 border-b border-slate-200">
+              <span class="text-[10px] font-semibold text-slate-600 uppercase">Послуги що будуть покриті цим профілем</span>
+            </div>
+            <table class="w-full text-xs">
+              <thead class="text-[10px] text-slate-500 uppercase">
+                <tr>
+                  <th class="text-left px-2 py-1">Cnt</th>
+                  <th class="text-left px-2 py-1">Назва</th>
+                  <th class="text-left px-2 py-1">Salon</th>
+                  <th class="text-right px-2 py-1">Ціна</th>
+                  <th class="text-right px-2 py-1">Час</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <template x-for="(svc, idx) in canonicalPreview.services" :key="idx">
+                  <tr class="hover:bg-white">
+                    <td class="px-2 py-1">
+                      <span class="text-[10px] font-semibold uppercase px-1 py-0.5 rounded"
+                            :class="svc.country === 'UA' ? 'bg-yellow-100 text-yellow-800' : svc.country === 'PL' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'"
+                            x-text="svc.country"></span>
+                    </td>
+                    <td class="px-2 py-1 text-slate-800 truncate max-w-xs" :title="svc.name" x-text="svc.name"></td>
+                    <td class="px-2 py-1 text-slate-500 font-mono text-[10px]" x-text="svc.salon_id"></td>
+                    <td class="px-2 py-1 text-right text-slate-700 whitespace-nowrap" x-text="`${svc.price} ${svc.currency}`"></td>
+                    <td class="px-2 py-1 text-right text-slate-600 whitespace-nowrap" x-text="`${svc.duration} хв`"></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 mt-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Country</label>
+          <select name="country" x-model="country"
+                  class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none">
+            <option value="">Глобальний (всі країни)</option>
+            <option value="ua">Тільки UA</option>
+            <option value="pl">Тільки PL</option>
+            <option value="gb">Тільки GB</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Default language</label>
+          <select name="default_language" x-model="default_language"
+                  class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none">
+            {% for lang in languages %}
+            <option value="{{ lang }}">{{ language_names[lang] }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- First translation (in default language) -->
+    <div class="bg-white rounded-xl border border-slate-200 px-6 py-5">
+      <h2 class="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-4">
+        Перший переклад (<span x-text="default_language"></span>)
+      </h2>
+      <p class="text-xs text-slate-500 mb-4">Решту мов додаси на сторінці профілю після створення</p>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Short description <span class="text-red-500">*</span></label>
+        <textarea name="short_description" x-model="short_description" required rows="2"
+                  placeholder="1-2 речення для агента: що це за послуга, для кого"
+                  class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-100 outline-none transition"></textarea>
+      </div>
+
+      <!-- Addresses problems -->
+      <div class="mt-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">Addresses problems <span class="text-xs text-slate-500">(які проблеми вирішує)</span></label>
+      </div>
+      <div class="flex flex-wrap gap-2 mb-3" x-show="addresses_problems.length > 0">
+        <template x-for="(item, idx) in addresses_problems" :key="idx">
+          <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-rose-50 text-rose-700 text-sm">
+            <span x-text="item"></span>
+            <button type="button" @click="addresses_problems.splice(idx, 1)" class="text-rose-400 hover:text-rose-700">×</button>
+          </span>
+        </template>
+      </div>
+      <div class="flex gap-2">
+        <input type="text" x-model="newProblem" @keydown.enter.prevent="addItem('addresses_problems', 'newProblem')"
+               placeholder="Наприклад: тьмяність, сухість"
+               class="flex-1 px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none">
+        <button type="button" @click="addItem('addresses_problems', 'newProblem')"
+                class="px-3 py-2 text-sm bg-slate-100 hover:bg-slate-200 rounded-lg">+</button>
+      </div>
+      <input type="hidden" name="addresses_problems" :value="JSON.stringify(addresses_problems)">
+
+      <!-- Benefits -->
+      <div class="mt-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">Benefits <span class="text-xs text-slate-500">(вигоди)</span></label>
+        <div class="flex flex-wrap gap-2 mb-3" x-show="benefits.length > 0">
+          <template x-for="(item, idx) in benefits" :key="idx">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 text-sm">
+              <span x-text="item"></span>
+              <button type="button" @click="benefits.splice(idx, 1)" class="text-emerald-400 hover:text-emerald-700">×</button>
+            </span>
+          </template>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" x-model="newBenefit" @keydown.enter.prevent="addItem('benefits', 'newBenefit')"
+                 placeholder="Наприклад: блиск, зміцнення"
+                 class="flex-1 px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none">
+          <button type="button" @click="addItem('benefits', 'newBenefit')"
+                  class="px-3 py-2 text-sm bg-slate-100 hover:bg-slate-200 rounded-lg">+</button>
+        </div>
+        <input type="hidden" name="benefits" :value="JSON.stringify(benefits)">
+      </div>
+
+      <!-- Keywords -->
+      <div class="mt-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">Keywords <span class="text-xs text-slate-500">(слова що клієнт може сказати)</span></label>
+        <div class="flex flex-wrap gap-2 mb-3" x-show="keywords.length > 0">
+          <template x-for="(item, idx) in keywords" :key="idx">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-violet-50 text-violet-700 text-sm">
+              <span x-text="item"></span>
+              <button type="button" @click="keywords.splice(idx, 1)" class="text-violet-400 hover:text-violet-700">×</button>
+            </span>
+          </template>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" x-model="newKeyword" @keydown.enter.prevent="addItem('keywords', 'newKeyword')"
+                 placeholder="Наприклад: блиск, сяйво, тьмяний"
+                 class="flex-1 px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none">
+          <button type="button" @click="addItem('keywords', 'newKeyword')"
+                  class="px-3 py-2 text-sm bg-slate-100 hover:bg-slate-200 rounded-lg">+</button>
+        </div>
+        <input type="hidden" name="keywords" :value="JSON.stringify(keywords)">
+      </div>
+
+      <!-- Sales pitch -->
+      <div class="mt-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Sales pitch <span class="text-xs text-slate-500">(готова фраза для агента)</span></label>
+        <textarea name="sales_pitch" x-model="sales_pitch" rows="2"
+                  placeholder="Раджу [послуга] — це [причина]. Тримається [скільки]. Готова порекомендувати?"
+                  class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none transition"></textarea>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between pt-2">
+      <a href="/admin/profiles" class="text-sm text-slate-500 hover:text-slate-700">Скасувати</a>
+      <button type="submit"
+              class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium rounded-lg transition">
+        Створити профіль
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+function profileForm(initial) {
+  return {
+    name: initial.name || '',
+    canonical_key: initial.canonical_key || '',
+    country: initial.country || '',
+    default_language: initial.default_language || 'uk',
+    short_description: initial.short_description || '',
+    addresses_problems: [],
+    benefits: [],
+    keywords: [],
+    sales_pitch: '',
+    newProblem: '',
+    newBenefit: '',
+    newKeyword: '',
+    canonicalPreview: null,
+
+    addItem(listName, inputName) {
+      const t = (this[inputName] || '').trim();
+      if (t && !this[listName].includes(t)) {
+        this[listName].push(t);
+      }
+      this[inputName] = '';
+    },
+
+    async updateCanonicalKey() {
+      if (!this.name) return;
+      try {
+        const resp = await fetch(`/admin/profiles/api/preview-canonical-key?name=${encodeURIComponent(this.name)}`);
+        const data = await resp.json();
+        if (data.key) {
+          this.canonical_key = data.key;
+          this.canonicalPreview = data;
+        }
+      } catch (e) { console.warn(e); }
+    },
+
+    async previewCanonicalKey() {
+      if (!this.canonical_key) { this.canonicalPreview = null; return; }
+      try {
+        const resp = await fetch(`/admin/profiles/api/preview-canonical-key?canonical_key=${encodeURIComponent(this.canonical_key)}`);
+        const data = await resp.json();
+        this.canonicalPreview = data;
+      } catch (e) { console.warn(e); }
+    },
+
+    init() {
+      // Auto-load preview якщо canonical_key prefilled (наприклад з missing page)
+      if (this.canonical_key) {
+        this.previewCanonicalKey();
+      }
+    },
+  };
+}
+</script>
+{% endblock %}

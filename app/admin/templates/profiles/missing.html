@@ -1,0 +1,279 @@
+{% extends "_layout.html" %}
+{% block title %}Missing profiles{% endblock %}
+{% block main %}
+<div class="px-4 sm:px-6 py-6 w-full">
+  <header class="flex items-center gap-3 mb-6">
+    <a href="/admin/profiles" class="text-slate-400 hover:text-slate-600 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+      </svg>
+    </a>
+    <div class="flex-1">
+      <h1 class="text-2xl font-semibold text-slate-900">Missing profiles</h1>
+      <p class="text-sm text-slate-500 mt-1">
+        Канонічні послуги які ще не мають профілю — сортовано за популярністю (кількість реальних послуг)
+      </p>
+    </div>
+  </header>
+
+  <!-- Coverage summary -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+    <div class="bg-white rounded-xl border border-slate-200 px-5 py-4">
+      <div class="text-xs text-slate-500 uppercase font-medium">Не покрито канонічних</div>
+      <div class="text-3xl font-bold text-amber-700 mt-1">{{ coverage.global.canonical_keys_without_profile }}</div>
+      <div class="text-xs text-slate-500 mt-1">з {{ coverage.global.total_canonical_keys }} загалом</div>
+    </div>
+    <div class="bg-white rounded-xl border border-slate-200 px-5 py-4">
+      <div class="text-xs text-slate-500 uppercase font-medium">Не покрито послуг</div>
+      <div class="text-3xl font-bold text-rose-700 mt-1">{{ coverage.global.services_without_profile }}</div>
+      <div class="text-xs text-slate-500 mt-1">з {{ coverage.global.total_services }} загалом</div>
+    </div>
+    <div class="bg-white rounded-xl border border-slate-200 px-5 py-4">
+      <div class="text-xs text-slate-500 uppercase font-medium">Поточне покриття</div>
+      <div class="text-3xl font-bold text-emerald-700 mt-1">{{ coverage.global.coverage_pct }}%</div>
+      <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden mt-2">
+        <div class="h-full bg-emerald-500" style="width: {{ coverage.global.coverage_pct }}%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white rounded-xl border border-slate-200 px-5 py-4 mb-5">
+    <form method="get" class="flex flex-wrap items-center gap-3">
+      <div class="flex-1 min-w-[200px] relative">
+        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+        </svg>
+        <input type="text" name="search" value="{{ search or '' }}" placeholder="Пошук по назві послуги"
+               class="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-100 outline-none transition">
+      </div>
+      <select name="country"
+              class="pl-3 pr-8 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none appearance-none bg-no-repeat bg-[right_0.5rem_center] bg-[length:1rem_1rem]"
+              style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27%236b7280%27%3E%3Cpath fill-rule=%27evenodd%27 d=%27M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z%27 clip-rule=%27evenodd%27/%3E%3C/svg%3E')">
+        <option value="">Усі країни</option>
+        <option value="ua" {% if country == 'ua' %}selected{% endif %}>Ukraine</option>
+        <option value="pl" {% if country == 'pl' %}selected{% endif %}>Poland</option>
+        <option value="gb" {% if country == 'gb' %}selected{% endif %}>Great Britain</option>
+      </select>
+      <button type="submit" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition">
+        Фільтр
+      </button>
+      {% if search or country %}
+      <a href="/admin/profiles/missing" class="text-sm text-slate-500 hover:text-slate-700">Скинути</a>
+      {% endif %}
+    </form>
+  </div>
+
+  {% if auto_link_entries %}
+  <!-- Auto-link history -->
+  <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-5">
+    <h3 class="text-xs font-semibold text-emerald-800 uppercase mb-2">
+      Авто-присвоєння ({{ auto_link_entries|length }})
+    </h3>
+    <div class="space-y-1 max-h-56 overflow-y-auto">
+      {% for e in auto_link_entries %}
+      <div class="flex items-center gap-2 text-xs py-1 border-b border-emerald-100 last:border-0">
+        <code class="text-[10px] bg-white px-1.5 py-0.5 rounded font-mono">{{ e.canonical_key[:30] }}{% if e.canonical_key|length > 30 %}...{% endif %}</code>
+        <span class="text-slate-600 flex-1 truncate">{{ (e.sample_name or '')[:60] }}</span>
+        <span class="text-emerald-700 font-medium">→ {{ e.profile_name }}</span>
+        <span class="text-[10px] text-slate-400 whitespace-nowrap">overlap: {{ e.overlap_score }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Missing list -->
+  <div class="bg-white rounded-xl border border-slate-200">
+    {% if items %}
+    <div class="px-3 py-2.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between flex-wrap gap-2">
+      <div class="text-[11px] font-medium text-slate-600 uppercase">
+        {% set start = (pagination.page - 1) * pagination.page_size + 1 %}
+        {% set end = start + items|length - 1 %}
+        Показано <strong>{{ start }}–{{ end }}</strong> з <strong>{{ pagination.total }}</strong>
+      </div>
+      <div class="text-[11px] text-slate-500">
+        Сторінка {{ pagination.page }} з {{ pagination.total_pages }}
+      </div>
+    </div>
+    <div class="overflow-x-visible">
+    <table class="w-full text-xs table-fixed">
+      <thead class="bg-slate-50 text-[10px] font-medium text-slate-500 uppercase tracking-wide">
+        <tr>
+          <th class="text-left px-2 py-2.5 w-10">#</th>
+          <th class="text-left px-2 py-2.5">Канонічний концепт</th>
+          <th class="text-left px-2 py-2.5 w-44">Canonical key</th>
+          <th class="text-center px-2 py-2.5 w-14">Послуг</th>
+          <th class="text-left px-2 py-2.5 w-32">По країнах</th>
+          <th class="text-right px-2 py-2.5 w-24">Дія</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        {% for item in items %}
+        <tr class="hover:bg-slate-50 transition">
+          <td class="px-2 py-2 text-[10px] text-slate-400 font-mono align-middle">{{ start + loop.index0 }}</td>
+          <td class="px-2 py-2 align-middle min-w-0">
+            <div class="font-medium text-slate-900 truncate" title="{{ item.sample_name }}">{{ item.sample_name }}</div>
+          </td>
+          <td class="px-2 py-2 align-middle">
+            <code class="text-[10px] text-violet-700 bg-violet-50 px-1 py-0.5 rounded block truncate" title="{{ item.canonical_key }}">{{ item.canonical_key }}</code>
+          </td>
+          <td class="px-2 py-2 text-center align-middle">
+            <span class="inline-flex items-center justify-center min-w-7 h-6 px-1.5 bg-amber-100 text-amber-800 text-xs font-bold rounded">
+              {{ item.total_services }}
+            </span>
+          </td>
+          <td class="px-2 py-2 align-middle">
+            <div class="flex gap-1 flex-wrap">
+              {% for c, n in item.by_country.items() %}
+                {% if n > 0 %}
+                <span class="inline-flex items-center gap-0.5 px-1 py-0.5 rounded text-[10px]
+                      {% if c == 'ua' %}bg-yellow-100 text-yellow-800
+                      {% elif c == 'pl' %}bg-red-100 text-red-800
+                      {% else %}bg-blue-100 text-blue-800{% endif %}">
+                  <span class="font-semibold uppercase">{{ c }}</span>
+                  <span>{{ n }}</span>
+                </span>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </td>
+          <td class="px-2 py-2 text-right align-middle">
+            <div class="flex items-center justify-end gap-1" x-data="{ open: false, sel: '', saving: false, done: false }">
+              <a href="/admin/profiles/new?canonical_key={{ item.canonical_key }}&name={{ item.sample_name|urlencode }}"
+                 class="inline-flex items-center gap-0.5 px-2 py-1 bg-violet-600 hover:bg-violet-700 text-white text-[10px] font-medium rounded transition whitespace-nowrap">
+                + Створити
+              </a>
+              <div class="relative">
+                <button type="button" @click="open = !open"
+                        class="inline-flex items-center gap-0.5 px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-medium rounded transition whitespace-nowrap">
+                  Додати до...
+                </button>
+                <div x-show="open" @click.outside="open = false" x-cloak
+                     class="absolute right-0 mt-1 w-64 bg-white border border-slate-200 rounded-lg shadow-xl z-[9999] p-2"
+                     style="position: absolute; z-index: 9999;">
+                  <select x-model="sel" class="w-full text-xs px-2 py-1.5 border border-slate-300 rounded mb-2">
+                    <option value="">— Обрати профіль —</option>
+                    {% for p in profile_list %}
+                    <option value="{{ p.id }}">{{ p.name }}</option>
+                    {% endfor %}
+                  </select>
+                  <button type="button" :disabled="!sel || saving || done"
+                          @click="saving = true;
+                            fetch('/admin/profiles/' + sel + '/add-canonical-key', {
+                              method: 'POST',
+                              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                              body: new URLSearchParams({canonical_key: '{{ item.canonical_key }}'})
+                            }).then(r=>r.json()).then(()=>{saving=false; done=true; setTimeout(()=>location.reload(), 800)})"
+                          class="w-full px-2 py-1.5 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 text-white text-xs rounded">
+                    <span x-show="!saving && !done">Додати ключ</span>
+                    <span x-show="saving">Зберігаю...</span>
+                    <span x-show="done">✓ Додано</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if pagination.total_pages > 1 %}
+    {# Зберігаємо існуючі query params #}
+    {% set base_qs = [] %}
+    {% if country %}{% set _ = base_qs.append('country=' + country) %}{% endif %}
+    {% if search %}{% set _ = base_qs.append('search=' + (search|urlencode)) %}{% endif %}
+    {% if pagination.page_size != 200 %}{% set _ = base_qs.append('page_size=' + (pagination.page_size|string)) %}{% endif %}
+    {% set qs_prefix = ('&' + base_qs|join('&')) if base_qs else '' %}
+
+    <div class="px-3 py-3 border-t border-slate-200 flex items-center justify-between flex-wrap gap-2">
+      <div class="text-[11px] text-slate-500">
+        Сторінка <strong class="text-slate-900">{{ pagination.page }}</strong> з <strong class="text-slate-900">{{ pagination.total_pages }}</strong>
+      </div>
+
+      <nav class="flex items-center gap-1">
+        <!-- First / Prev -->
+        {% if pagination.page > 1 %}
+        <a href="?page=1{{ qs_prefix }}"
+           class="px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded transition" title="Перша">
+          ‹‹
+        </a>
+        <a href="?page={{ pagination.page - 1 }}{{ qs_prefix }}"
+           class="px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded transition" title="Попередня">
+          ‹
+        </a>
+        {% else %}
+        <span class="px-2.5 py-1.5 text-xs text-slate-300">‹‹</span>
+        <span class="px-2.5 py-1.5 text-xs text-slate-300">‹</span>
+        {% endif %}
+
+        <!-- Сторінки: показуємо вікно ±3 від поточної + перша/остання -->
+        {% set window = 3 %}
+        {% set page_nums = [] %}
+        {% for i in range(1, pagination.total_pages + 1) %}
+          {% if i == 1 or i == pagination.total_pages or (i >= pagination.page - window and i <= pagination.page + window) %}
+            {% set _ = page_nums.append(i) %}
+          {% endif %}
+        {% endfor %}
+
+        {% set ns = namespace(prev=0) %}
+        {% for i in page_nums %}
+          {% if i - ns.prev > 1 %}
+          <span class="px-2 text-xs text-slate-400">…</span>
+          {% endif %}
+          {% if i == pagination.page %}
+          <span class="px-3 py-1.5 text-xs font-bold bg-violet-600 text-white rounded">{{ i }}</span>
+          {% else %}
+          <a href="?page={{ i }}{{ qs_prefix }}"
+             class="px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-100 rounded transition">{{ i }}</a>
+          {% endif %}
+          {% set ns.prev = i %}
+        {% endfor %}
+
+        <!-- Next / Last -->
+        {% if pagination.page < pagination.total_pages %}
+        <a href="?page={{ pagination.page + 1 }}{{ qs_prefix }}"
+           class="px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded transition" title="Наступна">
+          ›
+        </a>
+        <a href="?page={{ pagination.total_pages }}{{ qs_prefix }}"
+           class="px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded transition" title="Остання">
+          ››
+        </a>
+        {% else %}
+        <span class="px-2.5 py-1.5 text-xs text-slate-300">›</span>
+        <span class="px-2.5 py-1.5 text-xs text-slate-300">››</span>
+        {% endif %}
+      </nav>
+
+      <!-- Page size selector -->
+      <form method="get" class="flex items-center gap-2">
+        {% if country %}<input type="hidden" name="country" value="{{ country }}">{% endif %}
+        {% if search %}<input type="hidden" name="search" value="{{ search }}">{% endif %}
+        <label class="text-xs text-slate-500">На сторінці:</label>
+        <select name="page_size" onchange="this.form.submit()"
+                class="text-xs px-2 py-1 rounded border border-slate-300 focus:border-violet-500 outline-none">
+          {% for size in [50, 100, 200, 500] %}
+          <option value="{{ size }}" {% if pagination.page_size == size %}selected{% endif %}>{{ size }}</option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="px-8 py-16 text-center">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-emerald-50 mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+        </svg>
+      </div>
+      <p class="text-slate-600 text-sm">Усі канонічні послуги вже мають профілі.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

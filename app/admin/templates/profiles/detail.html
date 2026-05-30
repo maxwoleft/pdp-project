@@ -1,0 +1,119 @@
+{% extends "_layout.html" %}
+{% block title %}{{ profile.name }}{% endblock %}
+{% block main %}
+<div class="px-8 py-7 max-w-5xl">
+  <header class="flex items-start gap-3 mb-6">
+    <a href="/admin/profiles?country={{ profile.country }}" class="text-slate-400 hover:text-slate-600 transition mt-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+      </svg>
+    </a>
+    <div class="flex-1 min-w-0">
+      <h1 class="text-2xl font-semibold text-slate-900 truncate">{{ profile.name }}</h1>
+      <div class="flex items-center gap-2 mt-1">
+        <code class="text-xs text-violet-700 bg-violet-50 px-2 py-0.5 rounded">{{ profile.canonical_key }}</code>
+        <span class="text-xs uppercase font-semibold px-2 py-0.5 rounded
+              {% if profile.country == 'ua' %}bg-yellow-100 text-yellow-800
+              {% elif profile.country == 'pl' %}bg-red-100 text-red-800
+              {% else %}bg-blue-100 text-blue-800{% endif %}">{{ profile.country }}</span>
+        <span class="text-xs text-slate-500">{{ keys_breakdown|length }} ключів</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- UK Content -->
+  {% set uk_t = translations|selectattr('language', 'equalto', 'uk')|first %}
+  <section class="bg-white rounded-xl border border-slate-200 px-6 py-5 mb-5">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-sm font-semibold text-slate-700 uppercase tracking-wide">Контент 🇺🇦</h2>
+      <span class="text-xs text-slate-500 italic">RU/EN/PL — AI перекладає на льоту</span>
+    </div>
+    {% if uk_t %}
+    <a href="/admin/profiles/{{ profile.id }}/edit/uk"
+       class="block px-5 py-4 rounded-lg border border-emerald-200 bg-emerald-50/30 hover:border-emerald-400 transition">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-sm font-semibold text-slate-900">Редагувати UK content</span>
+        <span class="text-xs text-emerald-700">✓ Заповнено</span>
+      </div>
+      <p class="text-sm text-slate-700 line-clamp-2 mb-2">{{ uk_t.short_description }}</p>
+      <div class="flex flex-wrap gap-1">
+        {% for p in uk_t.addresses_problems[:4] %}
+        <span class="text-xs px-2 py-0.5 bg-rose-100 text-rose-700 rounded">{{ p }}</span>
+        {% endfor %}
+        {% if uk_t.addresses_problems|length > 4 %}<span class="text-xs text-slate-400">+{{ uk_t.addresses_problems|length - 4 }}</span>{% endif %}
+      </div>
+    </a>
+    {% else %}
+    <a href="/admin/profiles/{{ profile.id }}/edit/uk" class="block px-5 py-4 rounded-lg border border-dashed border-slate-300 hover:border-violet-400">
+      <span class="text-slate-400 italic">+ Додати UK контент</span>
+    </a>
+    {% endif %}
+  </section>
+
+  <!-- Canonical keys + services breakdown -->
+  {% if keys_breakdown %}
+  <section class="bg-white rounded-xl border border-slate-200 px-6 py-5 mb-5">
+    <h2 class="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-4">
+      Канонічні ключі + послуги ({{ keys_breakdown | length }})
+    </h2>
+    <div class="space-y-3">
+      {% for kb in keys_breakdown %}
+      <details class="border border-slate-200 rounded-lg">
+        <summary class="px-4 py-3 cursor-pointer flex items-center justify-between hover:bg-slate-50">
+          <div class="flex items-center gap-3 min-w-0 flex-1">
+            <code class="text-xs px-2 py-0.5 bg-slate-100 text-slate-700 rounded font-mono shrink-0" title="{{ kb.canonical_key }}">{{ kb.canonical_key[:5] }}...</code>
+            <span class="text-sm font-medium text-slate-800 truncate">{{ kb.sample_name }}</span>
+            <span class="text-sm text-slate-500 whitespace-nowrap">{{ kb.services|length }} послуг</span>
+            {% if kb.description %}
+            <span class="text-xs text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded whitespace-nowrap">✓ контекст</span>
+            {% else %}
+            <span class="text-xs text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded whitespace-nowrap">⚠ без контексту</span>
+            {% endif %}
+          </div>
+        </summary>
+        <div class="px-4 pb-3 pt-1 space-y-3">
+          <!-- Inline key description editor -->
+          <div class="bg-violet-50 border border-violet-200 rounded-lg p-3"
+               x-data='{ "desc": {{ kb.description|tojson }}, "saving": false, "saved": false }'>
+            <label class="block text-[10px] font-semibold text-violet-700 uppercase mb-1">
+              В яких випадках робиться (контекст для AI)
+            </label>
+            <textarea x-model="desc" rows="2" placeholder="Напр.: для шкіри обличчя 40 хв; підходить для делікатних зон..."
+                      class="w-full px-2 py-1.5 text-xs rounded border border-violet-300 focus:border-violet-500 outline-none mb-2"></textarea>
+            <button type="button" :disabled="saving"
+                    @click="saving=true; saved=false;
+                      fetch('/admin/profiles/{{ profile.id }}/key-description', {
+                        method:'POST',
+                        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+                        body: new URLSearchParams({canonical_key:'{{ kb.canonical_key }}', description: desc})
+                      }).then(r=>r.json()).then(()=>{saving=false; saved=true; setTimeout(()=>saved=false,2000)})"
+                    class="px-3 py-1 bg-violet-600 hover:bg-violet-700 text-white text-xs rounded transition">
+              <span x-show="!saving && !saved">Зберегти</span>
+              <span x-show="saving">Зберігаю...</span>
+              <span x-show="saved" class="text-emerald-200">✓ Збережено</span>
+            </button>
+          </div>
+
+          {% if kb.services %}
+          <div>
+            <div class="text-xs uppercase font-semibold text-slate-500 mb-1">Послуги</div>
+            <ul class="text-xs space-y-0.5">
+              {% for svc in kb.services %}
+              <li class="flex items-center gap-2 text-slate-700">
+                <span class="flex-1 truncate">{{ svc.name }}</span>
+                {% if svc.brand %}<span class="text-slate-400">[{{ svc.brand }}]</span>{% endif %}
+                {% if svc.price %}<span class="text-slate-500 whitespace-nowrap">{{ svc.price }} {{ svc.currency }}</span>{% endif %}
+                {% if svc.duration_min %}<span class="text-slate-400 whitespace-nowrap">{{ svc.duration_min }}хв</span>{% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+        </div>
+      </details>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

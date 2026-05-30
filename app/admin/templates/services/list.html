@@ -1,0 +1,195 @@
+{% extends "_layout.html" %}
+{% block title %}Послуги{% endblock %}
+{% block main %}
+<div class="px-4 sm:px-6 py-6 w-full">
+  <header class="flex items-center justify-between mb-5">
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">Каталог послуг</h1>
+      <p class="text-sm text-slate-500 mt-1">
+        {{ pagination.total }} послуг
+        {% if city %} · {{ city }}{% endif %}
+        {% if selected_salon_name %} · {{ selected_salon_name }}{% endif %}
+      </p>
+    </div>
+  </header>
+
+  <!-- Filters -->
+  <div class="bg-white rounded-xl border border-slate-200 px-4 py-3 mb-5">
+    <form method="get" class="flex flex-wrap items-end gap-3" id="filterForm">
+      <!-- Country -->
+      <div>
+        <label class="block text-[10px] font-medium text-slate-500 uppercase mb-1">Країна</label>
+        <select name="country" onchange="document.getElementById('filterForm').submit()"
+                class="pl-2 pr-7 py-1.5 text-xs rounded-lg border border-slate-300 focus:border-violet-500 outline-none appearance-none bg-no-repeat bg-[right_0.4rem_center] bg-[length:1rem_1rem]"
+                style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 20 20%27 fill=%27%236b7280%27%3E%3Cpath fill-rule=%27evenodd%27 d=%27M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z%27 clip-rule=%27evenodd%27/%3E%3C/svg%3E')">
+          <option value="ua" {% if country == 'ua' %}selected{% endif %}>Ukraine</option>
+          <option value="pl" {% if country == 'pl' %}selected{% endif %}>Poland</option>
+          <option value="gb" {% if country == 'gb' %}selected{% endif %}>Great Britain</option>
+        </select>
+      </div>
+
+      <!-- City -->
+      <div>
+        <label class="block text-[10px] font-medium text-slate-500 uppercase mb-1">Місто</label>
+        <select name="city"
+                hx-get="/admin/services/api/salons?country={{ country }}"
+                hx-include="[name='country']"
+                hx-target="#salon-select"
+                hx-trigger="change"
+                onchange="document.getElementById('salon-select').value=''; document.getElementById('filterForm').submit()"
+                class="px-2 py-1.5 text-xs rounded-lg border border-slate-300 focus:border-violet-500 outline-none min-w-[140px]">
+          <option value="">Усі міста</option>
+          {% for c in cities %}
+          <option value="{{ c }}" {% if city == c %}selected{% endif %}>{{ c }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Salon -->
+      <div>
+        <label class="block text-[10px] font-medium text-slate-500 uppercase mb-1">Салон</label>
+        <select name="salon_id" id="salon-select"
+                onchange="document.getElementById('filterForm').submit()"
+                class="px-2 py-1.5 text-xs rounded-lg border border-slate-300 focus:border-violet-500 outline-none min-w-[160px]">
+          <option value="">Усі салони</option>
+          {% for s in salons %}
+          <option value="{{ s.id }}" {% if salon_id == s.id %}selected{% endif %}>{{ s.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Search -->
+      <div class="flex-1 min-w-[180px]">
+        <label class="block text-[10px] font-medium text-slate-500 uppercase mb-1">Пошук</label>
+        <div class="relative">
+          <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+          </svg>
+          <input type="text" name="search" value="{{ search or '' }}" placeholder="Пошук по назві"
+                 class="w-full pl-8 pr-2 py-1.5 text-xs rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-100 outline-none transition">
+        </div>
+      </div>
+
+      <button type="submit" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium rounded-lg transition">
+        Фільтр
+      </button>
+      {% if search or city or salon_id %}
+      <a href="/admin/services?country={{ country }}" class="text-xs text-slate-500 hover:text-slate-700">Скинути</a>
+      {% endif %}
+    </form>
+  </div>
+
+  <!-- Table -->
+  <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    {% if services %}
+    <div class="px-3 py-2 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+      <div class="text-[10px] font-medium text-slate-600 uppercase">
+        {% set start = (pagination.page - 1) * pagination.page_size + 1 %}
+        {% set end = start + services|length - 1 %}
+        Показано <strong>{{ start }}–{{ end }}</strong> з <strong>{{ pagination.total }}</strong>
+      </div>
+      <div class="text-[10px] text-slate-500">Сторінка {{ pagination.page }} з {{ pagination.total_pages }}</div>
+    </div>
+
+    <div class="overflow-x-auto">
+    <table class="w-full text-xs table-fixed">
+      <thead class="bg-slate-50 text-[10px] font-medium text-slate-500 uppercase tracking-wide">
+        <tr>
+          <th class="text-left px-2 py-2">Назва</th>
+          <th class="text-left px-2 py-2 w-24">Салон</th>
+          <th class="text-center px-2 py-2 w-12">Час</th>
+          <th class="text-right px-2 py-2 w-20">Ціна</th>
+          <th class="text-center px-2 py-2 w-14">Gender</th>
+          <th class="text-left px-2 py-2 w-44">Опис</th>
+          <th class="text-left px-2 py-2 w-36">Canonical key</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        {% for s in services %}
+        <tr class="hover:bg-slate-50 transition">
+          <td class="px-2 py-2 align-middle min-w-0">
+            <div class="font-medium text-slate-900 truncate" title="{{ s.name }}">{{ s.name }}</div>
+            {% if s.original_name != s.name %}
+            <div class="text-[10px] text-slate-400 truncate mt-0.5" title="{{ s.original_name }}">{{ s.original_name[:60] }}</div>
+            {% endif %}
+          </td>
+          <td class="px-2 py-2 align-middle">
+            <div class="text-slate-700 truncate text-[11px]" title="{{ s.salon_name }}">{{ s.salon_name }}</div>
+            <div class="text-[10px] text-slate-400">{{ s.salon_city }}</div>
+          </td>
+          <td class="px-2 py-2 text-center align-middle text-slate-600 whitespace-nowrap">{{ s.duration_min }} хв</td>
+          <td class="px-2 py-2 text-right align-middle text-slate-700 font-mono whitespace-nowrap">{{ "%.0f"|format(s.price) }} {{ s.currency }}</td>
+          <td class="px-2 py-2 text-center align-middle">
+            {% if s.gender == 'male' %}
+            <span class="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded">M</span>
+            {% elif s.gender == 'female' %}
+            <span class="text-[10px] px-1.5 py-0.5 bg-pink-50 text-pink-700 rounded">F</span>
+            {% else %}
+            <span class="text-[10px] text-slate-400">all</span>
+            {% endif %}
+          </td>
+          <td class="px-2 py-2 align-middle">
+            <div class="text-[10px] text-slate-500 truncate" title="{{ s.description }}">{{ s.description[:80] if s.description else '—' }}</div>
+          </td>
+          <td class="px-2 py-2 align-middle">
+            <code class="text-[9px] text-violet-600 bg-violet-50 px-1 py-0.5 rounded truncate block" title="{{ s.canonical_key }}">{{ s.canonical_key[:30] }}</code>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if pagination.total_pages > 1 %}
+    {% set base_qs = [] %}
+    {% if country %}{% set _ = base_qs.append('country=' + country) %}{% endif %}
+    {% if city %}{% set _ = base_qs.append('city=' + (city|urlencode)) %}{% endif %}
+    {% if salon_id %}{% set _ = base_qs.append('salon_id=' + salon_id) %}{% endif %}
+    {% if search %}{% set _ = base_qs.append('search=' + (search|urlencode)) %}{% endif %}
+    {% set qs_prefix = ('&' + base_qs|join('&')) if base_qs else '' %}
+
+    <div class="px-3 py-3 border-t border-slate-200 flex items-center justify-between flex-wrap gap-2">
+      <div class="text-[11px] text-slate-500">
+        Сторінка <strong>{{ pagination.page }}</strong> з <strong>{{ pagination.total_pages }}</strong>
+      </div>
+      <nav class="flex items-center gap-1">
+        {% if pagination.page > 1 %}
+        <a href="?page=1{{ qs_prefix }}" class="px-2 py-1 text-xs text-slate-600 hover:bg-slate-100 rounded">‹‹</a>
+        <a href="?page={{ pagination.page - 1 }}{{ qs_prefix }}" class="px-2 py-1 text-xs text-slate-600 hover:bg-slate-100 rounded">‹</a>
+        {% endif %}
+
+        {% set window = 3 %}
+        {% set page_nums = [] %}
+        {% for i in range(1, pagination.total_pages + 1) %}
+          {% if i == 1 or i == pagination.total_pages or (i >= pagination.page - window and i <= pagination.page + window) %}
+            {% set _ = page_nums.append(i) %}
+          {% endif %}
+        {% endfor %}
+        {% set ns = namespace(prev=0) %}
+        {% for i in page_nums %}
+          {% if i - ns.prev > 1 %}<span class="px-1 text-xs text-slate-400">…</span>{% endif %}
+          {% if i == pagination.page %}
+          <span class="px-2.5 py-1 text-xs font-bold bg-violet-600 text-white rounded">{{ i }}</span>
+          {% else %}
+          <a href="?page={{ i }}{{ qs_prefix }}" class="px-2.5 py-1 text-xs text-slate-700 hover:bg-slate-100 rounded">{{ i }}</a>
+          {% endif %}
+          {% set ns.prev = i %}
+        {% endfor %}
+
+        {% if pagination.page < pagination.total_pages %}
+        <a href="?page={{ pagination.page + 1 }}{{ qs_prefix }}" class="px-2 py-1 text-xs text-slate-600 hover:bg-slate-100 rounded">›</a>
+        <a href="?page={{ pagination.total_pages }}{{ qs_prefix }}" class="px-2 py-1 text-xs text-slate-600 hover:bg-slate-100 rounded">››</a>
+        {% endif %}
+      </nav>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="px-8 py-16 text-center">
+      <p class="text-slate-500 text-sm">Жодної послуги не знайдено</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

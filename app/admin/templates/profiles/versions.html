@@ -1,0 +1,60 @@
+{% extends "_layout.html" %}
+{% block title %}Versions — {{ profile.name }}{% endblock %}
+{% block main %}
+<div class="px-8 py-7 max-w-4xl">
+  <header class="flex items-center gap-3 mb-6">
+    <a href="/admin/profiles/{{ profile.id }}" class="text-slate-400 hover:text-slate-600 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+      </svg>
+    </a>
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">Version history</h1>
+      <p class="text-sm text-slate-500 mt-1">{{ profile.name }} · поточна версія v{{ profile.current_version }}</p>
+    </div>
+  </header>
+
+  <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    {% if versions %}
+    <ul class="divide-y divide-slate-100">
+      {% for v in versions %}
+      <li class="px-5 py-4 hover:bg-slate-50 transition flex items-center justify-between">
+        <div class="flex items-start gap-4 flex-1 min-w-0">
+          <code class="text-sm font-bold px-2 py-1 rounded
+                {% if v.version_number == profile.current_version %}bg-violet-100 text-violet-800
+                {% else %}bg-slate-100 text-slate-700{% endif %}">
+            v{{ v.version_number }}
+          </code>
+          <div class="flex-1 min-w-0">
+            <div class="text-sm text-slate-900 truncate">{{ v.change_summary or "(no description)" }}</div>
+            <div class="text-xs text-slate-500 mt-0.5">
+              {{ v.created_at.strftime('%Y-%m-%d %H:%M:%S') }} ·
+              <span class="text-slate-700">{{ v.created_by or 'system' }}</span> ·
+              {{ v.snapshot.translations|length }} перекладів,
+              {{ v.snapshot.variants|length if v.snapshot.variants else 0 }} A/B варіантів
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-2 ml-4">
+          {% if v.version_number != profile.current_version %}
+          <form method="post" action="/admin/profiles/{{ profile.id }}/versions/{{ v.version_number }}/rollback"
+                onsubmit="return confirm('Відкотити профіль до v{{ v.version_number }}? Поточний стан буде збережений як новий снапшот.');">
+            <button type="submit" class="text-xs px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded font-medium transition">
+              Rollback
+            </button>
+          </form>
+          {% else %}
+          <span class="text-xs px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded font-medium">Current</span>
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="px-8 py-12 text-center text-sm text-slate-400">
+      Жодної версії
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

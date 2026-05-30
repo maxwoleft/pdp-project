@@ -1,0 +1,61 @@
+{% extends "_picker.html" %}
+{% set step = 2 %}
+{% set title = "Оберіть салон" %}
+{% set subtitle = "Знайдіть зручне місто і конкретний салон — з ним Mira буде працювати." %}
+{% set back_url = "/chat/restart" %}
+{% block title %}Mira — оберіть салон{% endblock %}
+
+{% block items %}
+<div class="space-y-4 max-h-[60vh] overflow-y-auto scrollbar-thin pr-1 -mr-1">
+  {% for city in cities %}
+    <div>
+      <div class="flex items-center gap-2 mb-1.5 text-[12px] uppercase tracking-wide text-slate-500 font-medium">
+        <span>📍</span><span>{{ city.name }}</span>
+        <span class="text-slate-300">·</span>
+        <span class="text-slate-400 normal-case tracking-normal">{{ city.salons|length }} салон{% if city.salons|length != 1 %}и{% endif %}</span>
+      </div>
+      <div class="space-y-1.5">
+        {% for s in city.salons %}
+          <button type="button"
+                  @click="select('{{ s.id }}')"
+                  :disabled="loading"
+                  class="w-full text-left flex items-start gap-3 px-3.5 py-2.5 rounded-xl border border-slate-200 hover:border-slate-900 hover:bg-slate-50 transition disabled:opacity-50">
+            <span class="text-lg mt-0.5">🏠</span>
+            <span class="flex-1 min-w-0">
+              <span class="block font-medium text-slate-900 truncate text-[14px]">{{ s.name }}</span>
+              {% if s.address %}<span class="block text-[12px] text-slate-500 truncate">{{ s.address }}</span>{% endif %}
+              {% if s.phone %}<span class="block text-[11px] text-slate-400 mt-0.5">{{ s.phone }}</span>{% endif %}
+            </span>
+            <span class="text-slate-400 mt-1">→</span>
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block picker_script %}
+<script>
+function picker() {
+  return {
+    loading: false,
+    error: '',
+    async select(salonId) {
+      this.loading = true; this.error = '';
+      try {
+        const fd = new FormData();
+        fd.append('salon_id', salonId);
+        const r = await fetch('/api/chat/salon', { method: 'POST', body: fd, credentials: 'same-origin' });
+        if (!r.ok) throw new Error('Не вдалося зберегти вибір');
+        const d = await r.json();
+        window.location.href = d.redirect || '/chat/c';
+      } catch (e) {
+        this.error = e.message || 'Помилка';
+        this.loading = false;
+      }
+    },
+  };
+}
+</script>
+{% endblock %}

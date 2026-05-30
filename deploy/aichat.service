@@ -1,0 +1,27 @@
+[Unit]
+Description=AI Chat FastAPI app (uvicorn)
+After=network.target postgresql.service redis-server.service
+Wants=postgresql.service redis-server.service
+
+[Service]
+Type=simple
+User=aichat
+Group=aichat
+WorkingDirectory=/opt/aichat/app
+Environment="PATH=/opt/aichat/venv/bin:/usr/bin:/bin"
+EnvironmentFile=/opt/aichat/app/.env
+ExecStart=/opt/aichat/venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 2 --proxy-headers --forwarded-allow-ips=*
+Restart=on-failure
+RestartSec=5s
+StandardOutput=append:/var/log/aichat/app.log
+StandardError=append:/var/log/aichat/app.err.log
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/aichat /var/log/aichat /tmp
+
+[Install]
+WantedBy=multi-user.target

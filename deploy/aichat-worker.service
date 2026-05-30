@@ -1,0 +1,24 @@
+[Unit]
+Description=AI Chat Arq worker (background tasks)
+After=network.target redis-server.service postgresql.service
+Wants=redis-server.service postgresql.service
+
+[Service]
+Type=simple
+User=aichat
+Group=aichat
+WorkingDirectory=/opt/aichat/app
+Environment="PATH=/opt/aichat/venv/bin:/usr/bin:/bin"
+EnvironmentFile=/opt/aichat/app/.env
+# Arq потребує WorkerSettings класу. Заглушка поки не реалізовано — disable.
+ExecStart=/opt/aichat/venv/bin/python -m arq app.workers.worker.WorkerSettings
+Restart=on-failure
+RestartSec=10s
+StandardOutput=append:/var/log/aichat/worker.log
+StandardError=append:/var/log/aichat/worker.err.log
+
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

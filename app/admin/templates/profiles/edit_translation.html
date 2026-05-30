@@ -1,0 +1,219 @@
+{% extends "_layout.html" %}
+{% block title %}{{ profile.name }} — {{ language_names[language] }}{% endblock %}
+{% block main %}
+<div class="px-8 py-7 max-w-4xl">
+  <header class="flex items-center gap-3 mb-6">
+    <a href="/admin/profiles/{{ profile.id }}" class="text-slate-400 hover:text-slate-600 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/>
+      </svg>
+    </a>
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">{{ profile.name }}</h1>
+      <div class="flex items-center gap-2 mt-1">
+        <span class="text-sm text-slate-600">{{ language_names[language] }}</span>
+        <code class="text-xs text-slate-500">{{ language }}</code>
+      </div>
+    </div>
+  </header>
+
+  <form method="post" action="/admin/profiles/{{ profile.id }}/edit/{{ language }}"
+        x-data='translationForm({{ (translation_to_dict(translation) if translation else {})|tojson }})' class="space-y-5">
+
+    <!-- Core fields -->
+    <div class="bg-white rounded-xl border border-slate-200 px-6 py-5">
+      <h2 class="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-4">Опис</h2>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Short description <span class="text-red-500">*</span></label>
+        <textarea name="short_description" x-model="short_description" required rows="2"
+                  class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-100 outline-none transition"></textarea>
+      </div>
+
+      <div class="mt-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Detailed description</label>
+        <textarea name="detailed_description" x-model="detailed_description" rows="4"
+                  placeholder="Опційно — розгорнутий опис"
+                  class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none transition"></textarea>
+      </div>
+    </div>
+
+    <!-- Concern → Service mapping (КЛЮЧОВЕ) -->
+    <div class="bg-white rounded-xl border border-slate-200 px-6 py-5">
+      <h2 class="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-1">Concerns → Solution</h2>
+      <p class="text-xs text-slate-500 mb-4">Найважливіші поля для AI-агента — мапінг проблеми клієнта на цю послугу</p>
+
+      {% set fields = [
+        ("addresses_problems", "Addresses problems", "які проблеми вирішує", "rose"),
+        ("target_audience", "Target audience", "для кого підходить", "blue"),
+        ("benefits", "Benefits", "вигоди для клієнта", "emerald"),
+        ("keywords", "Keywords", "слова що клієнт може сказати", "violet"),
+      ] %}
+
+      {% for fname, label, hint, color in fields %}
+      <div class="mt-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">{{ label }} <span class="text-xs text-slate-500">({{ hint }})</span></label>
+        <div class="flex flex-wrap gap-2 mb-2" x-show="{{ fname }}.length > 0">
+          <template x-for="(item, idx) in {{ fname }}" :key="idx">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-{{ color }}-50 text-{{ color }}-700 text-sm">
+              <span x-text="item"></span>
+              <button type="button" @click="{{ fname }}.splice(idx, 1)" class="text-{{ color }}-400 hover:text-{{ color }}-700">×</button>
+            </span>
+          </template>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" x-model="newItem.{{ fname }}"
+                 @keydown.enter.prevent="addItem('{{ fname }}')"
+                 placeholder="Додай і Enter"
+                 class="flex-1 px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-{{ color }}-500 outline-none">
+          <button type="button" @click="addItem('{{ fname }}')"
+                  class="px-3 py-2 text-sm bg-slate-100 hover:bg-slate-200 rounded-lg">+</button>
+        </div>
+        <input type="hidden" name="{{ fname }}" :value="JSON.stringify({{ fname }})">
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Sales pitch -->
+    <div class="bg-white rounded-xl border border-slate-200 px-6 py-5">
+      <h2 class="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-4">Sales</h2>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Sales pitch <span class="text-xs text-slate-500">(готова фраза для агента)</span></label>
+        <textarea name="sales_pitch" x-model="sales_pitch" rows="3"
+                  placeholder="Раджу [послуга] — це [причина]. Тримається [скільки тижнів]. Готова порекомендувати?"
+                  class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none transition"></textarea>
+      </div>
+
+      <!-- Cross-sell -->
+      <div class="mt-4">
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">Cross-sell <span class="text-xs text-slate-500">(що пропонувати додатково)</span></label>
+        <div class="flex flex-wrap gap-2 mb-2" x-show="cross_sell.length > 0">
+          <template x-for="(item, idx) in cross_sell" :key="idx">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-amber-50 text-amber-700 text-sm">
+              <span x-text="item"></span>
+              <button type="button" @click="cross_sell.splice(idx, 1)" class="text-amber-400 hover:text-amber-700">×</button>
+            </span>
+          </template>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" x-model="newItem.cross_sell" @keydown.enter.prevent="addItem('cross_sell')"
+                 placeholder="Стрижка кінчиків, укладка..."
+                 class="flex-1 px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-amber-500 outline-none">
+          <button type="button" @click="addItem('cross_sell')"
+                  class="px-3 py-2 text-sm bg-slate-100 hover:bg-slate-200 rounded-lg">+</button>
+        </div>
+        <input type="hidden" name="cross_sell" :value="JSON.stringify(cross_sell)">
+      </div>
+    </div>
+
+    <!-- Advanced (collapsible) -->
+    <div class="bg-white rounded-xl border border-slate-200 px-6 py-5"
+         x-data="{open: false}">
+      <button type="button" @click="open = !open" class="w-full flex items-center justify-between text-left">
+        <h2 class="text-sm font-semibold text-slate-700 uppercase tracking-wide">Advanced</h2>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400 transition" :class="{'rotate-180': open}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+        </svg>
+      </button>
+      <div x-show="open" x-collapse class="mt-4 space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Duration (хвилини)</label>
+          <input type="number" name="duration_typical_min" x-model="duration_typical_min"
+                 class="w-32 px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none">
+        </div>
+
+        <!-- Procedure steps -->
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Procedure steps</label>
+          <div class="flex flex-wrap gap-2 mb-2" x-show="procedure_steps.length > 0">
+            <template x-for="(item, idx) in procedure_steps" :key="idx">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-sm">
+                <span x-text="`${idx + 1}. ${item}`"></span>
+                <button type="button" @click="procedure_steps.splice(idx, 1)" class="text-slate-400 hover:text-slate-700">×</button>
+              </span>
+            </template>
+          </div>
+          <div class="flex gap-2">
+            <input type="text" x-model="newItem.procedure_steps" @keydown.enter.prevent="addItem('procedure_steps')"
+                   placeholder="Миття волосся, діагностика, нанесення..."
+                   class="flex-1 px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none">
+            <button type="button" @click="addItem('procedure_steps')"
+                    class="px-3 py-2 text-sm bg-slate-100 hover:bg-slate-200 rounded-lg">+</button>
+          </div>
+          <input type="hidden" name="procedure_steps" :value="JSON.stringify(procedure_steps)">
+        </div>
+
+        <!-- Contraindications -->
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Contraindications</label>
+          <div class="flex flex-wrap gap-2 mb-2" x-show="contraindications.length > 0">
+            <template x-for="(item, idx) in contraindications" :key="idx">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-red-50 text-red-700 text-sm">
+                <span x-text="item"></span>
+                <button type="button" @click="contraindications.splice(idx, 1)" class="text-red-400 hover:text-red-700">×</button>
+              </span>
+            </template>
+          </div>
+          <div class="flex gap-2">
+            <input type="text" x-model="newItem.contraindications" @keydown.enter.prevent="addItem('contraindications')"
+                   placeholder="Вагітність, алергія..."
+                   class="flex-1 px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-red-500 outline-none">
+            <button type="button" @click="addItem('contraindications')"
+                    class="px-3 py-2 text-sm bg-slate-100 hover:bg-slate-200 rounded-lg">+</button>
+          </div>
+          <input type="hidden" name="contraindications" :value="JSON.stringify(contraindications)">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Aftercare advice</label>
+          <textarea name="aftercare_advice" x-model="aftercare_advice" rows="3"
+                    class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:border-violet-500 outline-none transition"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between pt-2">
+      <a href="/admin/profiles/{{ profile.id }}" class="text-sm text-slate-500 hover:text-slate-700">Скасувати</a>
+      <button type="submit"
+              class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium rounded-lg transition">
+        Зберегти переклад
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+function translationForm(initial) {
+  return {
+    short_description: initial.short_description || '',
+    detailed_description: initial.detailed_description || '',
+    addresses_problems: initial.addresses_problems || [],
+    target_audience: initial.target_audience || [],
+    benefits: initial.benefits || [],
+    keywords: initial.keywords || [],
+    procedure_steps: initial.procedure_steps || [],
+    contraindications: initial.contraindications || [],
+    cross_sell: initial.cross_sell || [],
+    aftercare_advice: initial.aftercare_advice || '',
+    duration_typical_min: initial.duration_typical_min || '',
+    sales_pitch: initial.sales_pitch || '',
+    newItem: {
+      addresses_problems: '',
+      target_audience: '',
+      benefits: '',
+      keywords: '',
+      procedure_steps: '',
+      contraindications: '',
+      cross_sell: '',
+    },
+    addItem(field) {
+      const v = (this.newItem[field] || '').trim();
+      if (v && !this[field].includes(v)) {
+        this[field].push(v);
+      }
+      this.newItem[field] = '';
+    },
+  };
+}
+</script>
+{% endblock %}
