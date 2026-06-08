@@ -141,6 +141,23 @@ class OpenAIClient(LLMClient):
             choice = resp.choices[0]
             msg = choice.message
 
+            # Token usage + prompt cache statistics
+            try:
+                usage = getattr(resp, "usage", None)
+                if usage:
+                    prompt_t = getattr(usage, "prompt_tokens", 0)
+                    comp_t = getattr(usage, "completion_tokens", 0)
+                    details = getattr(usage, "prompt_tokens_details", None)
+                    cached_t = getattr(details, "cached_tokens", 0) if details else 0
+                    cache_pct = round(100 * cached_t / prompt_t, 1) if prompt_t else 0
+                    import logging
+                    logging.getLogger("openai_usage").info(
+                        "[USAGE] prompt=%d completion=%d cached=%d (%.1f%%)",
+                        prompt_t, comp_t, cached_t, cache_pct,
+                    )
+            except Exception:
+                pass
+
             if msg.tool_calls:
                 # Додаємо assistant з tool_calls + результати
                 oai_messages.append({

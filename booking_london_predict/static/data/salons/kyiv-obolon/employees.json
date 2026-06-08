@@ -1,0 +1,956 @@
+[
+    {
+        "id": "88dbca37-4ced-b4d1-598d-329c6ab27027",
+        "name": "Асовська Юлія",
+        "title": "",
+        "phone": [
+            "+380 (98) 984 50 58"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0069-e091-56a5-7aa0-2f974788e382",
+            "88de0069-f546-1a03-7aa0-2f97201cc5d0",
+            "88de2cf0-10b0-1515-2532-54ab18081d39"
+        ],
+        "position_names": [
+            "Нарощування нігтів АРТ",
+            "Нігтьовий сервіс АРТ",
+            "Подологія АРТ"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dbdadd-d123-3a78-07d5-df605c446f57",
+        "name": "Балдашевська Марина",
+        "title": "",
+        "phone": [
+            "+380 (66) 776 18 10"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0039-0c87-b9d3-7aa0-2f97224c03e7",
+            "88de0067-20e0-635e-7aa0-2f974ff25178",
+            "88de0067-6368-8e71-7aa0-2f976fc2120e",
+            "88de006a-10bc-e2c8-7aa0-2f976de81010",
+            "88de006a-3115-39d6-7aa0-2f9725a60788",
+            "88de006a-6ffa-4c20-7aa0-2f975afe3ce7",
+            "88de006a-9821-ae96-7aa0-2f977309425b"
+        ],
+        "position_names": [
+            "Біозавивка",
+            "Колористи ТОП",
+            "Лікування волосся",
+            "Стилісти ТОП",
+            "Стилісти по зачіскам ТОП",
+            "Техніки висвітлення ТОП",
+            "Чоловічі стрижки ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc8abb-ee8d-dd6d-2b1b-83c47aa096b3",
+        "name": "Божок Марія",
+        "title": "",
+        "phone": [
+            "+380 (97) 316 27 24"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0067-20e0-635e-7aa0-2f974ff25178",
+            "88de0067-6368-8e71-7aa0-2f976fc2120e",
+            "88de006a-10bc-e2c8-7aa0-2f976de81010",
+            "88de006a-3115-39d6-7aa0-2f9725a60788",
+            "88de006a-6ffa-4c20-7aa0-2f975afe3ce7",
+            "88de006a-9821-ae96-7aa0-2f977309425b"
+        ],
+        "position_names": [
+            "Колористи ТОП",
+            "Лікування волосся",
+            "Стилісти ТОП",
+            "Стилісти по зачіскам ТОП",
+            "Техніки висвітлення ТОП",
+            "Чоловічі стрижки ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88d9e502-a22a-cdae-4f31-24f716d7804e",
+        "name": "Болдирєва Ксенія",
+        "title": "",
+        "phone": [
+            "+380 (95) 113 00 38"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d4d724-8c71-3088-343d-013e38a3134e"
+        ],
+        "position_names": [
+            "Адміністратори"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db56ac-33b3-6f85-0a93-fe8b014ea699",
+        "name": "Бурчак Наталія Володимирівна",
+        "title": "",
+        "phone": [
+            "+380 (50) 318 10 10"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d7aa2e-8b8e-9553-57d7-97024564542e"
+        ],
+        "position_names": [
+            "Косметологи"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de836f-de2f-8a69-2cec-e0ba2ad30892",
+        "name": "Вєннікова Ірина",
+        "title": "",
+        "phone": [
+            "+380 (50) 904 44 60"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d1d875-c1a9-4789-3a1e-de0e48150f32",
+            "88de0067-1a7a-a7c3-7aa0-2f9716c3ca4c",
+            "88de0067-6368-8e71-7aa0-2f976fc2120e",
+            "88de006a-2738-0ba7-7aa0-2f975f157e9d",
+            "88de006a-66c2-10c9-7aa0-2f97579e6a1d"
+        ],
+        "position_names": [
+            "Стилісти",
+            "Колористи",
+            "Лікування волосся",
+            "Стилісти по зачіскам",
+            "Техніки висвітлення"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db158c-d54f-39a1-543c-2b3338c8a8d1",
+        "name": "Вітер Альона",
+        "title": "",
+        "phone": [
+            "+380 (63) 679 39 02"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0067-e168-8f88-7aa0-2f970db866a1",
+            "88de0069-ee07-6426-7aa0-2f9777e902c0",
+            "88de117a-b9c3-526a-6fce-8f852a411fa4"
+        ],
+        "position_names": [
+            "Нарощування нігтів ТОП",
+            "Нігтьовий сервіс ТОП",
+            "Подологія ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd71e2-af28-8b18-1395-71a43d1a37a9",
+        "name": "Вітер Анжелика",
+        "title": "",
+        "phone": [
+            "+380 (97) 950 86 70"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d1dc29-31c5-d36e-1c91-dba61e194c3a",
+            "88de0067-d992-06c5-7aa0-2f9741d580ff",
+            "88de006a-0445-82cc-7aa0-2f9706c8ebff"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс",
+            "Нарощування нігтів",
+            "Подологія"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88d80968-73ef-5a78-2833-b7743d1685ea",
+        "name": "Глушенко Руслана",
+        "title": "",
+        "phone": [
+            "+380 (98) 303 06 04"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0069-e091-56a5-7aa0-2f974788e382",
+            "88de0069-f546-1a03-7aa0-2f97201cc5d0",
+            "88de2cf0-10b0-1515-2532-54ab18081d39"
+        ],
+        "position_names": [
+            "Нарощування нігтів АРТ",
+            "Нігтьовий сервіс АРТ",
+            "Подологія АРТ"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "ДОСВІД - «Опишіть тут важливу інформацію о спеціалізації майстра»Наприклад:«Не робить класичний педикюр з замочуванням; Подологія тільки не складне, може провести діагностику.»",
+        "commentsPlainText": "ДОСВІД - «Опишіть тут важливу інформацію о спеціалізації майстра»Наприклад:«Не робить класичний педикюр з замочуванням; Подологія тільки не складне, може провести діагностику.»"
+    },
+    {
+        "id": "88de615a-ee49-16d3-0173-03e96e5066ac",
+        "name": "Дубина Анастасия",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d7bba4-1ae1-f6aa-2d40-24181760aab2"
+        ],
+        "position_names": [
+            "Директор"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dbb853-fcfa-8af0-453f-eeed006eb135",
+        "name": "Евгения",
+        "title": "",
+        "phone": [
+            "+380 (63) 232 28 52"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dbb853-f107-a1e2-453f-eeed61bd09a2"
+        ],
+        "position_names": [
+            "Офис"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dcfb2c-0ea7-8094-7739-a7286eb1d767",
+        "name": "Закревська Оксана",
+        "title": "",
+        "phone": [
+            "+380 (67) 769 96 09"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d1d875-c1a9-4789-3a1e-de0e48150f32",
+            "88de0067-1a7a-a7c3-7aa0-2f9716c3ca4c",
+            "88de0067-6368-8e71-7aa0-2f976fc2120e",
+            "88de006a-2738-0ba7-7aa0-2f975f157e9d",
+            "88de006a-66c2-10c9-7aa0-2f97579e6a1d"
+        ],
+        "position_names": [
+            "Стилісти",
+            "Колористи",
+            "Лікування волосся",
+            "Стилісти по зачіскам",
+            "Техніки висвітлення"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd3ac3-edcf-d78e-1577-a71f44c61723",
+        "name": "Замена Хозяюшки",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d6e816-337d-50d0-603c-739148365249"
+        ],
+        "position_names": [
+            "Уборщицы"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88d83917-dbe7-718d-7360-a91a04404d28",
+        "name": "Ищук Яна",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d6f0d6-3bc1-a5d3-679d-bef50eccacd1"
+        ],
+        "position_names": [
+            "Франчайзер"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de631d-38db-1709-619d-97cd70c8d90a",
+        "name": "Іщук Катерина",
+        "title": "",
+        "phone": [
+            "+380 (63) 357 53 64"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d6f0d6-3bc1-a5d3-679d-bef50eccacd1"
+        ],
+        "position_names": [
+            "Франчайзер"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88d6f0d6-3bc1-a5d3-679d-bef521e65791",
+        "name": "Кольченко Егор",
+        "title": "",
+        "phone": [
+            "+380 (50) 239 58 18"
+        ],
+        "email": [
+            "egorkolchenkode@gmail.com"
+        ],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d6f0d6-3bc1-a5d3-679d-bef50eccacd1"
+        ],
+        "position_names": [
+            "Франчайзер"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88daddbb-1433-8e3a-2759-42015dc1f427",
+        "name": "Литвиненко Марина",
+        "title": "",
+        "phone": [
+            "+380 (97) 777 19 49"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0039-25c2-516e-7aa0-2f97654e9a00",
+            "88de0039-3e34-dc6b-7aa0-2f972d90ef68",
+            "88de0067-7bfe-56c9-7aa0-2f971522178d",
+            "88de0069-fdc6-7416-7aa0-2f9701343ce7"
+        ],
+        "position_names": [
+            "Брови, вії АРТ",
+            "Візажисти АРТ",
+            "Макіяж АРТ",
+            "Перманент"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88d7bad0-3bcf-20e5-173a-5ac745bdc8ee",
+        "name": "Литка Ірина",
+        "title": "",
+        "phone": [
+            "+380 (66) 670 40 19"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d6e816-337d-50d0-603c-739148365249"
+        ],
+        "position_names": [
+            "Уборщицы"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dcf366-4824-eb8a-798b-b1131cd22f0b",
+        "name": "Маркова Ганна",
+        "title": "",
+        "phone": [
+            "+380 (96) 797 08 46"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d6e816-337d-50d0-603c-739148365249"
+        ],
+        "position_names": [
+            "Уборщицы"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddb964-ca0b-15ca-6064-fdfb3ecedad5",
+        "name": "Маруженко Марина",
+        "title": "",
+        "phone": [
+            "+380 (67) 355 78 77"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d1d875-c1a9-4789-3a1e-de0e48150f32",
+            "88de0067-1a7a-a7c3-7aa0-2f9716c3ca4c",
+            "88de0067-6368-8e71-7aa0-2f976fc2120e",
+            "88de006a-2738-0ba7-7aa0-2f975f157e9d",
+            "88de006a-66c2-10c9-7aa0-2f97579e6a1d"
+        ],
+        "position_names": [
+            "Стилісти",
+            "Колористи",
+            "Лікування волосся",
+            "Стилісти по зачіскам",
+            "Техніки висвітлення"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "не делает каскад, не делает короткие стрижки под мужчин, не делает мужские стрижки",
+        "commentsPlainText": "не делает каскад, не делает короткие стрижки под мужчин, не делает мужские стрижки"
+    },
+    {
+        "id": "88d98a82-9676-43f7-4e89-7c3036332b24",
+        "name": "Матвєєва Олена",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da73a3-111a-c664-5c5e-4dc4443bf4b8"
+        ],
+        "position_names": [
+            "Бухгалтер"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88daf231-3489-2b81-1397-7def48ebb62c",
+        "name": "Михайлюк Антон",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d4f227-9858-cf58-4d0b-ab7b484a8080"
+        ],
+        "position_names": [
+            "Управление"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88d7aa20-e6fb-788d-57d7-97025db483b3",
+        "name": "Михайлюк Ольга",
+        "title": "",
+        "phone": [
+            "+380 (97) 521 19 48"
+        ],
+        "email": [
+            "olha.mihay@gmail.com"
+        ],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d4f227-9858-cf58-4d0b-ab7b484a8080"
+        ],
+        "position_names": [
+            "Управление"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88d7b220-8fb4-edcc-38c4-b5356a6a4320",
+        "name": "Ольга",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d7bba4-1ae1-f6aa-2d40-24181760aab2"
+        ],
+        "position_names": [
+            "Директор"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de8c11-65ac-e949-20b1-032d70e4396a",
+        "name": "Піонтківська Юлія",
+        "title": "",
+        "phone": [
+            "+380 (93) 600 94 25"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d1dc29-31c5-d36e-1c91-dba61e194c3a",
+            "88de0067-d992-06c5-7aa0-2f9741d580ff"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс",
+            "Нарощування нігтів"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88d9bfd0-ab46-f810-78ed-cd4d1a3f4989",
+        "name": "Попова Марина",
+        "title": "",
+        "phone": [
+            "+380 (50) 012 29 33"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0039-25c2-516e-7aa0-2f97654e9a00",
+            "88de0039-3e34-dc6b-7aa0-2f972d90ef68",
+            "88de0067-7bfe-56c9-7aa0-2f971522178d"
+        ],
+        "position_names": [
+            "Брови, вії АРТ",
+            "Візажисти АРТ",
+            "Макіяж АРТ"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dbd463-88ec-ba93-3ad2-010a76b53540",
+        "name": "Сухоставець Вікторія",
+        "title": "",
+        "phone": [
+            "+380 (66) 196 88 08"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0067-e168-8f88-7aa0-2f970db866a1",
+            "88de117a-b9c3-526a-6fce-8f852a411fa4"
+        ],
+        "position_names": [
+            "Нарощування нігтів ТОП",
+            "Подологія ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd4b3b-f319-f167-6411-560c262236e8",
+        "name": "Терещенко Марія",
+        "title": "",
+        "phone": [
+            "+380 (97) 600 04 68"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0067-e168-8f88-7aa0-2f970db866a1",
+            "88de0069-ee07-6426-7aa0-2f9777e902c0"
+        ],
+        "position_names": [
+            "Нарощування нігтів ТОП",
+            "Нігтьовий сервіс ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88d84a94-b8d6-4a59-5c89-ee9d1aeaef6f",
+        "name": "Томашевская Юлия Яр Вал",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0067-d039-2498-7aa0-2f9779246995"
+        ],
+        "position_names": [
+            "Нарощування волосся"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddc85d-f844-09a8-4688-c51638946f35",
+        "name": "Хемматі Али",
+        "title": "",
+        "phone": [
+            "+380 (63) 640 23 88"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0067-27b0-edd5-7aa0-2f973144a5d0",
+            "88de0067-6368-8e71-7aa0-2f976fc2120e",
+            "88de006a-1c71-6868-7aa0-2f97449eae0a",
+            "88de006a-38d8-11ab-7aa0-2f977647e139",
+            "88de006a-7829-7c43-7aa0-2f974239ead7"
+        ],
+        "position_names": [
+            "Колористи АРТ",
+            "Лікування волосся",
+            "Стилісти АРТ",
+            "Стилісти по зачіскам АРТ",
+            "Техніки висвітлення АРТ"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dea5cb-2925-16ba-428e-5c4453e0a469",
+        "name": "Х. Жижома Олена Асистент",
+        "title": "",
+        "phone": [
+            "+380 (50) 767 51 54"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d1d875-c1a9-4789-3a1e-de0e48150f32"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "Закінчила курс «Колористика» в Академії Блейд Ранерс 01.04.2026 асистент Али",
+        "commentsPlainText": "Закінчила курс «Колористика» в Академії Блейд Ранерс 01.04.2026 асистент Али"
+    },
+    {
+        "id": "88db3ff5-156c-59d2-1b1e-ec7b2bbc3c20",
+        "name": "Хоменко Катерина",
+        "title": "",
+        "phone": [
+            "+380 (67) 577 72 55"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d4d724-8c71-3088-343d-013e38a3134e"
+        ],
+        "position_names": [
+            "Адміністратори"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88d6f583-b69c-a8d9-2fec-84eb7be256aa",
+        "name": "Шиденко Анна",
+        "title": "",
+        "phone": [],
+        "email": [
+            "shadyanett@gmail.com"
+        ],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88d6f0d6-3bc1-a5d3-679d-bef50eccacd1"
+        ],
+        "position_names": [
+            "Франчайзер"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc0206-87ab-6d66-2e9c-5a5f19adeef3",
+        "name": "Юрій Малічев",
+        "title": "",
+        "phone": [
+            "+380 (73) 124 70 24"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc0206-3e05-493e-2e9c-5a5f0d306723"
+        ],
+        "position_names": [
+            "Реклама"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da73a3-1bfd-e35e-5c5e-4dc40ec8da23",
+        "name": "Якимчук Янина",
+        "title": "",
+        "phone": [
+            "+380 (96) 785 45 39"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da73a3-111a-c664-5c5e-4dc4443bf4b8"
+        ],
+        "position_names": [
+            "Бухгалтер"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88d7b132-37c3-9308-2646-3fa215449639",
+        "name": "Янковська Марина",
+        "title": "",
+        "phone": [
+            "+380 (50) 909 58 80"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88de0039-0c87-b9d3-7aa0-2f97224c03e7",
+            "88de0067-1269-87a3-7aa0-2f97619053bc",
+            "88de0067-27b0-edd5-7aa0-2f973144a5d0",
+            "88de0067-6368-8e71-7aa0-2f976fc2120e",
+            "88de006a-1c71-6868-7aa0-2f97449eae0a",
+            "88de006a-38d8-11ab-7aa0-2f977647e139",
+            "88de006a-7829-7c43-7aa0-2f974239ead7",
+            "88de006a-9f40-0aeb-7aa0-2f974c79e21d"
+        ],
+        "position_names": [
+            "Біозавивка",
+            "Кератин",
+            "Колористи АРТ",
+            "Лікування волосся",
+            "Стилісти АРТ",
+            "Стилісти по зачіскам АРТ",
+            "Техніки висвітлення АРТ",
+            "Чоловічі стрижки АРТ"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    }
+]

@@ -117,11 +117,13 @@ def _build_msg(
 async def _fetch_salons(request: Request, country: str) -> list[dict]:
     session_factory = request.app.state.session_factory
     async with session_factory() as session:
-        await session.execute(sql_text(f'SET search_path TO "{country}", public'))
+        # Salon переїхав у booking.salons (global, з country колонкою).
         rows = await session.execute(sql_text(
-            "SELECT id, name, city, address, phone FROM salon "
-            "WHERE archive=false ORDER BY city, name"
-        ))
+            "SELECT id, name, city, address_line, phone_display "
+            "FROM booking.salons "
+            "WHERE archive=false AND country = :country "
+            "ORDER BY city, name"
+        ), {"country": country})
         return [
             {"id": r[0], "name": r[1], "city": r[2], "address": r[3], "phone": r[4]}
             for r in rows.all()
@@ -379,7 +381,10 @@ async def send_text_stream(request: Request, text: str = Form(...)) -> Streaming
 
     async def producer() -> None:
         try:
-            reply = await conv.process_web_turn([msg], on_tool_event=on_tool_event)
+            reply = await conv.process_web_turn(
+                [msg], on_tool_event=on_tool_event,
+                session_factory=request.app.state.session_factory,
+            )
             await queue.put({"type": "reply", "text": reply})
         except Exception as exc:
             log.exception("send_text_stream error: %s", exc)
@@ -427,7 +432,9 @@ async def send_text(request: Request, text: str = Form(...)) -> JSONResponse:
     if len(text) > 4000:
         raise HTTPException(400, "text too long")
     msg = _build_msg(chat_id, country, MessageType.TEXT, salon_id=salon_id, text=text)
-    reply = await _conv_service(request).process_web_turn([msg])
+    reply = await _conv_service(request).process_web_turn(
+        [msg], session_factory=request.app.state.session_factory,
+    )
     return JSONResponse({"reply": reply})
 
 
@@ -448,12 +455,23 @@ async def send_voice(request: Request, audio: UploadFile = File(...)) -> JSONRes
         transcript = await _whisper(request).transcribe(raw, mime)
     except Exception as exc:
         log.exception("whisper transcribe failed: %s", exc)
+        try:
+            from app.infrastructure.db.repositories.bot_error_repo import record_error
+            await record_error(
+                request.app.state.session_factory,
+                source="voice:whisper", exc=exc,
+                chat_id=chat_id, country=country, salon_id=salon_id,
+            )
+        except Exception:
+            pass
         raise HTTPException(502, "transcription failed") from exc
     transcript = (transcript or "").strip()
     if not transcript:
         return JSONResponse({"reply": "Вибачте, не вдалося розпізнати голос. Спробуйте ще раз або напишіть текстом.", "transcript": ""})
     msg = _build_msg(chat_id, country, MessageType.TEXT, salon_id=salon_id, text=transcript)
-    reply = await _conv_service(request).process_web_turn([msg])
+    reply = await _conv_service(request).process_web_turn(
+        [msg], session_factory=request.app.state.session_factory,
+    )
     return JSONResponse({"reply": reply, "transcript": transcript})
 
 
@@ -484,7 +502,9 @@ async def send_image(
         text=caption.strip() or None,
         media_url=data_url, media_mime=mime,
     )
-    reply = await _conv_service(request).process_web_turn([msg])
+    reply = await _conv_service(request).process_web_turn(
+        [msg], session_factory=request.app.state.session_factory,
+    )
     return JSONResponse({"reply": reply})
 
 

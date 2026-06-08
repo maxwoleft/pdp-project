@@ -28,6 +28,20 @@ MAILTO=""
 
 # Cleanup add-on (idempotent — на випадок якщо CRM додає нові add-on)
 15 3 * * * aichat cd /opt/aichat/app && /opt/aichat/venv/bin/python -m scripts.cleanup_addon_categories --apply >> /var/log/aichat/cleanup.log 2>&1
+# Cleanup addon services (по NAME pattern: додатково/дополнительн/add-on)
+18 3 * * * aichat cd /opt/aichat/app && /opt/aichat/venv/bin/python -m scripts.cleanup_addon_services --apply >> /var/log/aichat/cleanup.log 2>&1
+
+# ─── Midday sync (light) — без LLM/embed (OpenAI cost), тільки оновити catalog ───
+# 13:00 — повний sync з CRM
+0 13 * * * aichat cd /opt/aichat/app && /opt/aichat/venv/bin/python -m scripts.sync_from_crm --all >> /var/log/aichat/sync.log 2>&1
+# 13:15 — cleanup add-on
+15 13 * * * aichat cd /opt/aichat/app && /opt/aichat/venv/bin/python -m scripts.cleanup_addon_categories --apply >> /var/log/aichat/cleanup.log 2>&1
+# 13:18 — cleanup addon services
+18 13 * * * aichat cd /opt/aichat/app && /opt/aichat/venv/bin/python -m scripts.cleanup_addon_services --apply >> /var/log/aichat/cleanup.log 2>&1
+# 13:25 — link нові services до existing profiles
+25 13 * * * aichat cd /opt/aichat/app && /opt/aichat/venv/bin/python -m scripts.auto_link_missing_keys --country ua --apply >> /var/log/aichat/auto_link.log 2>&1 ; /opt/aichat/venv/bin/python -m scripts.auto_link_missing_keys --country pl --apply >> /var/log/aichat/auto_link.log 2>&1 ; /opt/aichat/venv/bin/python -m scripts.auto_link_missing_keys --country gb --apply >> /var/log/aichat/auto_link.log 2>&1
+# 13:40 — recompute profile.salon_ids
+40 13 * * * aichat cd /opt/aichat/app && /opt/aichat/venv/bin/python -m scripts.compute_profile_salons --apply >> /var/log/aichat/salons.log 2>&1
 CRON
 
 chmod 644 /etc/cron.d/aichat-sync

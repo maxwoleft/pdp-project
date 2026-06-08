@@ -21,7 +21,7 @@ class Category(Base):
     __tablename__ = "category"
 
     id: Mapped[str] = mapped_column(String(80), primary_key=True)
-    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("salon.id"), nullable=False, index=True)
+    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("booking.salons.id"), nullable=False, index=True)
     name: Mapped[str] = mapped_column(String(500), nullable=False)
     parent_id: Mapped[str | None] = mapped_column(String(80), ForeignKey("category.id"), nullable=True)
     picture: Mapped[str | None] = mapped_column(String(500), nullable=True)
@@ -44,7 +44,7 @@ class Position(Base):
     __tablename__ = "position"
 
     id: Mapped[str] = mapped_column(String(80), primary_key=True)
-    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("salon.id"), nullable=False, index=True)
+    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("booking.salons.id"), nullable=False, index=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     archive: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
 
@@ -58,7 +58,7 @@ class Service(Base):
     __tablename__ = "service"
 
     id: Mapped[str] = mapped_column(String(80), primary_key=True)
-    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("salon.id"), nullable=False, index=True)
+    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("booking.salons.id"), nullable=False, index=True)
     name: Mapped[str] = mapped_column(String(1000), nullable=False)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     description_plain: Mapped[str | None] = mapped_column(Text, nullable=True)
@@ -107,7 +107,7 @@ class ProductCategory(Base):
     __tablename__ = "product_category"
 
     id: Mapped[str] = mapped_column(String(80), primary_key=True)
-    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("salon.id"), nullable=False, index=True)
+    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("booking.salons.id"), nullable=False, index=True)
     name: Mapped[str] = mapped_column(String(500), nullable=False)
     archive: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
 
@@ -117,7 +117,7 @@ class Product(Base):
     __tablename__ = "product"
 
     id: Mapped[str] = mapped_column(String(80), primary_key=True)
-    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("salon.id"), nullable=False, index=True)
+    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("booking.salons.id"), nullable=False, index=True)
     name: Mapped[str] = mapped_column(String(500), nullable=False)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     barcode: Mapped[str | None] = mapped_column(String(50), nullable=True)

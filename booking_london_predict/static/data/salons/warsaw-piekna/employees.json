@@ -1,0 +1,2311 @@
+[
+    {
+        "id": "88da4e0d-7240-7104-5e78-4ec458eecd3c",
+        "name": "BeautyPro",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4e0d-65b0-d065-5e78-4ec4163787b1"
+        ],
+        "position_names": [
+            "Тимчасова папка"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db53cb-f77c-7316-0d53-9ddc2adde7c5",
+        "name": "Аикава Аири Ассистент",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db8437-3360-253a-3464-34a22cf97765",
+        "name": "Аікава Аірі",
+        "title": "",
+        "phone": [
+            "+48 (721) 369 153"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dea1e8-c1af-9bc5-42a0-451a045a9d28",
+            "88dea1e8-e9fc-59e5-42a0-451a07fb619e",
+            "88dea1e8-fae0-97e2-42a0-451a497fcc9f",
+            "88dea1e9-0d32-5a9d-42a0-451a297ab765",
+            "88dea1e9-1ffa-9774-42a0-451a04cb0bd6"
+        ],
+        "position_names": [
+            "Стилісти ТОП",
+            "Стилісти по зачіскам ТОП",
+            "Техніки висвітлення ТОП",
+            "Колористи ТОП",
+            "Лікування волосся ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "Не робить чоловічі стрижки",
+        "commentsPlainText": "Не робить чоловічі стрижки"
+    },
+    {
+        "id": "88dc74dc-e02c-d66a-3c1c-0a191493a22f",
+        "name": "Алексей Подолог",
+        "title": "",
+        "phone": [
+            "+380 (98) 933 27 27"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9",
+            "88db23a2-3a04-26ad-6a91-5176350313ab"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс",
+            "ман подология"
+        ],
+        "roles": [
+            "administrator",
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc532b-1e0f-06ec-2788-8b1500007a4c",
+        "name": "Алиева Самира",
+        "title": "",
+        "phone": [
+            "+380 (93) 485 44 70",
+            "+48 (790) 316 667"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c7-46c3-0f66-31f5-46de5f56f75b"
+        ],
+        "position_names": [
+            "Косметологи"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da6ef5-7f24-7e8c-40c7-1b7d72884f19",
+        "name": "Амира",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6ef5-741b-3bf2-40c7-1b7d4330703b"
+        ],
+        "position_names": [
+            "Владелица"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc4806-a5a0-8db5-1a5b-b40145bccadf",
+        "name": "Анна",
+        "title": "",
+        "phone": [
+            "+48 (537) 092 627"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc4806-5401-a5a4-1a5b-b4017c9add12"
+        ],
+        "position_names": [
+            "Масажисти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da97fb-7e65-3c1d-2731-e42f09f0e95c",
+        "name": "Антонийчук Иванна ТОП Гжиб",
+        "title": "",
+        "phone": [
+            "+48 (883) 269 443"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c6-e74d-2367-31f5-46de0e620c9e"
+        ],
+        "position_names": [
+            "Візажисти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dbe5e1-1d0b-f038-1266-87fa5033c8cf",
+        "name": "Ася Joanna",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6731-3291-dbe5-6b0c-a843460e40f8"
+        ],
+        "position_names": [
+            "уборщица"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc532b-3e35-271f-2788-8b157ae5683d",
+        "name": "Бережна Анастасия",
+        "title": "",
+        "phone": [
+            "+48 (503) 570 415"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c7-46c3-0f66-31f5-46de5f56f75b"
+        ],
+        "position_names": [
+            "Косметологи"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc74ee-dea7-91cc-3c1c-0a1925308cb1",
+        "name": "Беспалько Анна",
+        "title": "",
+        "phone": [
+            "+48 (733) 630 438"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da64c6-d0b7-853a-31f5-46de5e754420",
+        "name": "Бойко Екатерина",
+        "title": "",
+        "phone": [
+            "+48 (725) 635 647"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88daaf71-f4bc-41d5-1db5-047a3eb1656a",
+        "name": "Бондар Марина",
+        "title": "",
+        "phone": [
+            "+48 (574) 018 872"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de812b-a5ec-db22-3221-ea6a10eb6131",
+        "name": "Будрик Людмила",
+        "title": "",
+        "phone": [
+            "+48 (786) 460 695"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210",
+            "88dea1e8-e00f-d645-42a0-451a7c8dac02",
+            "88dea1e8-f2a9-aab4-42a0-451a5af2d043",
+            "88dea1e9-04ed-c7b3-42a0-451a522ec89d",
+            "88dea1e9-16fc-9338-42a0-451a079ec703",
+            "88dea1e9-2b3e-ad27-42a0-451a37bd3e8a"
+        ],
+        "position_names": [
+            "Стилісти",
+            "Стилісти по зачіскам",
+            "Техніки висвітлення",
+            "Колористи",
+            "Лікування волосся",
+            "Чоловічі стрижки"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db0519-266c-89b1-6ce2-21ef49fd2cc7",
+        "name": "Бухгалтер",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6341-1327-99ec-4842-f289157c368d"
+        ],
+        "position_names": [
+            "Администратор"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de785f-fdd0-dd3b-5f1a-82f6331ba32d",
+        "name": "Вернигора Надія",
+        "title": "",
+        "phone": [
+            "+48 (570) 361 182"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c7-46c3-0f66-31f5-46de5f56f75b",
+            "88dea1e7-4857-4d4d-42a0-451a5d9a3c72"
+        ],
+        "position_names": [
+            "Косметологи",
+            "Ін'єкціоніст"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "ДОСВІД 13 РОКІВМає медичну освітуЗнає польську мову",
+        "commentsPlainText": "ДОСВІД 13 РОКІВМає медичну освітуЗнає польську мову"
+    },
+    {
+        "id": "88dcc057-e04a-46b5-33cb-36fc5b47d643",
+        "name": "Войнарівська Ярослава",
+        "title": "",
+        "phone": [
+            "+48 (500) 632 658"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6341-1327-99ec-4842-f289157c368d"
+        ],
+        "position_names": [
+            "Администратор"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db9be4-1b3b-dd87-03f9-54b17287ff58",
+        "name": "Врещ Наталия 3. Часа",
+        "title": "",
+        "phone": [
+            "+48 (730) 630 397"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dafa20-bc3d-8d6d-6420-d66a115ff465",
+        "name": "Горбанюк Лиля Дж",
+        "title": "",
+        "phone": [
+            "+48 (790) 480 842"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dafa06-f9b9-c19c-0274-4ecd6f97a252",
+        "name": "Горбанюк Лиля Пенкна",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dabcd7-095a-7919-3f7f-469c4271be59"
+        ],
+        "position_names": [
+            "Подологія"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc4cad-fdfb-0e8e-1b01-219f51e97206",
+        "name": "Горняк Діна",
+        "title": "",
+        "phone": [
+            "+48 (516) 147 347"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210",
+            "88dea1e8-f2a9-aab4-42a0-451a5af2d043",
+            "88dea1e9-04ed-c7b3-42a0-451a522ec89d",
+            "88dea1e9-16fc-9338-42a0-451a079ec703"
+        ],
+        "position_names": [
+            "Стилісти",
+            "Техніки висвітлення",
+            "Колористи",
+            "Лікування волосся"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "ДОСВІД Не робить чоловічі стрижки",
+        "commentsPlainText": "ДОСВІД Не робить чоловічі стрижки"
+    },
+    {
+        "id": "88dd71ba-30bb-21fb-613f-7f824810fba3",
+        "name": "Гуцал Софія",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6341-1327-99ec-4842-f289157c368d"
+        ],
+        "position_names": [
+            "Администратор"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dabb20-76c5-9159-35b7-4ed160f8ab60",
+        "name": "Дацюк Марьяна Гжибовского",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da917a-5988-f053-0f15-fa4238aace60",
+        "name": "Дацюк Мар'яна",
+        "title": "",
+        "phone": [
+            "+48 (889) 474 809"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dea1e8-c1af-9bc5-42a0-451a045a9d28",
+            "88dea1e8-fae0-97e2-42a0-451a497fcc9f",
+            "88dea1e9-0d32-5a9d-42a0-451a297ab765",
+            "88dea1e9-1ffa-9774-42a0-451a04cb0bd6",
+            "88dea1e9-32b1-a132-42a0-451a26a06c45"
+        ],
+        "position_names": [
+            "Стилісти ТОП",
+            "Техніки висвітлення ТОП",
+            "Колористи ТОП",
+            "Лікування волосся ТОП",
+            "Чоловічі стрижки ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "ДОСВІД«Опишіть тут важливу інформацію о спеціалізації майстра»-Наприклад:«Не працює бритвою; Не навчалася робити вихід з чорного кислотною змивкою; Кератин та ботокс - не робить 4 роки був декрет тому потрібно підвищення кваліфікації по колористиці»",
+        "commentsPlainText": "ДОСВІД«Опишіть тут важливу інформацію о спеціалізації майстра»-Наприклад:«Не працює бритвою; Не навчалася робити вихід з чорного кислотною змивкою; Кератин та ботокс - не робить 4 роки був декрет тому потрібно підвищення кваліфікації по колористиці»"
+    },
+    {
+        "id": "88db02b6-5d51-d87f-4426-e92d3aafee95",
+        "name": "Деркач Зинаида ТОП",
+        "title": "",
+        "phone": [
+            "+48 (668) 234 675"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc240c-cc42-d228-60ce-14b123039c12",
+        "name": "Джос Ирина Пенкная",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c6-e74d-2367-31f5-46de0e620c9e"
+        ],
+        "position_names": [
+            "Візажисти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da6bc3-7b90-34d6-428a-c10749720606",
+        "name": "Дзюбенко Анастасия",
+        "title": "",
+        "phone": [
+            "+48 (789) 933 095"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c7-46c3-0f66-31f5-46de5f56f75b"
+        ],
+        "position_names": [
+            "Косметологи"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd4920-0a1b-b5b5-403b-6a905a1019ef",
+        "name": "Дідик Ліна",
+        "title": "",
+        "phone": [
+            "+48 (507) 681 345"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9",
+            "88dea1e7-a1fc-932c-42a0-451a243bc033"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс",
+            "Нарощування нігтів"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dbb855-4f47-d3fc-186f-f8134226b391",
+        "name": "Евгения",
+        "title": "",
+        "phone": [
+            "+380 (63) 232 28 52"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dbb855-4359-afa2-186f-f8132a229df9"
+        ],
+        "position_names": [
+            "Офис"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc37b7-cb2f-f28c-37b0-455a47b29f9a",
+        "name": "Замена",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6731-3291-dbe5-6b0c-a843460e40f8"
+        ],
+        "position_names": [
+            "уборщица"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc2027-5d0a-7474-6a51-f7233f09dec4",
+        "name": "Замена",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6731-3291-dbe5-6b0c-a843460e40f8"
+        ],
+        "position_names": [
+            "уборщица"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dded35-d8ff-ba63-7cb0-38f269f3bcab",
+        "name": "Засоба Віталій",
+        "title": "",
+        "phone": [
+            "+48 (729) 463 724"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dea1e8-c1af-9bc5-42a0-451a045a9d28",
+            "88dea1e8-f2a9-aab4-42a0-451a5af2d043",
+            "88dea1e9-04ed-c7b3-42a0-451a522ec89d",
+            "88dea1e9-16fc-9338-42a0-451a079ec703",
+            "88dea1e9-32b1-a132-42a0-451a26a06c45"
+        ],
+        "position_names": [
+            "Стилісти ТОП",
+            "Техніки висвітлення",
+            "Колористи",
+            "Лікування волосся",
+            "Чоловічі стрижки ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "ДОСВІД: 25 років - не стриже дітей до 10 років- не робить плетіння і зачіски- не стриже бороди і барберсі стрижкиВажлива інформація- чоловічі стрижки лише класичні- ТОП по стрижках - спеціалізується на укладках",
+        "commentsPlainText": "ДОСВІД: 25 років - не стриже дітей до 10 років- не робить плетіння і зачіски- не стриже бороди і барберсі стрижкиВажлива інформація- чоловічі стрижки лише класичні- ТОП по стрижках - спеціалізується на укладках"
+    },
+    {
+        "id": "88da6341-3b33-99d1-4842-f2895ed30ffa",
+        "name": "Иванюк Лиана",
+        "title": "",
+        "phone": [
+            "+48 (729) 546 296"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6341-1327-99ec-4842-f289157c368d"
+        ],
+        "position_names": [
+            "Администратор"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da68cd-e31b-70d0-720e-c90f42147b3b",
+        "name": "Ищук Яна",
+        "title": "",
+        "phone": [
+            "+380 (50) 106 86 87"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88db6b60-3566-8c0d-2188-b65c4d58183d"
+        ],
+        "position_names": [
+            "Управляющий офис"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de631f-0cf4-e7f4-375b-3b0e2c4127af",
+        "name": "Іщук Катерина",
+        "title": "",
+        "phone": [
+            "+380 (63) 357 53 64"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dbb855-4359-afa2-186f-f8132a229df9"
+        ],
+        "position_names": [
+            "Офис"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dea79e-e8e0-6c81-53a3-dc80569ca689",
+        "name": "Капсулятор",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6731-3291-dbe5-6b0c-a843460e40f8"
+        ],
+        "position_names": [
+            "уборщица"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddcf3e-d926-188d-539a-5c5e7cdf5feb",
+        "name": "Кобилецька Ліля",
+        "title": "",
+        "phone": [
+            "+48 (886) 786 666"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c6-e74d-2367-31f5-46de0e620c9e",
+            "88dea1e6-dab4-1867-42a0-451a4309ef95",
+            "88dea1e7-1bd2-cd46-42a0-451a2531fd5e"
+        ],
+        "position_names": [
+            "Візажисти",
+            "Брови, вії",
+            "Макіяж"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "Досвід 3 роки- не виконує ламінування вій та брів- не фарбує хною",
+        "commentsPlainText": "Досвід 3 роки- не виконує ламінування вій та брів- не фарбує хною"
+    },
+    {
+        "id": "88dc563e-401e-1d81-3b61-6b3111d77859",
+        "name": "Ковальчук Инна",
+        "title": "",
+        "phone": [
+            "+48 (721) 786 149"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da6341-75cf-4894-4842-f2894b85bf57",
+        "name": "Ковтун Диана",
+        "title": "",
+        "phone": [
+            "+48 (575) 233 398"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-3249-5742-13f1-f5b67abc24e3"
+        ],
+        "position_names": [
+            "Директор"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddc9e2-3d9e-05c6-5ade-442b5b7bd0ef",
+        "name": "Ковч Альона",
+        "title": "",
+        "phone": [
+            "+48 (789) 913 487"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c6-e74d-2367-31f5-46de0e620c9e",
+            "88dea1e6-dab4-1867-42a0-451a4309ef95",
+            "88dea1e7-1bd2-cd46-42a0-451a2531fd5e"
+        ],
+        "position_names": [
+            "Візажисти",
+            "Брови, вії",
+            "Макіяж"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da6bdb-dd57-374e-482b-570a5b59d071",
+        "name": "Колесникова Людмила",
+        "title": "",
+        "phone": [
+            "+48 (575) 789 598"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6731-3291-dbe5-6b0c-a843460e40f8"
+        ],
+        "position_names": [
+            "уборщица"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc6b60-506d-bfe0-1e1a-82be3c1c0e7a",
+        "name": "Коротка Юлія",
+        "title": "",
+        "phone": [
+            "+48 (793) 415 306"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dea1e7-9772-272a-42a0-451a3e916dc1",
+            "88dea1e7-a7b2-fdb7-42a0-451a3588ecb6"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс ТОП",
+            "Нарощування нігтів ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "ДОСВІД«Опишіть тут важливу інформацію о спеціалізації майстра»-\tНаприклад:«Не робить класичний педикюр з замочуванням; Подологія тільки не складне, може провести діагностику.»",
+        "commentsPlainText": "ДОСВІД«Опишіть тут важливу інформацію о спеціалізації майстра»-\tНаприклад:«Не робить класичний педикюр з замочуванням; Подологія тільки не складне, може провести діагностику.»"
+    },
+    {
+        "id": "88dc7b3a-bb1e-3fb6-13d1-ce097d33ba17",
+        "name": "Коротка Юлія Гжи",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dbf82c-4f3a-b171-0aa1-7f354e7543f2",
+        "name": "Косметолог Чеки В. 0.",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c7-46c3-0f66-31f5-46de5f56f75b"
+        ],
+        "position_names": [
+            "Косметологи"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc6d0e-2164-6a0f-63b7-e61074d9f715",
+        "name": "Космо Лена Вилянов",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c7-46c3-0f66-31f5-46de5f56f75b"
+        ],
+        "position_names": [
+            "Косметологи"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db5549-036f-265f-1dc1-79127f088379",
+        "name": "Ксения Нитяговская Piekna",
+        "title": "",
+        "phone": [
+            "+48 (786) 420 493"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db5aa3-6a8a-644d-780b-3ba830537b9d",
+        "name": "Кульчицька Ірина",
+        "title": "",
+        "phone": [
+            "+48 (664) 652 233"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9",
+            "88da64c7-46c3-0f66-31f5-46de5f56f75b",
+            "88dea1e7-a1fc-932c-42a0-451a243bc033"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс",
+            "Косметологи",
+            "Нарощування нігтів"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "ДОСВІД«Опишіть тут важливу інформацію о спеціалізації майстра»-\tНаприклад:«Не робить класичний педикюр з замочуванням; Подологія тільки не складне, може провести діагностику.»",
+        "commentsPlainText": "ДОСВІД«Опишіть тут важливу інформацію о спеціалізації майстра»-\tНаприклад:«Не робить класичний педикюр з замочуванням; Подологія тільки не складне, може провести діагностику.»"
+    },
+    {
+        "id": "88dcb880-66dd-2874-6903-5a207acf44a7",
+        "name": "Кучко Юлія",
+        "title": "",
+        "phone": [
+            "+48 (736) 340 558"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c7-46c3-0f66-31f5-46de5f56f75b",
+            "88dea1e7-4857-4d4d-42a0-451a5d9a3c72"
+        ],
+        "position_names": [
+            "Косметологи",
+            "Ін'єкціоніст"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd866d-f73d-3ca0-027a-95f65549a1af",
+        "name": "Лещинський Роман",
+        "title": "",
+        "phone": [
+            "+48 (788) 284 889"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc4806-5401-a5a4-1a5b-b4017c9add12"
+        ],
+        "position_names": [
+            "Масажисти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd33ee-d5e6-1272-5283-a3630e77c009",
+        "name": "Лєгкова Вікторія",
+        "title": "",
+        "phone": [
+            "+48 (45) 331 79 19"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dea1e7-9772-272a-42a0-451a3e916dc1",
+            "88dea1e7-a7b2-fdb7-42a0-451a3588ecb6"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс ТОП",
+            "Нарощування нігтів ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88daac67-ce92-1518-063f-80b05b832987",
+        "name": "Лия",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6ef5-741b-3bf2-40c7-1b7d4330703b"
+        ],
+        "position_names": [
+            "Владелица"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de4c6f-00af-4ff4-540e-17372bfb5a7d",
+        "name": "Лівандовська Дарія",
+        "title": "",
+        "phone": [
+            "+48 (732) 563 556"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6341-1327-99ec-4842-f289157c368d"
+        ],
+        "position_names": [
+            "Администратор"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc8b89-fbea-d1d9-3b90-afe2617f18f9",
+        "name": "Максименко Регина",
+        "title": "",
+        "phone": [
+            "12345678"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6341-1327-99ec-4842-f289157c368d"
+        ],
+        "position_names": [
+            "Администратор"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd2c20-a6e5-6a83-5601-46fc4915e1cb",
+        "name": "Максимук Вікторія",
+        "title": "",
+        "phone": [
+            "+48 (577) 813 781"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-3249-5742-13f1-f5b67abc24e3"
+        ],
+        "position_names": [
+            "Директор"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dbf82c-5e96-4304-0aa1-7f353d4a6dce",
+        "name": "Манікюр Чеки В. 0.",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db8f8d-d2d7-baa7-5016-a1701dcf8469",
+        "name": "Мария Малицкая",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc5fbf-ce6c-d3cc-594b-f4e77d0bd830",
+        "name": "Массажист Чеки В. 0.",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc4806-5401-a5a4-1a5b-b4017c9add12"
+        ],
+        "position_names": [
+            "Масажисти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dca8ef-ccaa-45dc-5d8d-f04835b21083",
+        "name": "Массаж Ноль",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc4806-5401-a5a4-1a5b-b4017c9add12"
+        ],
+        "position_names": [
+            "Масажисти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da6bc3-a31d-d889-428a-c1071836861a",
+        "name": "Милькина Виктория Гжиб",
+        "title": "",
+        "phone": [
+            "+48 (574) 003 484"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da64c7-46c3-0f66-31f5-46de5f56f75b"
+        ],
+        "position_names": [
+            "Косметологи"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc0397-d957-1e81-415f-89082b2583e5",
+        "name": "Найфонова Настя",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-3249-5742-13f1-f5b67abc24e3"
+        ],
+        "position_names": [
+            "Директор"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dbf9bf-6019-38f1-68c6-87a5792359fb",
+        "name": "Настя",
+        "title": "",
+        "phone": [
+            "+48 (884) 094 586"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6341-1327-99ec-4842-f289157c368d"
+        ],
+        "position_names": [
+            "Администратор"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db2602-352e-f765-2710-82713331ab61",
+        "name": "Новицкая Татьяна Топ",
+        "title": "",
+        "phone": [
+            "+48 (789) 664 194"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da64b1-916c-94de-31f5-46de038d13ab",
+        "name": "Оврах Арсения ТОП",
+        "title": "",
+        "phone": [
+            "+48 (517) 184 097"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc0580-865b-7c23-10ff-6b813aad206d",
+        "name": "Оврачук Алина",
+        "title": "",
+        "phone": [
+            "+48 (537) 911 631"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da64b4-0dd5-8523-31f5-46de20804f95",
+        "name": "Омелянчук Дарья ЖІН",
+        "title": "",
+        "phone": [
+            "+48 (732) 771 057"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da64b1-9dcd-29f9-31f5-46de1b58ec7d",
+        "name": "Остапец Анна Топ Гжиб",
+        "title": "",
+        "phone": [
+            "+48 (791) 633 491"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da64b1-aa96-a5bc-31f5-46de58826bcf",
+        "name": "Павлова Любовь ТОП",
+        "title": "",
+        "phone": [
+            "+48 (786) 436 275"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88daa1fd-5daa-68c0-681f-8d1b6cf7ad46",
+        "name": "Павлюк Рита",
+        "title": "",
+        "phone": [
+            "+48 (881) 610 693"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dea1e8-c1af-9bc5-42a0-451a045a9d28",
+            "88dea1e8-e9fc-59e5-42a0-451a07fb619e",
+            "88dea1e8-fae0-97e2-42a0-451a497fcc9f",
+            "88dea1e9-0d32-5a9d-42a0-451a297ab765",
+            "88dea1e9-1ffa-9774-42a0-451a04cb0bd6",
+            "88dea1e9-32b1-a132-42a0-451a26a06c45"
+        ],
+        "position_names": [
+            "Стилісти ТОП",
+            "Стилісти по зачіскам ТОП",
+            "Техніки висвітлення ТОП",
+            "Колористи ТОП",
+            "Лікування волосся ТОП",
+            "Чоловічі стрижки ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "ДОСВІД «Опишіть тут важливу інформацію о спеціалізації майстра»-\tНаприклад:«Не працює бритвою; Не навчалася робити вихід з чорного кислотною змивкою; Кератин та ботокс - не робить 4 роки був декрет тому потрібно підвищення кваліфікації по колористиці»",
+        "commentsPlainText": "ДОСВІД «Опишіть тут важливу інформацію о спеціалізації майстра»-\tНаприклад:«Не працює бритвою; Не навчалася робити вихід з чорного кислотною змивкою; Кератин та ботокс - не робить 4 роки був декрет тому потрібно підвищення кваліфікації по колористиці»"
+    },
+    {
+        "id": "88dbf82c-6670-282b-0aa1-7f3514c5e199",
+        "name": "Перукар Чеки В. 0.",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db0f7c-7dd1-531a-3aa3-432e7754e66c",
+        "name": "Петрашкина Юлия",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-3249-5742-13f1-f5b67abc24e3"
+        ],
+        "position_names": [
+            "Директор"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db5de3-b19b-b26c-1d12-dfdf79aad475",
+        "name": "Пилипенко Алина",
+        "title": "",
+        "phone": [
+            "+380 (66) 426 43 76"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4e0b-19f0-b379-5e78-4ec429a2f09a"
+        ],
+        "position_names": [
+            "Франчайзер"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88daa785-f757-3a6a-21af-420541be1d8b",
+        "name": "Пітерова Елена",
+        "title": "",
+        "phone": [
+            "+48 (882) 606 668"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dabcd7-095a-7919-3f7f-469c4271be59"
+        ],
+        "position_names": [
+            "Подологія"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "ДОСВІД «Опишіть тут важливу інформацію о спеціалізації майстра»-\tНаприклад:«Не робить класичний педикюр з замочуванням; Подологія тільки не складне, може провести діагностику.»",
+        "commentsPlainText": "ДОСВІД «Опишіть тут важливу інформацію о спеціалізації майстра»-\tНаприклад:«Не робить класичний педикюр з замочуванням; Подологія тільки не складне, може провести діагностику.»"
+    },
+    {
+        "id": "88da64c6-c20c-738b-31f5-46de4bb7ef6e",
+        "name": "Плужник Людмила",
+        "title": "",
+        "phone": [
+            "+48 (517) 593 810"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dab0fa-0458-999c-2dd2-6745476ce6a7",
+        "name": "Порух Слава",
+        "title": "",
+        "phone": [
+            "+48 (882) 690 218"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dea1e7-9772-272a-42a0-451a3e916dc1",
+            "88dea1e7-a7b2-fdb7-42a0-451a3588ecb6"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс ТОП",
+            "Нарощування нігтів ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "ДОСВІД «Опишіть тут важливу інформацію о спеціалізації майстра»-\tНаприклад:«Не робить класичний педикюр з замочуванням; Подологія тільки не складне, може провести діагностику.»",
+        "commentsPlainText": "ДОСВІД «Опишіть тут важливу інформацію о спеціалізації майстра»-\tНаприклад:«Не робить класичний педикюр з замочуванням; Подологія тільки не складне, може провести діагностику.»"
+    },
+    {
+        "id": "88daab8a-30e0-94fc-5b63-4aee7a7f72cb",
+        "name": "Порух Слава Гжибовск",
+        "title": "",
+        "phone": [
+            "+48 (882) 690 218"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dda204-3963-e7a7-47fb-d06158a71212",
+        "name": "Прокопчук Руслана",
+        "title": "",
+        "phone": [
+            "+48 (792) 856 627"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210",
+            "88dea1e8-e00f-d645-42a0-451a7c8dac02",
+            "88dea1e8-f2a9-aab4-42a0-451a5af2d043",
+            "88dea1e9-04ed-c7b3-42a0-451a522ec89d",
+            "88dea1e9-16fc-9338-42a0-451a079ec703",
+            "88dea1e9-32b1-a132-42a0-451a26a06c45"
+        ],
+        "position_names": [
+            "Стилісти",
+            "Стилісти по зачіскам",
+            "Техніки висвітлення",
+            "Колористи",
+            "Лікування волосся",
+            "Чоловічі стрижки ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "досвід роботи - 22 рокиФарбуванн з тону в тону, Первинне фарбування,Фішка - шатуш,балаяж.Стрижки чоловічі так, Барберські ніЖіночі стрижки так в різних стилях (навіть вибриті скроні).",
+        "commentsPlainText": "досвід роботи - 22 рокиФарбуванн з тону в тону, Первинне фарбування,Фішка - шатуш,балаяж.Стрижки чоловічі так, Барберські ніЖіночі стрижки так в різних стилях (навіть вибриті скроні)."
+    },
+    {
+        "id": "88dd6ac1-7fd8-ac8a-009b-a6d945836825",
+        "name": "Рассадіна Наталія",
+        "title": "",
+        "phone": [
+            "+48 (780) 721 400"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9",
+            "88dea1e7-a1fc-932c-42a0-451a243bc033"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс",
+            "Нарощування нігтів"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de85a3-1149-80b7-32e7-ddde4252da80",
+        "name": "Рева Аліна",
+        "title": "",
+        "phone": [
+            "+48 (514) 870 611"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9",
+            "88dea1e7-a1fc-932c-42a0-451a243bc033"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс",
+            "Нарощування нігтів"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de317b-c5ca-70d1-1f46-7ef67763dbf9",
+        "name": "Рижук Софія",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6341-1327-99ec-4842-f289157c368d"
+        ],
+        "position_names": [
+            "Администратор"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88db3c11-dab3-746b-2806-b25508c19207",
+        "name": "Роксолана",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88db3529-8aed-c438-4d83-6d1739e38f84"
+        ],
+        "position_names": [
+            "Отдел продаж"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da6731-4997-88fe-6b0c-a84374a9f20c",
+        "name": "Самсоненко Татьяна",
+        "title": "",
+        "phone": [
+            "+48 (574) 362 067"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6731-3291-dbe5-6b0c-a843460e40f8"
+        ],
+        "position_names": [
+            "уборщица"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dea9d2-107f-1057-3c91-b49a1bfe3400",
+        "name": "Скіба Анастасія",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6341-1327-99ec-4842-f289157c368d"
+        ],
+        "position_names": [
+            "Администратор"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da64b1-7fa0-66ff-31f5-46de7d8783db",
+        "name": "Скляр Ирина ТОП",
+        "title": "",
+        "phone": [
+            "+48 (788) 189 208"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de21f6-70a5-e55f-140b-287c78f5b091",
+        "name": "Сорока Валентина",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6731-3291-dbe5-6b0c-a843460e40f8"
+        ],
+        "position_names": [
+            "уборщица"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc9e5d-fae7-fda6-238a-739076139848",
+        "name": "Тимофеева Дарья",
+        "title": "",
+        "phone": [
+            "+48 (695) 276 529"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6341-1327-99ec-4842-f289157c368d"
+        ],
+        "position_names": [
+            "Администратор"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd8ef8-2c00-0cb0-211d-7d28543bbd57",
+        "name": "Тимошенко Юлія",
+        "title": "",
+        "phone": [
+            "+48 (789) 907 515"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210",
+            "88dea1e8-d24f-1226-42a0-451a3cc48e6b",
+            "88dea1e8-f2a9-aab4-42a0-451a5af2d043",
+            "88dea1e9-04ed-c7b3-42a0-451a522ec89d",
+            "88dea1e9-16fc-9338-42a0-451a079ec703"
+        ],
+        "position_names": [
+            "Стилісти",
+            "Нарощування волосся",
+            "Техніки висвітлення",
+            "Колористи",
+            "Лікування волосся"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "НЕ РОБИТЬ ЧОЛОВІЧІ СТРИЖКИ",
+        "commentsPlainText": "НЕ РОБИТЬ ЧОЛОВІЧІ СТРИЖКИ"
+    },
+    {
+        "id": "88da64c6-9d2b-1761-31f5-46de5df05fa6",
+        "name": "ТОП Гриценко Татьяна Фарб-Лік",
+        "title": "",
+        "phone": [
+            "+48 (574) 063 725"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b67a42b210"
+        ],
+        "position_names": [
+            "Стилісти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc00a4-fc9c-5e32-426b-02616eacf34d",
+        "name": "Федчук Катерина",
+        "title": "",
+        "phone": [
+            "+48 (793) 232 122"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dea1e8-c1af-9bc5-42a0-451a045a9d28",
+            "88dea1e8-fae0-97e2-42a0-451a497fcc9f",
+            "88dea1e9-0d32-5a9d-42a0-451a297ab765",
+            "88dea1e9-1ffa-9774-42a0-451a04cb0bd6"
+        ],
+        "position_names": [
+            "Стилісти ТОП",
+            "Техніки висвітлення ТОП",
+            "Колористи ТОП",
+            "Лікування волосся ТОП"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "ДОСВІД НЕ РОБИТЬ ЧОЛОВІЧІ СТРИЖКИ",
+        "commentsPlainText": "ДОСВІД НЕ РОБИТЬ ЧОЛОВІЧІ СТРИЖКИ"
+    },
+    {
+        "id": "88de317b-9ccf-cc48-1f46-7ef6250593e3",
+        "name": "Цибулько Марта",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6341-1327-99ec-4842-f289157c368d"
+        ],
+        "position_names": [
+            "Администратор"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da64b1-bc6c-5c52-31f5-46de0052b734",
+        "name": "Шевченко Ирина ЧАС Подолог",
+        "title": "",
+        "phone": [
+            "+48 (574) 845 061"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da4a22-5e0e-6691-13f1-f5b635f8d1d9",
+            "88db23a2-3a04-26ad-6a91-5176350313ab"
+        ],
+        "position_names": [
+            "Нігтьовий сервіс",
+            "ман подология"
+        ],
+        "roles": [
+            "administrator",
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da72e6-1a1c-09b9-66b1-60c5360a55cc",
+        "name": "Шиденко Анна",
+        "title": "",
+        "phone": [
+            "+380 (68) 359 23 23"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6ef5-741b-3bf2-40c7-1b7d4330703b"
+        ],
+        "position_names": [
+            "Владелица"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc0207-b54d-fe6d-2b9b-ceb92003d219",
+        "name": "Юрій Малічев",
+        "title": "",
+        "phone": [
+            "+380 (73) 124 70 24"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc0207-a9de-d6dd-2b9b-ceb92b7c68e0"
+        ],
+        "position_names": [
+            "Реклама"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88da8f2d-01b3-f30a-5a3d-607523705c8e",
+        "name": "Якимчук Янина",
+        "title": "",
+        "phone": [
+            "+380 (96) 785 45 39"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88da6ef5-741b-3bf2-40c7-1b7d4330703b"
+        ],
+        "position_names": [
+            "Владелица"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dc4806-956c-23a3-1a5b-b40121da4dca",
+        "name": "Ян max 8. Масажів",
+        "title": "",
+        "phone": [
+            "+48 (512) 604 597"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc4806-5401-a5a4-1a5b-b4017c9add12"
+        ],
+        "position_names": [
+            "Масажисти"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    }
+]

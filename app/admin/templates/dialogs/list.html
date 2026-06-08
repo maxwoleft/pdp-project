@@ -1,0 +1,99 @@
+{% extends "_layout.html" %}
+{% block title %}Діалоги{% endblock %}
+
+{% block main %}
+<div class="px-8 py-7 max-w-6xl">
+  <header class="mb-6">
+    <h1 class="text-2xl font-semibold text-slate-900">Діалоги клієнтів з AI</h1>
+    <p class="text-sm text-slate-500 mt-1">Усі бесіди записуються. Натисни на діалог щоб побачити повну історію + які функції AI викликав.</p>
+  </header>
+
+  <form method="get" class="bg-white rounded-xl border border-slate-200 p-4 mb-5 flex flex-wrap gap-3 items-end">
+    <div>
+      <label class="block text-xs text-slate-500 mb-1">Країна</label>
+      <select name="country" class="px-3 py-2 text-sm border border-slate-300 rounded-lg">
+        <option value="">Усі</option>
+        <option value="ua" {% if country == 'ua' %}selected{% endif %}>UA</option>
+        <option value="pl" {% if country == 'pl' %}selected{% endif %}>PL</option>
+        <option value="gb" {% if country == 'gb' %}selected{% endif %}>GB</option>
+      </select>
+    </div>
+    <div class="flex-1 min-w-[200px]">
+      <label class="block text-xs text-slate-500 mb-1">Пошук у повідомленнях</label>
+      <input type="text" name="search" value="{{ search or '' }}" placeholder="фрагмент тексту..."
+             class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:border-slate-500 outline-none">
+    </div>
+    <button type="submit" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-sm rounded-lg">Фільтрувати</button>
+    {% if search or country %}
+    <a href="/admin/dialogs" class="text-sm text-slate-500 hover:text-slate-700">Скинути</a>
+    {% endif %}
+  </form>
+
+  <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    <div class="px-5 py-3 border-b border-slate-200 flex items-center justify-between">
+      <span class="text-sm font-medium text-slate-700">Знайдено: {{ total }}</span>
+      <span class="text-xs text-slate-500">Сторінка {{ page }} / {{ total_pages }}</span>
+    </div>
+
+    {% if items %}
+    <ul class="divide-y divide-slate-100">
+      {% for item in items %}
+      <li>
+        <a href="/admin/dialogs/{{ item.chat_id }}" class="block px-5 py-4 hover:bg-slate-50 transition">
+          <div class="flex items-start gap-3">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="inline-flex px-2 py-0.5 text-[11px] font-semibold rounded
+                             {% if item.country == 'ua' %}bg-blue-100 text-blue-800
+                             {% elif item.country == 'pl' %}bg-rose-100 text-rose-800
+                             {% elif item.country == 'gb' %}bg-violet-100 text-violet-800
+                             {% else %}bg-slate-100 text-slate-700{% endif %}">
+                  {{ (item.country or '?')|upper }}
+                </span>
+                {% if item.last_message_at and (now_utc - item.last_message_at).total_seconds() < active_threshold_sec %}
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-semibold rounded bg-emerald-100 text-emerald-800 animate-pulse">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  АКТИВНИЙ
+                </span>
+                {% endif %}
+                <span class="text-xs text-slate-400 font-mono truncate" title="{{ item.chat_id }}">{{ item.chat_id[:12] }}…</span>
+                <span class="text-xs text-slate-500 ml-auto whitespace-nowrap">
+                  {{ item.last_message_at.strftime('%Y-%m-%d %H:%M') if item.last_message_at }}
+                </span>
+              </div>
+              <p class="text-sm text-slate-800 truncate">{{ item.first_user_msg[:200] }}</p>
+              <div class="flex items-center gap-3 mt-1 text-xs text-slate-500">
+                <span>💬 {{ item.turn_count }} повідомлень</span>
+                {% if item.salon_id %}<span>🏠 {{ item.salon_id[:8] }}…</span>{% endif %}
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-slate-300 mt-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+            </svg>
+          </div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="px-5 py-10 text-center text-slate-400">
+      <p class="text-sm">Поки що немає діалогів за обраними фільтрами.</p>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if total_pages > 1 %}
+  <nav class="mt-4 flex items-center justify-center gap-2">
+    {% if page > 1 %}
+    <a href="?{% if country %}country={{ country }}&{% endif %}{% if search %}search={{ search }}&{% endif %}page={{ page - 1 }}"
+       class="px-3 py-1.5 text-sm bg-white border border-slate-300 rounded-lg hover:bg-slate-50">←</a>
+    {% endif %}
+    <span class="text-sm text-slate-600">{{ page }} / {{ total_pages }}</span>
+    {% if page < total_pages %}
+    <a href="?{% if country %}country={{ country }}&{% endif %}{% if search %}search={{ search }}&{% endif %}page={{ page + 1 }}"
+       class="px-3 py-1.5 text-sm bg-white border border-slate-300 rounded-lg hover:bg-slate-50">→</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}

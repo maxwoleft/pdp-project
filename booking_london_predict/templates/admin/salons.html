@@ -1,0 +1,762 @@
+{% extends "admin/base.html" %}
+{% block title %}Салони{% endblock %}
+{% block page_title %}Салони{% endblock %}
+
+{% block extra_head %}
+<style>
+  /* ── Location Group ── */
+  .loc-group {
+    margin-bottom: 32px;
+  }
+  .loc-group-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .loc-group-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .loc-group-country {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #888;
+  }
+  .loc-group-badge {
+    padding: 3px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .loc-group-badge.active { background: #027DEF1A; color: #027DEF; }
+  .loc-group-badge.planned { background: rgba(230,126,22,0.12); color: #b25c00; }
+  .loc-group-badge.inactive { background: #0000000D; color: #888; }
+
+  /* ── Salon Card ── */
+  .salon-card {
+    background: #fff;
+    border: 1px solid #0000000D;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .salon-card:hover {
+    border-color: #027DEF50;
+    box-shadow: 0 2px 8px rgba(2,125,239,0.06);
+  }
+  .salon-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .salon-card-info {
+    flex: 1;
+  }
+  .salon-card-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+  }
+  .salon-card-address {
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    margin-top: 2px;
+  }
+  .salon-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .salon-card-code {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #aaa;
+    text-transform: uppercase;
+  }
+  .salon-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .salon-status-dot.active { background: #27ae60; }
+  .salon-status-dot.planned { background: #e67e22; }
+  .salon-status-dot.inactive { background: #ccc; }
+
+  /* ── Salon Detail Panel ── */
+  .salon-panel-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 300;
+  }
+  .salon-panel-overlay.open { display: block; }
+
+  .salon-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 520px;
+    max-width: 100%;
+    height: 100vh;
+    background: #fff;
+    z-index: 301;
+    display: none;
+    flex-direction: column;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  .salon-panel.open { display: flex; }
+
+  .salon-panel-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #0000000D;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .salon-panel-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .salon-panel-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #888;
+  }
+  .salon-panel-close:hover { color: #000; }
+
+  .salon-panel-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+  }
+
+  .salon-panel-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #0000000D;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .field-group {
+    margin-bottom: 20px;
+  }
+  .field-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 6px;
+  }
+  .field-input {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #0000000D;
+    font-family: 'Gotham Pro', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+    background: #fff;
+    outline: none;
+    border-radius: 0;
+  }
+  .field-input:focus { border-color: #027DEF; }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .field-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #027DEF;
+    margin: 24px 0 12px;
+    padding-top: 16px;
+    border-top: 1px solid #0000000D;
+  }
+
+  /* ── Language Chips (inside panel) ── */
+  .lang-grid-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .lang-chip-sm {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 1px solid #0000000D;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .lang-chip-sm:hover { border-color: #027DEF50; }
+  .lang-chip-sm.active {
+    border-color: #027DEF;
+    background: #027DEF0D;
+    color: #027DEF;
+    font-weight: 700;
+  }
+
+  /* ── Toggle Switch ── */
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+  }
+  .toggle-row-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #000;
+  }
+  .toggle-row-sub {
+    font-size: 11px;
+    font-weight: 500;
+    color: #888;
+    margin-top: 2px;
+  }
+  .toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #ccc;
+    border-radius: 24px;
+    transition: 0.2s;
+  }
+  .toggle-slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: 0.2s;
+  }
+  .toggle-switch input:checked + .toggle-slider {
+    background: #027DEF;
+  }
+  .toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(20px);
+  }
+  .payment-system-select {
+    margin-top: 12px;
+    display: none;
+  }
+  .payment-system-select.visible {
+    display: block;
+  }
+
+  /* ── Save Status ── */
+  .save-status {
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .save-status.ok { color: #27ae60; }
+  .save-status.err { color: #c0392b; }
+
+  /* ── Salon Grid ── */
+  .salons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 12px;
+  }
+
+  /* ── Empty ── */
+  .loc-empty {
+    padding: 20px;
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px dashed #0000001A;
+    background: #fafafa;
+  }
+
+  @media (max-width: 768px) {
+    .salon-panel { width: 100%; }
+    .salons-grid { grid-template-columns: 1fr; }
+    .field-row { grid-template-columns: 1fr; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="section-header">
+  <h2>Салони — {{ current_location.name }}</h2>
+</div>
+
+<!-- AI Chat bulk toggle (для всіх салонів одразу) -->
+<div class="ps-form" style="border-top-color: #027DEF; margin-bottom: 16px;">
+  <div class="ps-form-title">AI чат — банер для всіх салонів</div>
+  <div style="display: flex; gap: 12px; align-items: center;">
+    <button class="btn btn-primary btn-sm" onclick="bulkAiChat(true)">Увімкнути для всіх</button>
+    <button class="btn btn-sm" onclick="bulkAiChat(false)" style="background:#eee; color:#333;">Вимкнути для всіх</button>
+    <span class="ps-status" id="aiChatBulkStatus"></span>
+  </div>
+  <div style="margin-top: 8px; font-size: 12px; color: #888;">
+    Окремо для салону — у його панелі налаштувань нижче.
+  </div>
+</div>
+
+<!-- Location Languages -->
+<div class="ps-form" style="border-top-color: #27ae60; margin-bottom: 16px;">
+  <div class="ps-form-title">Мови локації «{{ current_location.name }}»</div>
+  <div class="lang-grid-panel" id="locationLangGrid">
+    {% for lang in available_languages %}
+    <div class="lang-chip-sm{% if lang.code in (current_location.languages or ['en']) %} active{% endif %}"
+         data-lang="{{ lang.code }}" onclick="this.classList.toggle('active')">
+      {{ lang.label }} ({{ lang.prefix }})
+    </div>
+    {% endfor %}
+  </div>
+  <div style="margin-top: 12px; display: flex; align-items: center; gap: 12px;">
+    <button class="btn btn-primary btn-sm" onclick="saveLocationLanguages()">Зберегти мови</button>
+    <span class="ps-status" id="locLangStatus"></span>
+  </div>
+</div>
+
+{% if not salons %}
+<div class="loc-empty">Салони для локації «{{ current_location.name }}» ще не додані</div>
+{% else %}
+<div class="salons-grid">
+  {% for salon in salons %}
+  <div class="salon-card" onclick="openSalonPanel('{{ salon.code }}')">
+    <div class="salon-card-top">
+      <div class="salon-card-info">
+        <div class="salon-card-name">{{ salon.name }}</div>
+        <div class="salon-card-address">{{ salon.address_line or '' }}{% if salon.postal_code %}, {{ salon.postal_code }}{% endif %}</div>
+      </div>
+      <div class="salon-card-meta">
+        <span class="salon-card-code">{{ salon.code }}</span>
+        <span class="salon-status-dot {{ salon.status }}"></span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Salon Detail Panel (slide-in) -->
+<div class="salon-panel-overlay" id="panelOverlay" onclick="closeSalonPanel()"></div>
+<div class="salon-panel" id="salonPanel">
+  <div class="salon-panel-header">
+    <span class="salon-panel-title" id="panelTitle">Налаштування салону</span>
+    <button class="salon-panel-close" onclick="closeSalonPanel()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <div class="salon-panel-body" id="panelBody">
+    <input type="hidden" id="panelSalonCode">
+
+    <div class="field-group">
+      <label class="field-label">Назва салону</label>
+      <input class="field-input" id="fName" placeholder="Oxford Circus">
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">Статус</label>
+        <select class="field-input" id="fStatus">
+          <option value="active">Active</option>
+          <option value="planned">Planned</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Код салону</label>
+        <input class="field-input" id="fCode" disabled style="background:#f5f5f5; color:#888;">
+      </div>
+    </div>
+
+    <div class="field-section-title">Адреса</div>
+
+    <div class="field-group">
+      <label class="field-label">Адреса</label>
+      <input class="field-input" id="fAddress" placeholder="67, Mortimer Street, London">
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">Поштовий індекс</label>
+        <input class="field-input" id="fPostalCode" placeholder="W1W 7SE">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Email</label>
+        <input class="field-input" id="fEmail" placeholder="office@p-de-p.co.uk">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">Телефон (відображення)</label>
+        <input class="field-input" id="fPhoneDisplay" placeholder="+44 07907707767">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Телефон (посилання)</label>
+        <input class="field-input" id="fPhoneLink" placeholder="447907707767">
+      </div>
+    </div>
+
+    <div class="field-section-title">Інтеграції</div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">CRM Database Code</label>
+        <input class="field-input" id="fDatabaseCode" placeholder="776611">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Payment Location ID</label>
+        <input class="field-input" id="fPaymentId" placeholder="3194">
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Telegram Token</label>
+      <input class="field-input" id="fTgToken" placeholder="bot token">
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Telegram Chat ID</label>
+      <input class="field-input" id="fTgChat" placeholder="-100...">
+    </div>
+
+    <div class="field-section-title">Контакти клієнта (footer / sidebar)</div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">WhatsApp (тільки цифри)</label>
+        <input class="field-input" id="fWhatsappPhone" placeholder="447907707767">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Instagram URL</label>
+        <input class="field-input" id="fInstagramUrl" placeholder="https://www.instagram.com/pied.de.poule_london/">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">Графік (підпис)</label>
+        <input class="field-input" id="fHoursLabel" placeholder="Opening Hours: Everyday">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Графік (час)</label>
+        <input class="field-input" id="fHoursValue" placeholder="09:00 AM - 09:00 PM">
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">SMTP From Email (надсилач для email клієнту)</label>
+      <input class="field-input" id="fSmtpFromEmail" placeholder="london@p-de-p.com">
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-row-label">AI чат — банер</div>
+        <div class="toggle-row-sub">Показувати кнопку "Зробіть замовлення через AI чат" клієнтам</div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="fAiChatEnabled">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="field-section-title">Зображення</div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label class="field-label">Зображення салону</label>
+        <input class="field-input" id="fImage" placeholder="img/london1.jpg">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Іконка локації</label>
+        <input class="field-input" id="fAreaIcon" placeholder="img/areaLondon.png">
+      </div>
+    </div>
+
+    <div class="field-section-title">Оплата</div>
+
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-row-label">Депозит обовʼязковий</div>
+        <div class="toggle-row-sub">Клієнт сплачує депозит перед бронюванням</div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="fPaymentEnabled" onchange="togglePaymentSelect()">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="payment-system-select" id="paymentSelectWrap">
+      <div class="field-group">
+        <label class="field-label">Платіжна система</label>
+        <select class="field-input" id="fPaymentSystemId">
+          <option value="">— не обрано —</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Payment Location ID</label>
+        <input class="field-input" id="fPaymentLocId" placeholder="ID локації в платіжній системі">
+      </div>
+    </div>
+  </div>
+
+  <div class="salon-panel-footer">
+    <button class="btn btn-primary btn-sm" onclick="saveSalonPanel()">Зберегти</button>
+    <span class="save-status" id="panelStatus"></span>
+  </div>
+</div>
+
+<script>
+// Bulk AI chat toggle (для всіх салонів)
+function bulkAiChat(enabled) {
+  const s = document.getElementById('aiChatBulkStatus');
+  s.textContent = '...';
+  s.className = 'ps-status';
+  fetch('/admin/api/salons/ai-chat-bulk', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({enabled: enabled})
+  })
+  .then(r => r.json())
+  .then(d => {
+    if (d.success) {
+      s.className = 'ps-status ok';
+      s.textContent = `Оновлено ${d.updated} салонів (${enabled ? 'увімкнено' : 'вимкнено'})`;
+    } else {
+      s.className = 'ps-status err';
+      s.textContent = d.error || 'Помилка';
+    }
+  })
+  .catch(() => { s.className = 'ps-status err'; s.textContent = 'Помилка мережі'; });
+}
+
+// Location languages save (outside IIFE, needs to be global)
+function saveLocationLanguages() {
+  const statusEl = document.getElementById('locLangStatus');
+  statusEl.textContent = '';
+  const langs = [];
+  document.querySelectorAll('#locationLangGrid .lang-chip-sm.active').forEach(chip => {
+    langs.push(chip.dataset.lang);
+  });
+  if (!langs.length) {
+    statusEl.className = 'ps-status err';
+    statusEl.textContent = 'Оберіть хоча б одну мову';
+    return;
+  }
+  fetch('/admin/api/locations/{{ current_location.slug }}/languages', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ languages: langs })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) {
+      statusEl.className = 'ps-status err';
+      statusEl.textContent = data.error;
+    } else {
+      statusEl.className = 'ps-status ok';
+      statusEl.textContent = 'Збережено';
+      setTimeout(() => { statusEl.textContent = ''; }, 3000);
+    }
+  })
+  .catch(() => {
+    statusEl.className = 'ps-status err';
+    statusEl.textContent = 'Помилка збереження';
+  });
+}
+
+(function(){
+  let currentSalonCode = null;
+  let paymentSystemsCache = null;
+
+  function loadPaymentSystems() {
+    if (paymentSystemsCache) return Promise.resolve(paymentSystemsCache);
+    return fetch('/admin/api/payment-systems')
+      .then(r => r.json())
+      .then(systems => {
+        paymentSystemsCache = systems.filter(s => s.status === 'active');
+        return paymentSystemsCache;
+      });
+  }
+
+  window.togglePaymentSelect = function() {
+    const enabled = document.getElementById('fPaymentEnabled').checked;
+    const wrap = document.getElementById('paymentSelectWrap');
+    wrap.classList.toggle('visible', enabled);
+  };
+
+  window.openSalonPanel = function(code) {
+    currentSalonCode = code;
+    document.getElementById('panelOverlay').classList.add('open');
+    document.getElementById('salonPanel').classList.add('open');
+    document.getElementById('panelStatus').textContent = '';
+
+    // Load salon data + payment systems in parallel
+    Promise.all([
+      fetch('/admin/api/salons/' + code).then(r => r.json()),
+      loadPaymentSystems()
+    ])
+    .then(([data, systems]) => {
+      if (data.error) { alert(data.error); return; }
+
+      document.getElementById('panelSalonCode').value = data.code;
+      document.getElementById('panelTitle').textContent = data.name || 'Салон';
+      document.getElementById('fCode').value = data.code;
+      document.getElementById('fName').value = data.name || '';
+      document.getElementById('fStatus').value = data.status || 'planned';
+      document.getElementById('fAddress').value = data.address_line || '';
+      document.getElementById('fPostalCode').value = data.postal_code || '';
+      document.getElementById('fEmail').value = data.email || '';
+      document.getElementById('fPhoneDisplay').value = data.phone_display || '';
+      document.getElementById('fPhoneLink').value = data.phone_link || '';
+      document.getElementById('fDatabaseCode').value = data.database_code || '';
+      document.getElementById('fTgToken').value = data.telegram_token || '';
+      document.getElementById('fTgChat').value = data.telegram_chat_id || '';
+      document.getElementById('fImage').value = data.image || '';
+      document.getElementById('fAreaIcon').value = data.area_icon || '';
+      document.getElementById('fWhatsappPhone').value = data.whatsapp_phone || '';
+      document.getElementById('fInstagramUrl').value = data.instagram_url || '';
+      document.getElementById('fHoursLabel').value = data.hours_label || '';
+      document.getElementById('fHoursValue').value = data.hours_value || '';
+      document.getElementById('fSmtpFromEmail').value = data.smtp_from_email || '';
+      document.getElementById('fAiChatEnabled').checked = data.ai_chat_enabled !== false;
+
+      // Payment
+      const payEnabled = !!data.payment_enabled;
+      document.getElementById('fPaymentEnabled').checked = payEnabled;
+      document.getElementById('paymentSelectWrap').classList.toggle('visible', payEnabled);
+      document.getElementById('fPaymentLocId').value = data.payment_location_id || '';
+
+      // Populate payment system dropdown
+      const select = document.getElementById('fPaymentSystemId');
+      select.innerHTML = '<option value="">— не обрано —</option>';
+      systems.forEach(ps => {
+        const opt = document.createElement('option');
+        opt.value = ps.id;
+        opt.textContent = ps.name + ' (' + ps.provider + ')';
+        if (data.payment_system_id == ps.id) opt.selected = true;
+        select.appendChild(opt);
+      });
+    })
+    .catch(() => {
+      alert('Помилка завантаження даних салону');
+    });
+  };
+
+  window.closeSalonPanel = function() {
+    document.getElementById('panelOverlay').classList.remove('open');
+    document.getElementById('salonPanel').classList.remove('open');
+    currentSalonCode = null;
+  };
+
+  window.saveSalonPanel = function() {
+    if (!currentSalonCode) return;
+    const statusEl = document.getElementById('panelStatus');
+    statusEl.textContent = '';
+
+    const paymentEnabled = document.getElementById('fPaymentEnabled').checked;
+    const paymentSystemId = document.getElementById('fPaymentSystemId').value;
+
+    const payload = {
+      name: document.getElementById('fName').value,
+      status: document.getElementById('fStatus').value,
+      address_line: document.getElementById('fAddress').value,
+      postal_code: document.getElementById('fPostalCode').value,
+      email: document.getElementById('fEmail').value,
+      phone_display: document.getElementById('fPhoneDisplay').value,
+      phone_link: document.getElementById('fPhoneLink').value,
+      database_code: document.getElementById('fDatabaseCode').value,
+      payment_location_id: document.getElementById('fPaymentLocId').value,
+      telegram_token: document.getElementById('fTgToken').value,
+      telegram_chat_id: document.getElementById('fTgChat').value,
+      image: document.getElementById('fImage').value,
+      area_icon: document.getElementById('fAreaIcon').value,
+      whatsapp_phone: document.getElementById('fWhatsappPhone').value,
+      instagram_url: document.getElementById('fInstagramUrl').value,
+      hours_label: document.getElementById('fHoursLabel').value,
+      hours_value: document.getElementById('fHoursValue').value,
+      smtp_from_email: document.getElementById('fSmtpFromEmail').value,
+      ai_chat_enabled: document.getElementById('fAiChatEnabled').checked,
+      payment_enabled: paymentEnabled,
+      payment_system_id: paymentSystemId ? parseInt(paymentSystemId) : null,
+    };
+
+    fetch('/admin/api/salons/' + currentSalonCode, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) {
+        statusEl.className = 'save-status err';
+        statusEl.textContent = 'Помилка: ' + data.error;
+      } else {
+        statusEl.className = 'save-status ok';
+        statusEl.textContent = 'Збережено';
+        // Update card text on the page
+        document.querySelectorAll('.salon-card').forEach(card => {
+          if (card.getAttribute('onclick').includes("'" + currentSalonCode + "'")) {
+            card.querySelector('.salon-card-name').textContent = payload.name;
+            const addrText = payload.address_line + (payload.postal_code ? ', ' + payload.postal_code : '');
+            card.querySelector('.salon-card-address').textContent = addrText;
+            const dot = card.querySelector('.salon-status-dot');
+            dot.className = 'salon-status-dot ' + payload.status;
+          }
+        });
+        setTimeout(() => { statusEl.textContent = ''; }, 3000);
+      }
+    })
+    .catch(() => {
+      statusEl.className = 'save-status err';
+      statusEl.textContent = 'Помилка збереження';
+    });
+  };
+
+  // Close panel on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeSalonPanel();
+  });
+})();
+</script>
+
+{% endblock %}

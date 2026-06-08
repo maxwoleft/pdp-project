@@ -37,7 +37,7 @@ async def country_session(
     """
     country = country.lower()
     async with session_factory() as session:
-        await session.execute(text(f'SET search_path TO "{country}", public'))
+        await session.execute(text(f'SET search_path TO "{country}", public, booking'))
         try:
             yield session
             await session.commit()

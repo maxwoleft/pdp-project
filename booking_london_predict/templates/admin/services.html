@@ -1,0 +1,1307 @@
+{% extends "admin/base.html" %}
+{% block title %}Послуги{% endblock %}
+{% block page_title %}Послуги{% endblock %}
+
+{% block extra_head %}
+<style>
+  .salon-switcher {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .salon-btn {
+    padding: 10px 20px;
+    font-family: 'Gotham Pro', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    background: #fff;
+    border: 1px solid #0000000D;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .salon-btn:hover { background: #0000000D; color: #000; }
+  .salon-btn.active {
+    background: #027DEF;
+    color: #fff;
+    border-color: #027DEF;
+    font-weight: 700;
+  }
+
+  /* Services table */
+  .svc-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .svc-table th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #888;
+    padding: 16px 12px;
+    border-bottom: 1px solid #0000000D;
+  }
+  .svc-table td {
+    padding: 20px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    border-bottom: 1px solid #0000000D;
+    vertical-align: middle;
+    color: #000;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  .svc-table tr:hover td { background: #fafafa; }
+  .svc-table tr:last-child td { border-bottom: none; }
+
+  .svc-name {
+    font-weight: 700;
+    max-width: 320px;
+    word-break: break-word;
+  }
+  .svc-category {
+    font-size: 11px;
+    color: #888;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .svc-desc-preview {
+    color: #888;
+    font-size: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  .svc-desc-empty {
+    color: #c0392b;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .svc-price { font-weight: 700; }
+
+  .btn-edit {
+    padding: 6px 14px;
+    font-family: 'Gotham Pro', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: #0000000D;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-edit:hover { opacity: 0.7; }
+
+  /* Language status column */
+  .lang-status-cell { word-wrap: break-word; }
+  .lang-ok {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: #027DEF1A;
+    color: #027DEF;
+    margin: 1px 2px;
+  }
+  .lang-missing {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: rgba(192,57,43,0.1);
+    color: #c0392b;
+    margin: 1px 2px;
+  }
+  .lang-all-ok {
+    font-size: 11px;
+    font-weight: 700;
+    color: #27ae60;
+  }
+
+  /* Category group header */
+  .cat-group-header td {
+    background: #f5f5f5;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #027DEF;
+    padding: 16px 12px;
+    border-bottom: 1px solid #0000000D;
+  }
+
+  /* Stats bar */
+  .svc-stats {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+  }
+  .svc-stats span { font-weight: 700; color: #000; }
+  .svc-stats .warn { color: #c0392b; }
+
+  /* Modal overlay */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1000;
+    justify-content: flex-end;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal-panel {
+    width: 560px;
+    max-width: 100%;
+    height: 100vh;
+    background: #fff;
+    overflow-y: auto;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.2s ease;
+  }
+  @keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid #0000000D;
+    flex-shrink: 0;
+  }
+  .modal-header h3 {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+  }
+
+  .modal-body {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  .modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #0000000D;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .field-group { margin-bottom: 20px; }
+  .field-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 6px;
+  }
+  .field-input {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid #0000000D;
+    font-family: 'Gotham Pro', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    background: #fff;
+    outline: none;
+    border-radius: 0;
+  }
+  .field-input:focus { border-color: #027DEF; }
+  .field-textarea {
+    width: 100%;
+    min-height: 160px;
+    padding: 12px 14px;
+    border: 1px solid #0000000D;
+    font-family: 'Gotham Pro', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+    background: #fff;
+    outline: none;
+    resize: vertical;
+    border-radius: 0;
+    line-height: 1.6;
+  }
+  .field-textarea:focus { border-color: #027DEF; }
+  .field-readonly {
+    background: #f5f5f5;
+    color: #888;
+    cursor: not-allowed;
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .sync-status {
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .sync-ok { color: #27ae60; }
+  .sync-queued { color: #e67e22; }
+  .sync-fail { color: #c0392b; }
+
+  .loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #0000001A;
+    border-top-color: #027DEF;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .search-box {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .search-box input {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px 0 40px;
+    border: 1px solid #0000000D;
+    font-family: 'Gotham Pro', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+    background: #fff;
+    outline: none;
+    border-radius: 0;
+  }
+  .search-box input:focus { border-color: #027DEF; }
+  .search-box svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+  }
+
+  /* Language field tags */
+  .lang-field-group { margin-bottom: 16px; }
+  .lang-field-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .lang-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: #027DEF1A;
+    color: #027DEF;
+  }
+  .lang-field-name {
+    font-size: 11px;
+    font-weight: 500;
+    color: #888;
+  }
+
+  @media (max-width: 768px) {
+    .salon-switcher { flex-direction: column; }
+    .modal-panel { width: 100%; }
+    .field-row { grid-template-columns: 1fr; }
+    .svc-stats { flex-direction: column; gap: 8px; }
+
+    .svc-table { table-layout: auto; }
+    .svc-table thead { display: none; }
+    .svc-table tr {
+      display: block;
+      padding: 14px 0;
+      border-bottom: 1px solid #0000000D;
+    }
+    .svc-table tr.cat-group-header { padding: 8px 0; }
+    .svc-table td {
+      display: block;
+      padding: 4px 12px;
+      border-bottom: none;
+      text-align: left;
+    }
+    .svc-table td:before {
+      content: attr(data-label);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #888;
+      display: block;
+      margin-bottom: 2px;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% if not salons %}
+<div class="coming-soon">
+  <div class="coming-soon-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 8 12 8 12s8-6.75 8-12c0-4.42-3.58-8-8-8zm0 11a3 3 0 110-6 3 3 0 010 6z" fill="currentColor"/></svg>
+  </div>
+  <div class="coming-soon-title">Локація запланована</div>
+  <div class="coming-soon-text">Послуги для локації «{{ current_location.name }}» ще не додані. Вони з'являться після розгортання системи.</div>
+</div>
+{% else %}
+
+<!-- Salon Switcher -->
+<div class="salon-switcher">
+  {% for code, info in salons.items() %}
+  <button class="salon-btn {% if loop.first %}active{% endif %}"
+          data-salon="{{ code }}"
+          onclick="switchSalon('{{ code }}', this)">
+    {{ info.get('name', '') }}
+  </button>
+  {% endfor %}
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <a href="{{ url_for('admin.services') }}" class="tab {% if active_tab == 'general' %}active{% endif %}">Загальні</a>
+  <a href="{{ url_for('admin.categories') }}" class="tab {% if active_tab == 'categories' %}active{% endif %}">Категорії послуг</a>
+  <a href="{{ url_for('admin.recommendations') }}" class="tab {% if active_tab == 'recommendations' %}active{% endif %}">Рекомендації</a>
+</div>
+
+{% if active_tab == 'general' %}
+
+<!-- Stats -->
+<div class="svc-stats" id="svcStats">
+  <div>Всього послуг: <span id="statTotal">—</span></div>
+  <div>З описом: <span id="statWithDesc">—</span></div>
+  <div>Без опису: <span id="statNoDesc" class="warn">—</span></div>
+</div>
+
+<!-- Filters -->
+<div class="filters-bar">
+  <select id="categoryFilter" class="filter-select" onchange="filterServices()" style="min-width: 220px;">
+    <option value="">Всі категорії</option>
+  </select>
+  <div class="search-box" style="flex:1; margin-bottom:0;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <input type="text" id="searchInput" placeholder="Пошук за назвою..." oninput="filterServices()">
+  </div>
+</div>
+
+<!-- Services Table -->
+<div class="card" style="padding: 0; overflow: hidden;">
+  <div id="servicesContainer" style="padding: 0;">
+    <div style="padding: 48px 20px; text-align: center; color: #aaa;">
+      <div class="loading-spinner" style="width: 24px; height: 24px; margin: 0 auto 12px;"></div>
+      <p style="font-size: 13px; font-weight: 500;">Завантаження послуг...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <h3>Редагування послуги</h3>
+      <button class="modal-close" onclick="closeModal()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="#000" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editServiceId">
+
+      <div class="field-group">
+        <label class="field-label">Категорія</label>
+        <input type="text" id="editCategory" class="field-input field-readonly" readonly>
+      </div>
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Вартість (GBP)</label>
+          <input type="number" id="editPrice" class="field-input field-readonly" readonly title="Вартість змінюється в CRM">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Тривалість (хв)</label>
+          <input type="number" id="editDuration" class="field-input" step="5" min="0">
+        </div>
+      </div>
+
+      <!-- Per-language name fields -->
+      <div class="lang-fields-section" id="nameFieldsSection">
+        <div class="field-label" style="margin-bottom:10px; margin-top:8px; font-size:12px; border-bottom:1px solid #0000000D; padding-bottom:8px;">Назва по мовам</div>
+        <div id="nameFields"></div>
+      </div>
+
+      <!-- Per-language description fields -->
+      <div class="lang-fields-section" id="descFieldsSection">
+        <div class="field-label" style="margin-bottom:10px; margin-top:8px; font-size:12px; border-bottom:1px solid #0000000D; padding-bottom:8px;">Опис по мовам</div>
+        <div id="descFields"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="btnSave" onclick="saveService()">Зберегти</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Скасувати</button>
+      <span class="sync-status" id="syncStatus"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  let currentSalon = '{{ (salons.keys()|list)[0] }}';
+  let allServices = [];
+  let allCategories = [];
+  let currentLanguages = []; // [{code, label, prefix}]
+
+  // ── Lang text parsing / building ──
+  // Format: "EN Text / UA Текст / RUS Текст"
+  // Description format: "EN Text\n...\n\n/ UA Текст\n..." (uses / + newlines)
+
+  function parseLangName(fullText) {
+    // Returns {en: "...", ua: "...", ru: "..."} etc.
+    const result = {};
+    if (!fullText) return result;
+
+    // Normalize: replace HTML entities
+    let text = fullText.replace(/&#x2F;/g, '/').replace(/\uFEFF/g, '');
+
+    // Split by " / " that is followed by a lang prefix
+    // Pattern: split on ` / ` before EN|UA|RU|RUS|PL
+    const parts = text.split(/\s*\/\s*(?=(?:EN|UA|RUS|RU|PL)\s)/i);
+
+    for (const part of parts) {
+      const m = part.match(/^(EN|UA|RUS|RU|PL)\s+(.+)$/is);
+      if (m) {
+        let code = m[1].toUpperCase();
+        if (code === 'RUS') code = 'RU';
+        const langCode = {EN:'en', UA:'ua', RU:'ru', PL:'pl'}[code] || code.toLowerCase();
+        result[langCode] = m[2].trim();
+      }
+    }
+
+    // If nothing parsed, treat whole text as first language
+    if (Object.keys(result).length === 0 && fullText.trim()) {
+      const firstLang = currentLanguages.length > 0 ? currentLanguages[0].code : 'en';
+      result[firstLang] = fullText.trim();
+    }
+
+    return result;
+  }
+
+  function buildLangName(langMap) {
+    // Builds "EN Text / UA Текст / RUS Текст" from {en: "...", ua: "...", ru: "..."}
+    const prefixMap = {en:'EN', ua:'UA', ru:'RUS', pl:'PL'};
+    const parts = [];
+    for (const lang of currentLanguages) {
+      const val = (langMap[lang.code] || '').trim();
+      if (val) {
+        parts.push(prefixMap[lang.code] + ' ' + val);
+      }
+    }
+    return parts.join(' / ');
+  }
+
+  function parseLangDescription(fullText) {
+    const result = {};
+    if (!fullText) return result;
+
+    let text = fullText.replace(/&#x2F;/g, '/').replace(/\uFEFF/g, '');
+
+    // Descriptions use "/ UA" or "/ RUS" as delimiters (sometimes at line start)
+    // Split on lines that start with / followed by lang prefix
+    const parts = text.split(/\n*\s*\/\s*(?=(?:EN|UA|RUS|RU|PL)\s)/i);
+
+    for (const part of parts) {
+      const m = part.match(/^(EN|UA|RUS|RU|PL)\s+([\s\S]*)$/i);
+      if (m) {
+        let code = m[1].toUpperCase();
+        if (code === 'RUS') code = 'RU';
+        const langCode = {EN:'en', UA:'ua', RU:'ru', PL:'pl'}[code] || code.toLowerCase();
+        result[langCode] = m[2].trim();
+      }
+    }
+
+    if (Object.keys(result).length === 0 && fullText.trim()) {
+      const firstLang = currentLanguages.length > 0 ? currentLanguages[0].code : 'en';
+      result[firstLang] = fullText.trim();
+    }
+
+    return result;
+  }
+
+  function buildLangDescription(langMap) {
+    const prefixMap = {en:'EN', ua:'UA', ru:'RUS', pl:'PL'};
+    const parts = [];
+    for (const lang of currentLanguages) {
+      const val = (langMap[lang.code] || '').trim();
+      if (val) {
+        parts.push(prefixMap[lang.code] + ' ' + val);
+      }
+    }
+    return parts.join('\n\n/ ');
+  }
+
+  // ── Build dynamic language fields in modal ──
+
+  function buildLangFields(containerId, fieldPrefix, langValues, isTextarea) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+
+    for (const lang of currentLanguages) {
+      const val = langValues[lang.code] || '';
+      const div = document.createElement('div');
+      div.className = 'lang-field-group';
+
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'lang-field-label';
+      labelDiv.innerHTML = '<span class="lang-tag">' + escHtml(lang.prefix) + '</span><span class="lang-field-name">' + escHtml(lang.label) + '</span>';
+      div.appendChild(labelDiv);
+
+      if (isTextarea) {
+        const ta = document.createElement('textarea');
+        ta.className = 'field-textarea';
+        ta.id = fieldPrefix + '_' + lang.code;
+        ta.value = val;
+        ta.style.minHeight = '100px';
+        div.appendChild(ta);
+      } else {
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.className = 'field-input';
+        inp.id = fieldPrefix + '_' + lang.code;
+        inp.value = val;
+        div.appendChild(inp);
+      }
+
+      container.appendChild(div);
+    }
+  }
+
+  function collectLangFields(fieldPrefix) {
+    const result = {};
+    for (const lang of currentLanguages) {
+      const el = document.getElementById(fieldPrefix + '_' + lang.code);
+      if (el) result[lang.code] = el.value;
+    }
+    return result;
+  }
+
+  // ── Salon switch & load ──
+
+  window.switchSalon = function(code, btn) {
+    currentSalon = code;
+    document.querySelectorAll('.salon-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadServices();
+  };
+
+  function loadServices() {
+    const container = document.getElementById('servicesContainer');
+    container.innerHTML = '<div style="padding:48px 20px;text-align:center;color:#aaa;"><div class="loading-spinner" style="width:24px;height:24px;margin:0 auto 12px;"></div><p style="font-size:13px;font-weight:500;">Завантаження послуг...</p></div>';
+
+    fetch('/admin/api/services?salon=' + currentSalon)
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) { container.innerHTML = '<div style="padding:24px;color:#c0392b;">Помилка: ' + data.error + '</div>'; return; }
+        allServices = data.services || [];
+        allCategories = data.categories || [];
+        currentLanguages = data.languages || [{code:'en', label:'English', prefix:'EN'}];
+        populateCategoryFilter();
+        renderServices(allServices);
+        updateStats(allServices);
+      })
+      .catch(err => {
+        container.innerHTML = '<div style="padding:24px;color:#c0392b;">Помилка завантаження</div>';
+      });
+  }
+
+  function updateStats(svcs) {
+    const total = svcs.length;
+    const withDesc = svcs.filter(s => s.description && s.description.trim()).length;
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statWithDesc').textContent = withDesc;
+    document.getElementById('statNoDesc').textContent = total - withDesc;
+  }
+
+  function populateCategoryFilter() {
+    const sel = document.getElementById('categoryFilter');
+    const prev = sel.value;
+    sel.innerHTML = '<option value="">Всі категорії</option>';
+
+    const parents = new Set();
+    allServices.forEach(s => {
+      const p = s.parent || s.category || '';
+      if (p) parents.add(p);
+    });
+
+    Array.from(parents).sort().forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p;
+      opt.textContent = p;
+      sel.appendChild(opt);
+    });
+
+    if (prev && parents.has(prev)) sel.value = prev;
+  }
+
+  window.filterServices = function() {
+    const q = document.getElementById('searchInput').value.toLowerCase().trim();
+    const cat = document.getElementById('categoryFilter').value;
+    let filtered = allServices;
+
+    if (cat) {
+      filtered = filtered.filter(s => (s.parent || s.category || '') === cat);
+    }
+    if (q) {
+      filtered = filtered.filter(s =>
+        (s.name || '').toLowerCase().includes(q) ||
+        (s.category || '').toLowerCase().includes(q) ||
+        (s.description || '').toLowerCase().includes(q)
+      );
+    }
+    renderServices(filtered);
+  };
+
+  // ── Language completeness check ──
+
+  function getLangStatus(svc) {
+    // Returns { ok: ['en','ua'], missing: ['ru'] }
+    const nameByLang = parseLangName(svc.name);
+    const descByLang = parseLangDescription(svc.description);
+    const ok = [];
+    const missing = [];
+
+    for (const lang of currentLanguages) {
+      const hasName = (nameByLang[lang.code] || '').trim();
+      const hasDesc = (descByLang[lang.code] || '').trim();
+      if (hasName && hasDesc) {
+        ok.push(lang);
+      } else {
+        missing.push(lang);
+      }
+    }
+    return { ok, missing };
+  }
+
+  function renderLangStatus(svc) {
+    const { ok, missing } = getLangStatus(svc);
+    if (missing.length === 0) {
+      return '<span class="lang-all-ok">OK</span>';
+    }
+    let html = '';
+    for (const l of ok) {
+      html += '<span class="lang-ok">' + escHtml(l.prefix) + '</span>';
+    }
+    for (const l of missing) {
+      html += '<span class="lang-missing">' + escHtml(l.prefix) + '</span>';
+    }
+    return html;
+  }
+
+  // ── Render table ──
+
+  function renderServices(svcs) {
+    const container = document.getElementById('servicesContainer');
+    if (!svcs.length) {
+      container.innerHTML = '<div style="padding:48px 20px;text-align:center;color:#aaa;font-size:13px;font-weight:500;">Послуги не знайдено</div>';
+      return;
+    }
+
+    const groups = {};
+    svcs.forEach(s => {
+      const parent = s.parent || s.category || 'Інше';
+      if (!groups[parent]) groups[parent] = [];
+      groups[parent].push(s);
+    });
+
+    const colCount = 7;
+    let html = '<table class="svc-table"><colgroup><col span="2"><col><col><col><col><col></colgroup><thead><tr>';
+    html += '<th colspan="2">Назва / Категорія</th>';
+    html += '<th>Вартість</th>';
+    html += '<th>Тривалість</th>';
+    html += '<th>Опис</th>';
+    html += '<th>Мови сайту</th>';
+    html += '<th></th>';
+    html += '</tr></thead><tbody>';
+
+    const sortedGroups = Object.keys(groups).sort();
+    for (const group of sortedGroups) {
+      html += '<tr class="cat-group-header"><td colspan="' + colCount + '">' + escHtml(group) + ' (' + groups[group].length + ')</td></tr>';
+
+      const sorted = groups[group].sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      for (const svc of sorted) {
+        const hasDesc = svc.description && svc.description.trim();
+        const descPreview = hasDesc
+          ? '<span class="svc-desc-preview">' + escHtml(svc.description.substring(0, 80)) + '</span>'
+          : '<span class="svc-desc-empty">Немає опису</span>';
+
+        const price = svc.location_prices != null ? svc.location_prices : '—';
+        const currency = svc.price_currency || 'GBP';
+        const langHtml = renderLangStatus(svc);
+
+        html += '<tr>';
+        html += '<td colspan="2" data-label="Назва"><div class="svc-name">' + escHtml(svc.name || '') + '</div><div class="svc-category">' + escHtml(svc.category || '') + '</div></td>';
+        html += '<td data-label="Вартість" class="svc-price">' + price + ' ' + currency + '</td>';
+        html += '<td data-label="Тривалість" class="svc-duration">' + (svc.duration || 0) + ' хв</td>';
+        html += '<td data-label="Опис">' + descPreview + '</td>';
+        html += '<td data-label="Мови" class="lang-status-cell">' + langHtml + '</td>';
+        html += '<td><button class="btn-edit" onclick="openEdit(\'' + svc.id + '\')">Редагувати</button></td>';
+        html += '</tr>';
+      }
+    }
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
+  }
+
+  // ── Edit modal ──
+
+  window.openEdit = function(serviceId) {
+    const svc = allServices.find(s => s.id === serviceId);
+    if (!svc) return;
+
+    document.getElementById('editServiceId').value = svc.id;
+    document.getElementById('editCategory').value = svc.category || '';
+    document.getElementById('editPrice').value = svc.location_prices != null ? svc.location_prices : '';
+    document.getElementById('editDuration').value = svc.duration || '';
+    document.getElementById('syncStatus').textContent = '';
+    document.getElementById('btnSave').disabled = false;
+    document.getElementById('btnSave').innerHTML = 'Зберегти';
+
+    // Build per-language fields
+    const nameByLang = parseLangName(svc.name);
+    const descByLang = parseLangDescription(svc.description);
+
+    buildLangFields('nameFields', 'editName', nameByLang, false);
+    buildLangFields('descFields', 'editDesc', descByLang, true);
+
+    document.getElementById('editModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeModal = function() {
+    document.getElementById('editModal').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  // ── Save ──
+
+  window.saveService = function() {
+    const serviceId = document.getElementById('editServiceId').value;
+    const btn = document.getElementById('btnSave');
+    const statusEl = document.getElementById('syncStatus');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading-spinner" style="width:14px;height:14px;border-width:2px;"></span>';
+    statusEl.textContent = '';
+
+    // Collect per-language values and rebuild inline strings
+    const nameMap = collectLangFields('editName');
+    const descMap = collectLangFields('editDesc');
+
+    const updates = {
+      name: buildLangName(nameMap),
+      description: buildLangDescription(descMap),
+      duration: document.getElementById('editDuration').value,
+    };
+
+    fetch('/admin/api/services/' + serviceId, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ salon: currentSalon, updates: updates })
+    })
+    .then(r => r.json())
+    .then(data => {
+      btn.disabled = false;
+      btn.innerHTML = 'Зберегти';
+
+      if (data.error) {
+        statusEl.className = 'sync-status sync-fail';
+        statusEl.textContent = 'Помилка: ' + data.error;
+        return;
+      }
+
+      // Update local data
+      const svc = allServices.find(s => s.id === serviceId);
+      if (svc) {
+        if (updates.name) svc.name = updates.name;
+        if (updates.description !== undefined) svc.description = updates.description;
+        if (updates.duration) svc.duration = parseInt(updates.duration);
+      }
+
+      if (data.crm_synced) {
+        statusEl.className = 'sync-status sync-ok';
+        statusEl.textContent = 'Збережено та синхронізовано з CRM';
+      } else if (data.queued) {
+        statusEl.className = 'sync-status sync-queued';
+        statusEl.textContent = 'Збережено. CRM недоступна — синхронізацію поставлено в чергу';
+      } else {
+        statusEl.className = 'sync-status sync-ok';
+        statusEl.textContent = 'Збережено локально';
+      }
+
+      renderServices(allServices);
+      updateStats(allServices);
+    })
+    .catch(err => {
+      btn.disabled = false;
+      btn.innerHTML = 'Зберегти';
+      statusEl.className = 'sync-status sync-fail';
+      statusEl.textContent = 'Помилка збереження';
+    });
+  };
+
+  function escHtml(str) {
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  // Initial load
+  loadServices();
+})();
+</script>
+
+{% elif active_tab == 'categories' %}
+
+<!-- Categories Table -->
+<div class="card" style="padding: 0; overflow: hidden;">
+  <div id="catContainer" style="padding: 0;">
+    <div style="padding: 48px 20px; text-align: center; color: #aaa;">
+      <div class="loading-spinner" style="width: 24px; height: 24px; margin: 0 auto 12px;"></div>
+      <p style="font-size: 13px; font-weight: 500;">Завантаження категорій...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Category Edit Modal -->
+<div class="modal-overlay" id="catEditModal" onclick="if(event.target===this)closeCatModal()">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <h3>Редагування категорії</h3>
+      <button class="modal-close" onclick="closeCatModal()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="#000" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="catEditId">
+      <div class="field-group">
+        <label class="field-label">ID категорії</label>
+        <input type="text" id="catEditIdDisplay" class="field-input field-readonly" readonly>
+      </div>
+      <div class="field-group" id="catParentGroup" style="display:none;">
+        <label class="field-label">Батьківська категорія</label>
+        <input type="text" id="catEditParent" class="field-input field-readonly" readonly>
+      </div>
+      <div class="lang-fields-section">
+        <div class="field-label" style="margin-bottom:10px; margin-top:8px; font-size:12px; border-bottom:1px solid #0000000D; padding-bottom:8px;">Назва по мовам</div>
+        <div id="catNameFields"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="btnSaveCat" onclick="saveCategory()">Зберегти</button>
+      <button class="btn btn-ghost" onclick="closeCatModal()">Скасувати</button>
+      <span class="sync-status" id="catSyncStatus"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  let currentSalon = '{{ (salons.keys()|list)[0] }}';
+  let allCategories = [];
+  let currentLanguages = [];
+
+  // ── Lang helpers (same as general tab) ──
+
+  function parseLangName(fullText) {
+    const result = {};
+    if (!fullText) return result;
+    let text = fullText.replace(/&#x2F;/g, '/').replace(/\uFEFF/g, '');
+    const parts = text.split(/\s*\/\s*(?=(?:EN|UA|RUS|RU|PL)\s)/i);
+    for (const part of parts) {
+      const m = part.match(/^(EN|UA|RUS|RU|PL)\s+(.+)$/is);
+      if (m) {
+        let code = m[1].toUpperCase();
+        if (code === 'RUS') code = 'RU';
+        const langCode = {EN:'en', UA:'ua', RU:'ru', PL:'pl'}[code] || code.toLowerCase();
+        result[langCode] = m[2].trim();
+      }
+    }
+    if (Object.keys(result).length === 0 && fullText.trim()) {
+      const firstLang = currentLanguages.length > 0 ? currentLanguages[0].code : 'en';
+      result[firstLang] = fullText.trim();
+    }
+    return result;
+  }
+
+  function buildLangName(langMap) {
+    const prefixMap = {en:'EN', ua:'UA', ru:'RUS', pl:'PL'};
+    const parts = [];
+    for (const lang of currentLanguages) {
+      const val = (langMap[lang.code] || '').trim();
+      if (val) parts.push(prefixMap[lang.code] + ' ' + val);
+    }
+    return parts.join(' / ');
+  }
+
+  function buildLangFields(containerId, fieldPrefix, langValues) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+    for (const lang of currentLanguages) {
+      const val = langValues[lang.code] || '';
+      const div = document.createElement('div');
+      div.className = 'lang-field-group';
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'lang-field-label';
+      labelDiv.innerHTML = '<span class="lang-tag">' + escHtml(lang.prefix) + '</span><span class="lang-field-name">' + escHtml(lang.label) + '</span>';
+      div.appendChild(labelDiv);
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.className = 'field-input';
+      inp.id = fieldPrefix + '_' + lang.code;
+      inp.value = val;
+      div.appendChild(inp);
+      container.appendChild(div);
+    }
+  }
+
+  function collectLangFields(fieldPrefix) {
+    const result = {};
+    for (const lang of currentLanguages) {
+      const el = document.getElementById(fieldPrefix + '_' + lang.code);
+      if (el) result[lang.code] = el.value;
+    }
+    return result;
+  }
+
+  function escHtml(str) {
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  // ── Lang status for categories (name only, no description) ──
+
+  function getCatLangStatus(cat) {
+    const nameByLang = parseLangName(cat.name);
+    const ok = [];
+    const missing = [];
+    for (const lang of currentLanguages) {
+      if ((nameByLang[lang.code] || '').trim()) {
+        ok.push(lang);
+      } else {
+        missing.push(lang);
+      }
+    }
+    return { ok, missing };
+  }
+
+  function renderCatLangStatus(cat) {
+    const { ok, missing } = getCatLangStatus(cat);
+    if (missing.length === 0) return '<span class="lang-all-ok">OK</span>';
+    let html = '';
+    for (const l of ok) html += '<span class="lang-ok">' + escHtml(l.prefix) + '</span>';
+    for (const l of missing) html += '<span class="lang-missing">' + escHtml(l.prefix) + '</span>';
+    return html;
+  }
+
+  // ── Salon switch ──
+
+  window.switchSalon = function(code, btn) {
+    currentSalon = code;
+    document.querySelectorAll('.salon-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadCategories();
+  };
+
+  // ── Load & render ──
+
+  function loadCategories() {
+    const container = document.getElementById('catContainer');
+    container.innerHTML = '<div style="padding:48px 20px;text-align:center;color:#aaa;"><div class="loading-spinner" style="width:24px;height:24px;margin:0 auto 12px;"></div><p style="font-size:13px;font-weight:500;">Завантаження категорій...</p></div>';
+
+    fetch('/admin/api/services?salon=' + currentSalon)
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) { container.innerHTML = '<div style="padding:24px;color:#c0392b;">Помилка: ' + data.error + '</div>'; return; }
+        allCategories = data.categories || [];
+        currentLanguages = data.languages || [{code:'en', label:'English', prefix:'EN'}];
+        renderCategories();
+      })
+      .catch(() => {
+        container.innerHTML = '<div style="padding:24px;color:#c0392b;">Помилка завантаження</div>';
+      });
+  }
+
+  function renderCategories() {
+    const container = document.getElementById('catContainer');
+    if (!allCategories.length) {
+      container.innerHTML = '<div style="padding:48px 20px;text-align:center;color:#aaa;font-size:13px;font-weight:500;">Категорії не знайдено</div>';
+      return;
+    }
+
+    // Build hierarchy: roots (parent == null) → children
+    const roots = [];
+    const childrenMap = {}; // parentName → [cat, ...]
+
+    for (const cat of allCategories) {
+      if (!cat.parent) {
+        roots.push(cat);
+      } else {
+        const pName = cat.parentName || cat.parent;
+        if (!childrenMap[pName]) childrenMap[pName] = [];
+        childrenMap[pName].push(cat);
+      }
+    }
+
+    // Sort roots by name
+    roots.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+    let html = '<table class="svc-table"><colgroup><col span="2"><col><col><col></colgroup><thead><tr>';
+    html += '<th colspan="2">Назва</th>';
+    html += '<th>ID</th>';
+    html += '<th>Мови сайту</th>';
+    html += '<th></th>';
+    html += '</tr></thead><tbody>';
+
+    for (const root of roots) {
+      // Root as group header
+      html += '<tr class="cat-group-header"><td colspan="5">' + escHtml(root.name) + '</td></tr>';
+
+      // Root row itself (editable)
+      html += '<tr>';
+      html += '<td colspan="2" data-label="Назва"><div class="svc-name">' + escHtml(root.name || '') + '</div><div class="svc-category" style="color:#027DEF;">Головна категорія</div></td>';
+      html += '<td data-label="ID" style="font-size:11px;color:#888;">' + escHtml(root.id || '') + '</td>';
+      html += '<td data-label="Мови" class="lang-status-cell">' + renderCatLangStatus(root) + '</td>';
+      html += '<td><button class="btn-edit" onclick="openCatEdit(\'' + root.id + '\')">Редагувати</button></td>';
+      html += '</tr>';
+
+      // Children of this root
+      const children = childrenMap[root.name] || [];
+      children.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+      for (const child of children) {
+        html += '<tr>';
+        html += '<td colspan="2" data-label="Назва"><div class="svc-name">' + escHtml(child.name || '') + '</div></td>';
+        html += '<td data-label="ID" style="font-size:11px;color:#888;">' + escHtml(child.id || '') + '</td>';
+        html += '<td data-label="Мови" class="lang-status-cell">' + renderCatLangStatus(child) + '</td>';
+        html += '<td><button class="btn-edit" onclick="openCatEdit(\'' + child.id + '\')">Редагувати</button></td>';
+        html += '</tr>';
+      }
+    }
+
+    // Orphan categories (have parent but parent not in roots by name)
+    const rootNames = new Set(roots.map(r => r.name));
+    const orphans = allCategories.filter(c => c.parent && !rootNames.has(c.parentName || c.parent));
+    if (orphans.length > 0) {
+      html += '<tr class="cat-group-header"><td colspan="5">Інші</td></tr>';
+      for (const cat of orphans) {
+        html += '<tr>';
+        html += '<td colspan="2" data-label="Назва"><div class="svc-name">' + escHtml(cat.name || '') + '</div></td>';
+        html += '<td data-label="ID" style="font-size:11px;color:#888;">' + escHtml(cat.id || '') + '</td>';
+        html += '<td data-label="Мови" class="lang-status-cell">' + renderCatLangStatus(cat) + '</td>';
+        html += '<td><button class="btn-edit" onclick="openCatEdit(\'' + cat.id + '\')">Редагувати</button></td>';
+        html += '</tr>';
+      }
+    }
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
+  }
+
+  // ── Edit modal ──
+
+  window.openCatEdit = function(catId) {
+    const cat = allCategories.find(c => c.id === catId);
+    if (!cat) return;
+
+    document.getElementById('catEditId').value = cat.id;
+    document.getElementById('catEditIdDisplay').value = cat.id;
+    document.getElementById('catSyncStatus').textContent = '';
+    document.getElementById('btnSaveCat').disabled = false;
+    document.getElementById('btnSaveCat').innerHTML = 'Зберегти';
+
+    // Show parent info if it's a child category
+    const parentGroup = document.getElementById('catParentGroup');
+    if (cat.parent && cat.parentName) {
+      parentGroup.style.display = '';
+      document.getElementById('catEditParent').value = cat.parentName;
+    } else {
+      parentGroup.style.display = 'none';
+    }
+
+    const nameByLang = parseLangName(cat.name);
+    buildLangFields('catNameFields', 'catName', nameByLang);
+
+    document.getElementById('catEditModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeCatModal = function() {
+    document.getElementById('catEditModal').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  window.saveCategory = function() {
+    const catId = document.getElementById('catEditId').value;
+    const btn = document.getElementById('btnSaveCat');
+    const statusEl = document.getElementById('catSyncStatus');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading-spinner" style="width:14px;height:14px;border-width:2px;"></span>';
+    statusEl.textContent = '';
+
+    const nameMap = collectLangFields('catName');
+    const newName = buildLangName(nameMap);
+
+    fetch('/admin/api/categories/' + catId, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ salon: currentSalon, name: newName })
+    })
+    .then(r => r.json())
+    .then(data => {
+      btn.disabled = false;
+      btn.innerHTML = 'Зберегти';
+
+      if (data.error) {
+        statusEl.className = 'sync-status sync-fail';
+        statusEl.textContent = 'Помилка: ' + data.error;
+        return;
+      }
+
+      if (data.crm_synced) {
+        statusEl.className = 'sync-status sync-ok';
+        statusEl.textContent = 'Збережено та синхронізовано з CRM';
+      } else if (data.queued) {
+        statusEl.className = 'sync-status sync-queued';
+        statusEl.textContent = 'Збережено. CRM — в черзі';
+      } else {
+        statusEl.className = 'sync-status sync-ok';
+        statusEl.textContent = 'Збережено';
+      }
+
+      // Reload categories
+      loadCategories();
+    })
+    .catch(() => {
+      btn.disabled = false;
+      btn.innerHTML = 'Зберегти';
+      statusEl.className = 'sync-status sync-fail';
+      statusEl.textContent = 'Помилка збереження';
+    });
+  };
+
+  // Initial load
+  loadCategories();
+})();
+</script>
+
+{% elif active_tab == 'recommendations' %}
+
+<div class="plan-card" style="margin-bottom:20px;">
+  <div class="plan-card-num">Рекомендації</div>
+  <div class="plan-card-title">Up-sell рекомендації через самозапис</div>
+  <div class="plan-card-desc">
+    Після того, як клієнт обрав потрібну послугу, дату та час з майстром, на екрані підтвердження
+    послуги відображаємо рекомендовані послуги до тої, що обрав. В адмін панелі — розділ керування
+    самозаписом, де можна в ручному режимі обирати, які послуги до яких рекомендувати.
+  </div>
+  <div class="plan-card-meta">
+    <div>Вартість: <span>450 $</span></div>
+    <div>Термін: <span>5–7 днів</span></div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:20px;">
+  <div class="card-title">Що включає</div>
+  <div style="font-size:13px; font-weight:500; color:#555; line-height:1.8;">
+    <div style="margin-bottom:12px;">
+      <strong style="color:#000;">Ціль:</strong> upsell продажі через самозапис
+    </div>
+    <div>
+      <strong style="color:#000;">Проблема:</strong> жодних рекомендацій в самозапису наразі
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Перші правила рекомендацій</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Клієнт обирає</th>
+        <th>Рекомендація</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700;">Укладка</td>
+        <td>Пропонувати послуги макіяжу</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Макіяж</td>
+        <td>Пропонувати послуги укладки</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Масаж / апаратний масаж</td>
+        <td>«Чи бажаєте після масажу зробити укладку волосся?»</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Манікюр (тільки)</td>
+        <td>Пропонувати послуги педикюру</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Фарбування волосся</td>
+        <td>Пропонувати послуги для брів</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Педикюр (тільки)</td>
+        <td>Пропонувати послуги манікюру</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Стрижка</td>
+        <td>«Можливо бажаєте після стрижки також зробити манікюр?»</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Брови</td>
+        <td>Пропонувати оновити стрижку після процедури брів</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% endif %}{# active_tab #}
+
+{% endif %}{# salons check #}
+
+{% endblock %}

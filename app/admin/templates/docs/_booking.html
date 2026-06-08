@@ -1,0 +1,77 @@
+{# Онлайн запис (booking) #}
+<div class="prose prose-slate max-w-none">
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Що це</h2>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      <strong>Pied de Poule Booking</strong> — окремий веб-застосунок самозапису для клієнтів салонів.
+      Працює паралельно з AI чатом і використовує ту ж базу даних (per-country PostgreSQL).
+      Інтеграція з AIHelps CRM для реальних слотів і створення записів.
+    </p>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Доступ для клієнтів</h2>
+    <ul class="text-sm text-slate-700 space-y-2">
+      <li>• <strong>Домен:</strong> <a href="https://booking.p-de-p.com" target="_blank" class="text-violet-600 hover:underline">https://booking.p-de-p.com</a></li>
+      <li>• <strong>Country picker</strong> на головній — клієнт обирає UK / UA / PL.</li>
+      <li>• <strong>Salon picker</strong> — багаторівневий dropdown по містах і конкретних салонах.</li>
+      <li>• <strong>Deep link до конкретного салону:</strong> <code>https://booking.p-de-p.com/{salon-code}/{lang}</code> (наприклад <code>/l1/UA</code>).</li>
+      <li>• <strong>AI чат банер</strong> у застосунку: натискання → <code>https://ai-chat.p-de-p.com/chat/start?salon_id={uuid}</code> — клієнт одразу потрапляє в AI чат свого салону.</li>
+    </ul>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Адмінка booking</h2>
+    <ul class="text-sm text-slate-700 space-y-2">
+      <li>• <strong>URL:</strong> <a href="https://booking.p-de-p.com/admin" target="_blank" class="text-violet-600 hover:underline">https://booking.p-de-p.com/admin</a></li>
+      <li>• <strong>Логін:</strong> <code>bookadm</code></li>
+      <li>• <strong>Пароль:</strong> зберігається у менеджера / у <code>/opt/pdpbooking/app/.env</code> (BOOKADM_PASSWORD)</li>
+    </ul>
+    <p class="text-sm text-slate-700 leading-relaxed mt-3">
+      Адмінка має дві ролі:
+    </p>
+    <ul class="text-sm text-slate-700 space-y-1 mt-1 ml-4">
+      <li>• <strong>admin</strong> — менеджер конкретного салону: redакція послуг, перегляд статистики, увімкнення/вимкнення AI чату.</li>
+      <li>• <strong>superadmin</strong> — повний доступ: створення салонів, локацій, користувачів, платіжних систем; bulk-toggle AI-чат банера на всіх салонах.</li>
+    </ul>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Технологічно</h2>
+    <ul class="text-sm text-slate-700 space-y-2">
+      <li>• <strong>Стек:</strong> Python 3.12 + <strong>Flask</strong> + gunicorn (3 workers) під systemd (<code>pdpbooking.service</code>).</li>
+      <li>• <strong>Хостинг:</strong> той же DigitalOcean droplet що й AI чат (<code>167.172.100.158</code>).</li>
+      <li>• <strong>Шлях:</strong> <code>/opt/pdpbooking/app/</code>; gunicorn слухає <code>127.0.0.1:5050</code>.</li>
+      <li>• <strong>Nginx:</strong> reverse-proxy <code>booking.p-de-p.com</code> → 5050 + Let's Encrypt SSL.</li>
+      <li>• <strong>База даних:</strong> та сама PostgreSQL що й AI чат. Booking читає <code>booking.salons</code>, <code>{country}.service</code>, <code>{country}.employee</code>.</li>
+      <li>• <strong>CRM integration:</strong> AIHelps API через <code>appointmentService.py</code> — створення записів, freetime, employees.</li>
+      <li>• <strong>Frontend:</strong> Jinja2 + vanilla JS + інтeрактивний DOM (без React/Vue).</li>
+      <li>• <strong>Cache busting:</strong> mtime-based query params автоматично для CSS/JS.</li>
+    </ul>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Як AI чат і Booking працюють разом</h2>
+    <ol class="text-sm text-slate-700 space-y-2 ml-4">
+      <li><strong>1. Клієнт у Booking</strong> бачить банер "Зробіть замовлення через AI чат" вгорі сторінки салону.</li>
+      <li><strong>2. Натискає</strong> → переходить на <code>/chat/start?salon_id=&lt;uuid&gt;</code> — AI чат автоматично починає розмову з контекстом цього салону.</li>
+      <li><strong>3. AI чат</strong> підбирає послугу, майстра, час → створює запис через AIHelps API → той самий CRM що використовує Booking.</li>
+      <li><strong>4. Запис</strong> зʼявляється у CRM як від Booking, так і від AI чату — менеджер бачить єдиний потік.</li>
+    </ol>
+    <p class="text-sm text-slate-700 leading-relaxed mt-3">
+      Toggle банера AI чату — у адмінці Booking → Салони → Edit → "AI чат".
+      Bulk-увімкнення для всіх салонів — superadmin only.
+    </p>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Детальна документація Booking</h2>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      Повний опис керування Booking — у самій адмінці Booking:
+      <a href="https://booking.p-de-p.com/admin/docs" target="_blank" class="text-violet-600 hover:underline font-medium">
+        booking.p-de-p.com/admin/docs
+      </a>
+    </p>
+  </section>
+</div>

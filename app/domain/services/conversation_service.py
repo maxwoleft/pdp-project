@@ -106,6 +106,7 @@ class ConversationService:
         self,
         messages: list[IncomingMessage],
         on_tool_event=None,
+        session_factory=None,
     ) -> str:
         """Web flow: синхронна обробка без messenger.send.
         Будує content з messages (text/audio вже транскрибовані на рівні роута,
@@ -156,8 +157,40 @@ class ConversationService:
             text_for_history[:200],
         )
 
+        # Capture tool events для persist у БД
+        captured_tools: list[dict[str, Any]] = []
+        _running_tools: dict[str, dict[str, Any]] = {}
+
+        async def _capture_event(stage: str, name: str) -> None:
+            if stage == "start":
+                _running_tools[name] = {"name": name, "stage": "start"}
+            elif stage == "end":
+                _running_tools.pop(name, None)
+                captured_tools.append({"name": name})
+            # ланцюг — викликаємо також user-callback якщо є
+            if on_tool_event is not None:
+                try:
+                    await on_tool_event(stage, name)
+                except Exception:
+                    pass
+
         agent = self._agents.get_agent(first.country)
-        reply_text = await agent.respond(conversation, merged_content, on_tool_event=on_tool_event)
+        try:
+            reply_text = await agent.respond(conversation, merged_content, on_tool_event=_capture_event)
+        except Exception as exc:
+            log.exception("agent.respond failed: %s", exc)
+            if session_factory is not None:
+                try:
+                    from app.infrastructure.db.repositories.bot_error_repo import record_error
+                    await record_error(
+                        session_factory,
+                        source="agent:respond", exc=exc,
+                        chat_id=first.external_chat_id,
+                        country=first.country, salon_id=conversation.salon_id,
+                    )
+                except Exception:
+                    pass
+            reply_text = ""
         log.info("[WEB REPLY] chat=%s | ASSISTANT: %r", first.external_chat_id, reply_text[:300])
 
         conversation.history.append(
@@ -165,6 +198,26 @@ class ConversationService:
         )
         conversation.history.append(ConversationTurn(role="assistant", content=reply_text))
         await self._cache.save(conversation)
+
+        # Persist у БД для admin перегляду
+        if session_factory is not None:
+            try:
+                from app.infrastructure.db.repositories.dialog_repo import record_turn
+                async with session_factory() as session:
+                    await record_turn(
+                        session,
+                        chat_id=first.external_chat_id,
+                        country=first.country,
+                        salon_id=conversation.salon_id,
+                        user_text=text_for_history,
+                        user_has_image=has_image,
+                        assistant_text=reply_text,
+                        tool_calls=captured_tools,
+                    )
+                    await session.commit()
+            except Exception as exc:
+                log.warning("dialog persist failed: %s", exc)
+
         return reply_text
 
     async def _load_conversation(self, msg: IncomingMessage) -> Conversation:

@@ -1,0 +1,362 @@
+[
+    {
+        "id": "88ddd341-72e8-be19-6bfa-a8a6241c8832",
+        "name": "Add on blow dry package",
+        "parent": "88dda4e6-84be-c5b4-4c76-66035102211c",
+        "picture": null,
+        "archive": false,
+        "parentName": "Add-on hair"
+    },
+    {
+        "id": "88dc8950-8560-bf4d-5855-d4146620eb68",
+        "name": "Add-on EN PODOLOGY / UA Подологія / RUS Подология",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88de208e-e63b-e933-5a5c-13b60a5ddccb",
+        "name": "Add-on EN WAXING / UA Воскова депіляція / RUS Восковая депиляция",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dda4e6-84be-c5b4-4c76-66035102211c",
+        "name": "Add-on hair",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88ddf11c-ac96-487b-302b-27b37f84a76d",
+        "name": "Add-on make up",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88ddf11c-d461-b0f4-302b-27b30e6df369",
+        "name": "Add-on massage",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dda4e6-b7cc-7986-4c76-6603088802ca",
+        "name": "Add-on nail",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88ddbed6-ab1a-09f3-4cc3-f006778c7e53",
+        "name": "Add-on PACKEGES 2025",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc86fe-1c22-ed9c-79c2-2a9d51f3c826",
+        "name": "EN Add-on Colouring / UA Фарбування (додатково) / RUS Окрашивание (дополнительно)",
+        "parent": "88dda4e6-84be-c5b4-4c76-66035102211c",
+        "picture": null,
+        "archive": false,
+        "parentName": "Add-on hair"
+    },
+    {
+        "id": "88de6a1c-6e88-d9b6-4878-58cd7c0102ea",
+        "name": "EN Add-on extentions / UA Нарощене волосся / RU Нарощенные волосы",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc86ff-37e3-c120-79c2-2a9d521892d9",
+        "name": "EN Add-on haircut, curls / UA Стрижки, локони (Додатково) / RUS Стрижки, локоны (дополнительно)",
+        "parent": "88dda4e6-84be-c5b4-4c76-66035102211c",
+        "picture": null,
+        "archive": false,
+        "parentName": "Add-on hair"
+    },
+    {
+        "id": "88dc894b-2363-8acc-5855-d414072fec17",
+        "name": "EN Add-on Manicure / UA Доповнення до манікюру / RUS Дополнение к маникюру",
+        "parent": "88dda4e6-b7cc-7986-4c76-6603088802ca",
+        "picture": null,
+        "archive": false,
+        "parentName": "Add-on nail"
+    },
+    {
+        "id": "88dc894b-cd9f-9756-5855-d414566a3910",
+        "name": "EN Add-on Manicure TOP / UA Доповнення до манікюру ТОП / RUS Дополнение к маникюру ТОП",
+        "parent": "88dda4e6-b7cc-7986-4c76-6603088802ca",
+        "picture": null,
+        "archive": false,
+        "parentName": "Add-on nail"
+    },
+    {
+        "id": "88dc86e9-3403-d494-79c2-2a9d58a6bffb",
+        "name": "EN Add-on Treatment / UA Додатковий догляд / RUS Дополнительный уход",
+        "parent": "88dda4e6-84be-c5b4-4c76-66035102211c",
+        "picture": null,
+        "archive": false,
+        "parentName": "Add-on hair"
+    },
+    {
+        "id": "88dc86e8-bf18-e660-79c2-2a9d6eca7def",
+        "name": "EN Colouring. Highlight techniques. / UA Фарбування. Техніки висвітлення. / RUS Окрашивания. Техники осветления.",
+        "parent": "88dc8705-dec0-bc5e-79c2-2a9d347f445f",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN HAIR / UA Волосся / RUS Волосы"
+    },
+    {
+        "id": "88ddd107-57ec-e5f9-58c5-e20f2a74530c",
+        "name": "EN Colouring. Permanent. / UA Фарбування. Перманентні./ RUS Окрашивания. Перманентные.",
+        "parent": "88dc8705-dec0-bc5e-79c2-2a9d347f445f",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN HAIR / UA Волосся / RUS Волосы"
+    },
+    {
+        "id": "88ddd108-9795-3808-58c5-e20f1a70bba8",
+        "name": "EN Colouring. Toning. / UA Фарбування. Тонування. / RUS Окрашивания. Тонирования.",
+        "parent": "88dc8705-dec0-bc5e-79c2-2a9d347f445f",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN HAIR / UA Волосся / RUS Волосы"
+    },
+    {
+        "id": "88dda049-f69a-41e6-6212-8bb90fa94c30",
+        "name": "EN Consultation / UA Консультація / RUS Консультация",
+        "parent": "88dc8705-dec0-bc5e-79c2-2a9d347f445f",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN HAIR / UA Волосся / RUS Волосы"
+    },
+    {
+        "id": "88dc8706-73fb-8d5e-79c2-2a9d3e0ff882",
+        "name": "EN Eyebrow lamination / UA Ламінування брів / RUS Ламинирование бровей",
+        "parent": "88dc8706-2e1d-63f2-79c2-2a9d123a5900",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN MAKE UP / UA Візаж / RUS Визаж"
+    },
+    {
+        "id": "88dc8704-6093-1a9a-79c2-2a9d5a7409c9",
+        "name": "EN Eyebrows / UA Брови / RUS Брови",
+        "parent": "88dc8706-2e1d-63f2-79c2-2a9d123a5900",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN MAKE UP / UA Візаж / RUS Визаж"
+    },
+    {
+        "id": "88dc8705-b4c6-96ed-79c2-2a9d6f31c2dd",
+        "name": "EN Eyelash lamination / UA Ламінування вій / RUS Ламинирование ресниц",
+        "parent": "88dc8706-2e1d-63f2-79c2-2a9d123a5900",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN MAKE UP / UA Візаж / RUS Визаж"
+    },
+    {
+        "id": "88dc8705-dec0-bc5e-79c2-2a9d347f445f",
+        "name": "EN HAIR / UA Волосся / RUS Волосы",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc856e-445f-66ef-494d-92a1216015b4",
+        "name": "EN Hair extentions / UA Нарощення волосся / RUS Наращивание волос",
+        "parent": "88dc8705-dec0-bc5e-79c2-2a9d347f445f",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN HAIR / UA Волосся / RUS Волосы"
+    },
+    {
+        "id": "88dc8954-6279-4af7-5855-d4140687044c",
+        "name": "EN Hair MEN / UA Волосся чоловіче / RUS Волосы мужские",
+        "parent": "88dc8954-2fbf-388c-5855-d4147d34caa6",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN MEN / UA Чоловіки / RUS Мужчины"
+    },
+    {
+        "id": "88ddb592-a817-2b4c-2674-be830a53ae42",
+        "name": "EN Icoone / UA Айкун / RU Айкун",
+        "parent": "88ddb58b-ef3e-57c4-2674-be83553de863",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN Icoone, Stratosphere / UA Айкун, Стратосфера / RU Айкун, Стратосфера"
+    },
+    {
+        "id": "88ddb58b-ef3e-57c4-2674-be83553de863",
+        "name": "EN Icoone, Stratosphere / UA Айкун, Стратосфера / RU Айкун, Стратосфера",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc7bf6-b021-586a-02f3-a94418cd8d2f",
+        "name": "EN Ladies Blow dry/Hairstyle / UA Жіночі укладки/зачіски / RUS Женские укладки/прически",
+        "parent": "88dc8705-dec0-bc5e-79c2-2a9d347f445f",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN HAIR / UA Волосся / RUS Волосы"
+    },
+    {
+        "id": "88dc856a-9e0e-4ea8-494d-92a14886160f",
+        "name": "EN Ladies Haircut / UA Жіночі стрижки / RUS Женские стрижки",
+        "parent": "88dc8705-dec0-bc5e-79c2-2a9d347f445f",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN HAIR / UA Волосся / RUS Волосы"
+    },
+    {
+        "id": "88dc8704-eda1-cb5c-79c2-2a9d6ba0897b",
+        "name": "EN Lashes / UA Вії / RUS Ресници",
+        "parent": "88dc8706-2e1d-63f2-79c2-2a9d123a5900",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN MAKE UP / UA Візаж / RUS Визаж"
+    },
+    {
+        "id": "88dc8706-2e1d-63f2-79c2-2a9d123a5900",
+        "name": "EN MAKE UP / UA Візаж / RUS Визаж",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc8703-ecd9-3616-79c2-2a9d2387fba6",
+        "name": "EN Make up / UA Макіяж / RUS Макияж",
+        "parent": "88dc8706-2e1d-63f2-79c2-2a9d123a5900",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN MAKE UP / UA Візаж / RUS Визаж"
+    },
+    {
+        "id": "88dc892a-7ef6-fc90-5855-d414104fbbc4",
+        "name": "EN Manicure / UA Манікюр / RUS Маникюр",
+        "parent": "88dc8706-c204-a51c-79c2-2a9d742f1e67",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN NAIL / UA Манікюр/Педикюр / RUS Маникюр/Педикюр"
+    },
+    {
+        "id": "88ddb877-c958-5c3d-0fd4-b10e4794fe57",
+        "name": "EN Massage / UA Масаж/ RU Массаж",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc8954-2fbf-388c-5855-d4147d34caa6",
+        "name": "EN MEN / UA Чоловіки / RUS Мужчины",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc8706-c204-a51c-79c2-2a9d742f1e67",
+        "name": "EN NAIL / UA Манікюр/Педикюр / RUS Маникюр/Педикюр",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc894b-9c4c-5a16-5855-d41457d3bcec",
+        "name": "EN Nail extension/Correction / UA Нарощування/корекція нігтів / RUS Наращивание/коррекция ногтей",
+        "parent": "88dc8706-c204-a51c-79c2-2a9d742f1e67",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN NAIL / UA Манікюр/Педикюр / RUS Маникюр/Педикюр"
+    },
+    {
+        "id": "88dc8954-689a-7217-5855-d4143c311adc",
+        "name": "EN Nail MEN / UA Нігті чоловічі / RUS Ногти мужские",
+        "parent": "88dc8954-2fbf-388c-5855-d4147d34caa6",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN MEN / UA Чоловіки / RUS Мужчины"
+    },
+    {
+        "id": "88ddc381-9cd5-d31a-6d38-1dba13558a9e",
+        "name": "EN Offers of the month / UA Пропозиції місяця / RUS Предложения месяца",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc894c-e3ec-eeda-5855-d41409b5a191",
+        "name": "EN Pedicure / UA Педикюр / RUS Педикюр",
+        "parent": "88dc8706-c204-a51c-79c2-2a9d742f1e67",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN NAIL / UA Манікюр/Педикюр / RUS Маникюр/Педикюр"
+    },
+    {
+        "id": "88dda417-4fb4-bf20-021b-2594181d2cae",
+        "name": "EN PODOLOGY TOP/ UA Подологія ТОП/ RUS Подология ТОП",
+        "parent": "88dc8950-8560-bf4d-5855-d4146620eb68",
+        "picture": null,
+        "archive": false,
+        "parentName": "Add-on EN PODOLOGY / UA Подологія / RUS Подология"
+    },
+    {
+        "id": "88dc894c-5504-6b9a-5855-d414684c212b",
+        "name": "EN SPA Manicure / UA SPA-манікюр / RUS SPA-маникюр",
+        "parent": "88dc8706-c204-a51c-79c2-2a9d742f1e67",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN NAIL / UA Манікюр/Педикюр / RUS Маникюр/Педикюр"
+    },
+    {
+        "id": "88dc894f-8778-6cc3-5855-d41401621f40",
+        "name": "EN SPA Pedicure / UA SPA-педикюр / RUS-педикюр",
+        "parent": "88dc8706-c204-a51c-79c2-2a9d742f1e67",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN NAIL / UA Манікюр/Педикюр / RUS Маникюр/Педикюр"
+    },
+    {
+        "id": "88ddb592-6935-69c4-2674-be836c2c2bbf",
+        "name": "EN Stratosphere / UA Стратосфера / RU Стратосфера",
+        "parent": "88ddb58b-ef3e-57c4-2674-be83553de863",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN Icoone, Stratosphere / UA Айкун, Стратосфера / RU Айкун, Стратосфера"
+    },
+    {
+        "id": "88dc7bef-c83f-4710-02f3-a944416613a6",
+        "name": "EN Treatment / UA Догляд / RUS Уход",
+        "parent": "88dc8705-dec0-bc5e-79c2-2a9d347f445f",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN HAIR / UA Волосся / RUS Волосы"
+    },
+    {
+        "id": "88dc8954-783b-ca48-5855-d4147344aea2",
+        "name": "EN Visage MEN / UA Візаж чоловічий / RUS Визаж мужской",
+        "parent": "88dc8954-2fbf-388c-5855-d4147d34caa6",
+        "picture": null,
+        "archive": false,
+        "parentName": "EN MEN / UA Чоловіки / RUS Мужчины"
+    }
+]

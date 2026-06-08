@@ -1,0 +1,51 @@
+{% extends "_layout.html" %}
+{% block title %}Історія: {{ title }}{% endblock %}
+
+{% block main %}
+<div class="px-8 py-7 max-w-4xl">
+  <a href="/admin/settings/edit/{{ path }}" class="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 mb-3">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
+    </svg>
+    Назад до редагування
+  </a>
+
+  <header class="mb-5">
+    <h1 class="text-2xl font-semibold text-slate-900">Історія: {{ title }}</h1>
+    <p class="text-sm text-slate-500 mt-1 font-mono">{{ path }}</p>
+  </header>
+
+  {% if versions %}
+  <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    <ul class="divide-y divide-slate-100">
+      {% for v in versions %}
+      <li class="px-5 py-4 hover:bg-slate-50 transition">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-medium text-slate-800">
+              {{ v.saved_at.strftime('%Y-%m-%d %H:%M:%S') if v.saved_at }}
+            </div>
+            <div class="text-xs text-slate-500 mt-0.5">
+              {{ v.saved_by or 'system' }} · {{ v.size_bytes }} байт
+            </div>
+            <pre class="mt-2 text-xs text-slate-600 bg-slate-50 rounded p-2 font-mono whitespace-pre-wrap break-words">{{ v.preview }}{% if v.preview|length >= 200 %}…{% endif %}</pre>
+          </div>
+          <form method="post" action="/admin/settings/restore/{{ v.id }}"
+                onsubmit="return confirm('Відкатити до цієї версії? Поточна буде збережена в історії.')">
+            <button type="submit"
+                    class="px-3 py-1.5 bg-violet-50 hover:bg-violet-100 text-violet-700 text-xs rounded-lg border border-violet-200">
+              ↺ Відкатити
+            </button>
+          </form>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% else %}
+  <div class="bg-white rounded-xl border border-slate-200 p-10 text-center text-slate-400">
+    <p class="text-sm">Поки немає історії змін цього файлу.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

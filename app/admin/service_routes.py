@@ -35,10 +35,12 @@ async def services_list(
     page = max(1, page)
 
     # 1. Salons for filter dropdowns
+    # Salon переїхав у booking.salons (global з country колонкою).
     salons_sql = sql_text(
-        f"SELECT id, name, city FROM {country}.salon WHERE archive = false ORDER BY city, name"
+        "SELECT id, name, city FROM booking.salons "
+        "WHERE archive = false AND country = :country ORDER BY city, name"
     )
-    salons_rows = (await session.execute(salons_sql)).fetchall()
+    salons_rows = (await session.execute(salons_sql, {"country": country})).fetchall()
     salons = [{"id": r[0], "name": r[1], "city": r[2]} for r in salons_rows]
 
     # Unique cities
@@ -91,7 +93,7 @@ async def services_list(
                s.gender, s.canonical_key,
                sal.name as salon_name, sal.city as salon_city
         FROM {country}.service s
-        JOIN {country}.salon sal ON sal.id = s.salon_id
+        JOIN booking.salons sal ON sal.id = s.salon_id
         WHERE {where_clause}
         ORDER BY sal.city, sal.name, s.name
         LIMIT :lim OFFSET :off
@@ -158,11 +160,13 @@ async def api_salons_by_city(
 ):
     """HTMX endpoint: повертає <option> для select салонів при зміні міста."""
     sql = sql_text(
-        f"SELECT id, name FROM {country}.salon WHERE archive = false "
+        "SELECT id, name FROM booking.salons WHERE archive = false AND country = :country "
         + ("AND city = :city " if city else "")
         + "ORDER BY name"
     )
-    params = {"city": city} if city else {}
+    params = {"country": country}
+    if city:
+        params["city"] = city
     rows = (await session.execute(sql, params)).fetchall()
 
     options = '<option value="">Усі салони</option>'

@@ -1,0 +1,115 @@
+{% extends "_layout.html" %}
+{% block title %}{{ title }} — Налаштування{% endblock %}
+
+{% block main %}
+<div class="px-8 py-7 max-w-5xl">
+  <a href="/admin/settings" class="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 mb-3">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
+    </svg>
+    Усі налаштування
+  </a>
+
+  <header class="mb-4 flex items-start justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">{{ title }}</h1>
+      <p class="text-sm text-slate-500 mt-1">{{ desc }}</p>
+      <p class="text-xs text-slate-400 mt-1 font-mono">{{ path }}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      {% if saved %}
+      <div class="bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2 text-sm text-emerald-800 flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/>
+        </svg>
+        Збережено · AI оновлено
+      </div>
+      {% endif %}
+      <a href="/admin/settings/history/{{ path }}"
+         class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm rounded-lg border border-slate-300 inline-flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+        </svg>
+        Історія
+      </a>
+    </div>
+  </header>
+
+  <div class="bg-violet-50 border border-violet-200 rounded-lg p-3 mb-4 text-xs text-violet-800">
+    <strong>Variables:</strong> можна використовувати <code>{currency}</code>, <code>{country_code}</code>,
+    <code>{country_name}</code>, <code>{lang_default}</code> — підставляється автоматично залежно від країни.
+    Приклад: ціни вкажи у <code>{currency}</code> → UA побачить "грн", PL → "zł", GB → "£".
+  </div>
+
+  {% if test_run_id %}
+  <div x-data="{
+         status: 'running', passed: 0, total: 0, details: [],
+         async poll() {
+           const r = await fetch('/admin/settings/test_run/{{ test_run_id }}');
+           const d = await r.json();
+           this.status = d.status; this.passed = d.passed || 0;
+           this.total = d.total || 0; this.details = d.details || [];
+           if (this.status === 'running') setTimeout(() => this.poll(), 3000);
+         }
+       }" x-init="poll()"
+       class="bg-white border border-slate-200 rounded-lg p-4 mb-4">
+    <div class="flex items-center justify-between mb-2">
+      <h3 class="text-sm font-semibold text-slate-800">🧪 Regression smoke test</h3>
+      <span x-show="status === 'running'" class="text-xs text-blue-700 bg-blue-50 px-2 py-1 rounded">
+        Виконується… (≈60 сек)
+      </span>
+      <span x-show="status === 'passed'" class="text-xs text-emerald-700 bg-emerald-50 px-2 py-1 rounded font-medium">
+        ✓ Всі тести pass (<span x-text="passed"></span>/<span x-text="total"></span>)
+      </span>
+      <span x-show="status === 'failed'" class="text-xs text-rose-700 bg-rose-50 px-2 py-1 rounded font-medium">
+        ✗ Регресія: <span x-text="passed"></span>/<span x-text="total"></span>
+      </span>
+    </div>
+    <div x-show="details.length > 0" class="space-y-1 text-xs">
+      <template x-for="d in details" :key="d.id">
+        <div class="flex items-start gap-2">
+          <span :class="d.passed ? 'text-emerald-600' : 'text-rose-600'" class="font-mono">
+            <span x-text="d.passed ? '✓' : '✗'"></span>
+          </span>
+          <span class="font-mono text-slate-500 shrink-0" x-text="d.id"></span>
+          <span class="text-slate-600 truncate" x-text="d.query || ''"></span>
+        </div>
+      </template>
+    </div>
+  </div>
+  {% endif %}
+
+  <form method="post" action="/admin/settings/edit/{{ path }}" class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    <div class="px-4 py-2 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+      <div class="flex items-center gap-2 text-xs text-slate-500">
+        <span class="font-mono">.md</span>
+        <span>·</span>
+        <span x-data="{ count: 0 }" x-init="count = $refs.ta.value.length"
+              x-text="`${count} символів`"></span>
+      </div>
+      <button type="submit"
+              class="px-4 py-1.5 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg transition">
+        💾 Зберегти
+      </button>
+    </div>
+    <textarea name="content" x-ref="ta" @input="count = $event.target.value.length" rows="28"
+              class="block w-full px-5 py-4 text-sm font-mono leading-relaxed text-slate-800 bg-white
+                     outline-none resize-y border-0 focus:ring-0">{{ content }}</textarea>
+    <div class="px-4 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
+      <div>
+        Markdown синтаксис. Заголовки <code>##</code>, списки <code>-</code>, code <code>`</code>.
+      </div>
+      <button type="submit"
+              class="px-4 py-1.5 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg transition">
+        💾 Зберегти і застосувати
+      </button>
+    </div>
+  </form>
+
+  <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-xs text-amber-900 mt-5">
+    <strong>⚠ Увага:</strong> Це частина system prompt що AI бачить кожне повідомлення. Зміни тут впливають на
+    <strong>усі країни та салони</strong>. Після збереження кеш AI очищається — наступний клієнт працюватиме
+    з оновленим prompt. Попередня версія збережена у <code>{{ path }}.bak</code>.
+  </div>
+</div>
+{% endblock %}

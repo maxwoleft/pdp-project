@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="{{ lang.lower() }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ translations["successPageTitle"] }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='fonts/GothamPro/stylesheet.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='fonts/Arsenica_Trial_Italic/stylesheet.css') }}"
+    />
+    <style>
+
+      html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+        outline: none;
+        font-weight: 400;
+        font-family: 'Gotham Pro', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+
+      }
+      html { height: 101%; } /* always display scrollbars */
+
+        .priceserviceicon {
+          width: 20px;
+          height: 20px;
+          padding: 10px;
+          background: white;
+          border-radius: 50%;
+        }
+
+      </style>
+
+  </head>
+<body style="margin:0;padding:0;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" style="border-collapse:collapse;">
+          
+          <!-- Блок с изображением -->
+          <tr>
+            <td style="padding:0;">
+              <img src="{{ url_for('static', filename='img/email/email-img.png') }}" alt="" style="display:block;width:100%;height:auto;">
+            </td>
+          </tr>
+
+          <!-- Блок с заголовком и описанием -->
+          <tr>
+            <td align="left" style="padding:24px;">
+              <div style="font-weight:700;font-size:40px;line-height:120%;letter-spacing:-0.03em;text-transform:uppercase;margin-bottom:16px;">
+                {{ customerName }}, {{ translations["confirmAppointText"] }}
+              </div>
+              <div style="font-weight:500;font-size:14px;line-height:150%;letter-spacing:0%;">
+                {{ translations["confirmAppointText2"] }}
+              </div>
+            </td>
+          </tr>
+
+          <!-- Блок с услугами -->
+          <tr>
+            <td style="padding:0 24px;">
+              {{ servicesSummary|safe }}
+            </td>
+          </tr>
+
+          <!-- Кнопка -->
+          {% if show_buttons|default(True) %}
+          <tr>
+            <td align="center" style="padding:24px;">
+              <a href="{{ base_url }}" style="background:#000;color:#fff;text-decoration:none;padding:10px 20px;border-radius:4px;display:inline-block;">
+                {{ translations["onMainBtnName"] }}
+              </a>
+            </td>
+          </tr>
+          {% endif %}
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>

@@ -28,12 +28,39 @@ from app.domain.services.canonical_dicts import (
     get_canonical_brand,
 )
 
+# Кирилічні ↔ латинські візуально однакові символи. CRM-менеджери інколи
+# мікс-друкують (наприклад "Тokio" з кирил. Т) — це робить brand detection
+# false-negative. Нормалізуємо: якщо слово має І латиницю І кирилицю,
+# look-alikes конвертуємо у латиницю.
+_CYR_TO_LAT_LOOKALIKE = str.maketrans({
+    "а": "a", "е": "e", "о": "o", "с": "c", "р": "p", "х": "x",
+    "і": "i", "у": "y", "к": "k", "м": "m", "н": "h", "т": "t",
+    "А": "A", "Е": "E", "О": "O", "С": "C", "Р": "P", "Х": "X",
+    "І": "I", "У": "Y", "К": "K", "М": "M", "Н": "H", "Т": "T",
+    "В": "B", "ѕ": "s", "Ѕ": "S",
+})
+
+
+def _normalize_mixed_script(text: str) -> str:
+    """Якщо слово має і латиницю і кирилицю — replace кирил. look-alikes."""
+    has_lat = re.compile(r"[A-Za-z]")
+    has_cyr = re.compile(r"[Ѐ-ӿ]")
+    out = []
+    for chunk in re.findall(r"\S+|\s+", text):
+        if has_lat.search(chunk) and has_cyr.search(chunk):
+            out.append(chunk.translate(_CYR_TO_LAT_LOOKALIKE))
+        else:
+            out.append(chunk)
+    return "".join(out)
+
 # ── Регулярки для видалення варіативних суфіксів ──────────────────
 
 # Довжина волосся / нігтів
 _LENGTH_PATTERNS = [
     re.compile(r"\b[\d/]+\s*(?:дов?жин\w*|довжн\w*|длин\w*|length|długoś\w*)\b", re.IGNORECASE),
     re.compile(r"\b(?:дов?жин\w*|довжн\w*|длин\w*|length|długoś\w*)\s*[\d/]+\b", re.IGNORECASE),
+    # Standalone length word (без числа): "тонування довжини", "укладка довжина"
+    re.compile(r"\b(?:дов?жин[аиуыіe]|довжн[аиуы]|длин[ауыое]|długoś\w*)\b", re.IGNORECASE),
     re.compile(r"\(\s*(?:short|medium|long|extra long|tailbone length|junior)\s*\)", re.IGNORECASE),
     re.compile(
         r"\(\s*(?:коротке волосся|середнє волосся|довге волосся|дуже довге волосся|"
@@ -214,8 +241,9 @@ def _make_slug(text: str, sort_tokens: bool = True) -> str:
     if not text:
         return ""
     if sort_tokens:
-        tokens = [t for t in text.split("_") if t]
-        tokens.sort()
+        # set() — dedup токенів (наприклад після synonym що схлопнув варіанти
+        # в одне слово, не хочемо "afrokudri_afrokudri")
+        tokens = sorted({t for t in text.split("_") if t})
         text = "_".join(tokens)
     return text[:100]
 
@@ -250,8 +278,9 @@ def extract_attributes(name: str) -> dict:
     # 1. Multi-language CRM — беремо UA частину
     text = extract_uk_part_from_crm(name)
 
-    # 2. Lower-case + нормалізація опечаток і синонімів
+    # 2. Lower-case + нормалізація mixed-script + опечаток + синонімів
     text = text.lower()
+    text = _normalize_mixed_script(text)
     text = apply_typo_fixes(text)
     text = apply_synonyms(text)
 

@@ -1,0 +1,62 @@
+<header class="main-header">
+        <div class="header-container">
+            <button id="hamburgerBtn" class="hamburger-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="header-left">
+                <a href="{{ url_for('select_location_lang', lang=lang.lower() if lang else 'en') }}">{{ translations["menuMain"] if translations else "Main" }}</a>
+                <a href="{{ url_for('select_location_lang', lang=lang.lower() if lang else 'en') }}">{{ translations["menuLocations"] if translations else "Locations" }}</a>
+                <a href="https://p-de-p.co.uk/about-us-en/">{{ translations["menuAbout"] if translations else "About us" }}</a>
+            </div>
+            <a href="/" class="header-logo">
+            <svg class="logo__image black-logo-image" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 27.125 125 25.374999999999996" style="max-height: 500px" width="125" height="25.374999999999996"><path fill="#0E0D0A" d="M36.5 35.3v-1.43h4.35v1.42H36.5zM66.58 35.3v-1.43h4.36v1.42h-4.36zM0 38.95v-8.7h4.53c2.2 0 3.38.84 3.38 2.9 0 2.07-1.19 3.02-3.38 3.02H2.2V39L0 38.95zm4.35-4.66c.98 0 1.57-.24 1.57-1.08 0-.85-.62-1.09-1.57-1.09H2.2v2.17h2.15zM9.73 38.95v-8.7h2.1v8.7h-2.1zM14 38.95v-8.7h7.42v1.88h-5.34v1.54h4.7v1.62h-4.7v1.67h5.51v1.94l-7.6.05zM23.73 38.95v-8.7h4.4c3.49 0 5.06 1.85 5.06 4.35 0 2.5-2 4.35-5.05 4.35h-4.41zm4.22-1.93c1.73 0 3.05-.66 3.05-2.4 0-1.74-1.18-2.52-3.05-2.52h-2.12v4.92h2.12zM44.07 38.95v-8.7h4.4c3.49 0 5.06 1.85 5.06 4.35 0 2.5-2 4.35-5.06 4.35h-4.4zm4.22-1.93c1.73 0 3.05-.66 3.05-2.4 0-1.74-1.18-2.52-3.05-2.52H46.2v4.92h2.09zM55.67 38.95v-8.7h7.42v1.88h-5.32v1.54h4.7v1.62h-4.7v1.67h5.51v1.94l-7.61.05zM74.25 38.95v-8.7h4.53c2.2 0 3.38.84 3.38 2.9 0 2.07-1.19 3.02-3.38 3.02h-2.3V39l-2.23-.04zm4.35-4.66c.98 0 1.57-.24 1.57-1.08 0-.85-.62-1.09-1.57-1.09H76.5v2.17h2.11zM89.24 39.13c-2.99 0-5.32-1.74-5.32-4.46 0-2.71 2.12-4.63 5.32-4.63s5.37 1.92 5.37 4.63c0 2.72-2.26 4.46-5.37 4.46zm0-7.14c-1.81 0-3.19 1.01-3.19 2.68 0 1.68 1.41 2.55 3.19 2.55 1.77 0 3.18-.88 3.18-2.55 0-1.66-1.34-2.68-3.18-2.68zM103.3 30.23h2.1v5.37c0 2.7-2.2 3.56-4.4 3.56-2.21 0-4.42-.88-4.42-3.56v-5.37h2.09v5.23c0 1.14.77 1.8 2.35 1.8 1.59 0 2.35-.66 2.35-1.8l-.08-5.23zM107.52 38.97v-8.7h2.1v6.82h5.2V39l-7.3-.04zM116.93 38.97v-8.7h7.43v1.88h-5.38v1.55h4.7v1.62h-4.7v1.73h5.51V39l-7.56-.03zM21.25 46.1c-.4-.3-.9-.46-1.42-.45-.56 0-1.27.26-1.27.93 0 .14.04.28.13.39a.6.6 0 00.36.21c.52.18 1.35.11 1.94.32a.95.95 0 01.68 1c0 1.03-.97 1.3-1.8 1.3a2.3 2.3 0 01-2.01-.89l.33-.31a1.85 1.85 0 001.64.77c.57 0 1.36-.19 1.36-.9a.61.61 0 00-.1-.4.63.63 0 00-.35-.25c-.59-.2-1.27-.12-1.9-.32a1 1 0 01-.6-.36.98.98 0 01-.2-.65c0-.92.94-1.27 1.72-1.27.63-.03 1.24.15 1.74.52l-.25.37zM28.23 49.65l-.69-1.27H24.8l-.68 1.27h-.53l2.39-4.35h.38l2.4 4.35h-.52zm-2.08-3.8l-1.2 2.18h2.42l-1.22-2.17zM31.03 49.65V45.3h.49v3.93h2.93v.43h-3.42zM38.56 49.76a2.3 2.3 0 01-2.28-1.33c-.13-.29-.19-.6-.19-.9a2.25 2.25 0 011.53-2.19c.3-.1.62-.15.94-.12a2.37 2.37 0 012.3 1.38 2.28 2.28 0 010 1.83 2.25 2.25 0 01-1.36 1.23c-.3.1-.62.13-.94.1zm0-4.1a1.87 1.87 0 00-1.87 1.12c-.1.24-.14.5-.14.75a1.77 1.77 0 00.6 1.35 1.82 1.82 0 001.4.46 1.84 1.84 0 001.88-1.07 1.84 1.84 0 00-.44-2.12 1.89 1.89 0 00-1.43-.5zM46.93 49.65l-3.3-3.63v3.63h-.47V45.3h.47l3.26 3.61V45.3h.48v4.35l-.44.01zM54.42 49.65V45.3h2.02a2.13 2.13 0 012.22 1.29c.11.28.16.58.15.89a2.15 2.15 0 01-.7 1.6 2.21 2.21 0 01-1.66.57h-2.03zm2-.42a1.78 1.78 0 001.82-1.03c.1-.23.15-.47.15-.72a1.65 1.65 0 00-.54-1.32 1.7 1.7 0 00-1.37-.44h-1.54v3.5h1.48zM61.08 49.65V45.3h3.47v.42h-3.01v1.52h2.65v.37h-2.65v1.63h3.06v.42h-3.52zM71.48 49.65V45.3h2.2c.96 0 1.44.46 1.44 1.1a.93.93 0 01-.2.64.95.95 0 01-.59.34 1.01 1.01 0 011.05.65c.05.14.07.3.05.44 0 .75-.55 1.25-1.5 1.25l-2.45-.07zm2.2-2.42c.8 0 1-.38 1-.77 0-.4-.33-.75-1.02-.75h-1.72v1.52h1.74zm.13 2c.74 0 1.1-.36 1.1-.85 0-.67-.57-.77-1.16-.77h-1.81v1.63h1.87zM77.88 49.65V45.3h3.47v.42h-3v1.52H81v.37h-2.66v1.63h3.06v.42h-3.52zM88.05 49.65l-.7-1.27H84.6l-.68 1.27h-.52l2.39-4.35h.38l2.4 4.35h-.52zm-2.12-3.8l-1.21 2.18h2.42l-1.2-2.17zM94.1 45.3h.47v2.69c0 1.35-1 1.78-2.07 1.78-1.08 0-2.07-.43-2.07-1.78v-2.7h.47V48c0 .97.72 1.35 1.6 1.35.9 0 1.6-.38 1.6-1.35v-2.7zM98.59 49.65v-3.93h-1.74v-.43h3.94v.43h-1.73v3.93h-.47zM103.1 49.65V45.3h3.48v.42h-3.02v1.52h2.65v.37h-2.65v1.63h3.06v.42h-3.51zm.97-4.6l-.16-.2 2.1-1.55.25.35-2.2 1.4zM68.22 4.32V0l-4.38 4.32h-4.37l-8.74 8.63h4.37l4.37-4.32v4.32h4.37l-4.37 4.31v4.32l8.75-8.63V8.63l4.37-4.31h-4.37z"></path></svg>
+            </a>
+            <div class="header-right">
+            <div class="language-switch">
+                {% for lcode in (enabled_languages or ['en', 'ru', 'ua', 'pl']) %}
+                <div class="{% if lang == lcode|upper %}active{% endif %}">
+                    <a href="{{ url_for('select_location_lang', lang=lcode) }}">{{ lcode|upper }}</a>
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <button id="closeMenuBtn" class="close-menu" aria-label="Close">&times;</button>
+            <nav class="mobile-nav">
+                <a href="{{ url_for('select_location_lang', lang=lang.lower() if lang else 'en') }}">{{ translations["menuMain"] if translations else "Main" }}</a>
+                <div class="grayLine"></div>
+                <a href="{{ url_for('select_location_lang', lang=lang.lower() if lang else 'en') }}">{{ translations["menuLocations"] if translations else "Locations" }}</a>
+                <div class="grayLine"></div>
+                <a href="https://p-de-p.co.uk/about-us-en/">{{ translations["menuAbout"] if translations else "About us" }}</a>
+                <div class="grayLine"></div>
+            </nav>
+            <div class="language-switch">
+                {% for lcode in (enabled_languages or ['en', 'ru', 'ua', 'pl']) %}
+                <div class="{% if lang == lcode|upper %}active{% endif %}">
+                    <a href="{{ url_for('select_location_lang', lang=lcode) }}">{{ lcode|upper }}</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </header>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const closeBtn = document.getElementById('closeMenuBtn');
+            if (hamburger && mobileMenu && closeBtn) {
+                hamburger.addEventListener('click', () => {
+                mobileMenu.classList.add('open');
+                });
+                closeBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                });
+            }
+            });
+
+    </script>
+
+

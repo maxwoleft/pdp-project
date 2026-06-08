@@ -38,6 +38,7 @@ def _translation_to_dict(t) -> dict:
         "aftercare_advice": t.aftercare_advice or "",
         "duration_typical_min": t.duration_typical_min or "",
         "sales_pitch": t.sales_pitch or "",
+        "ckey_overrides": dict(getattr(t, "ckey_overrides", None) or {}),
     }
 
 
@@ -90,8 +91,9 @@ async def profiles_list(
 
     # Список салонів обраної країни (для фільтра)
     salons_rows = (await repo.session.execute(sql_text(
-        f"SELECT id, name, city FROM {country}.salon WHERE archive=false ORDER BY city, name"
-    ))).all()
+        "SELECT id, name, city FROM booking.salons "
+        "WHERE archive=false AND country = :country ORDER BY city, name"
+    ), {"country": country})).all()
     salons = [{"id": r[0], "name": r[1], "city": r[2]} for r in salons_rows]
 
     # Per-profile counts: canonical_keys + services у країні (з salon-фільтром)
@@ -401,6 +403,11 @@ async def profile_detail(
     if profile.canonical_key:
         all_keys.add(profile.canonical_key)
 
+    # Per-ckey overrides з default-language translation (для inline editor)
+    default_lang = profile.default_language or "uk"
+    default_tr = await repo.get_translation(profile_id, default_lang)
+    ckey_overrides_all = dict(getattr(default_tr, "ckey_overrides", None) or {}) if default_tr else {}
+
     # services per key (only profile country) — skip keys без послуг
     keys_breakdown: list[dict] = []
     for k in sorted(all_keys):
@@ -426,11 +433,14 @@ async def profile_detail(
                 if part.startswith("UA "):
                     sample_name = part[3:].strip()
                     break
+        ov = dict(ckey_overrides_all.get(k) or {})
         keys_breakdown.append({
             "canonical_key": k,
             "services": services,
             "description": profile_descs.get(k, ""),
             "sample_name": sample_name,
+            "overrides": ov,
+            "override_lang": default_lang,
         })
 
     return templates.TemplateResponse(
@@ -474,6 +484,74 @@ async def save_key_description_profile(
     profile.key_descriptions = kd
     await repo.session.flush()
     return {"ok": True, "canonical_key": canonical_key, "description": desc}
+
+
+# ── Per-ckey overrides на translation (AJAX, inline editor) ───────
+
+@profile_router.post("/{profile_id}/key-overrides")
+async def save_key_overrides(
+    profile_id: str,
+    canonical_key: str = Form(...),
+    language: str = Form("uk"),
+    addresses_problems: str = Form(""),
+    target_audience: str = Form(""),
+    benefits: str = Form(""),
+    keywords: str = Form(""),
+    sales_pitch: str = Form(""),
+    cross_sell: str = Form(""),
+    user: AdminUser = Depends(current_admin_user),
+    repo: ServiceProfileRepository = Depends(get_profile_repo),
+):
+    """Inline AJAX — оновлює translation.ckey_overrides[canonical_key].
+
+    Кожне поле — multiline текст (items по новій лінії). Пусте поле = очистити
+    override для цього field (fallback на translation default).
+    """
+    profile = await repo.get(profile_id)
+    if not profile:
+        raise HTTPException(404)
+    if language not in SUPPORTED_LANGUAGES:
+        raise HTTPException(400, "Unsupported language")
+
+    def _lines_to_list(raw: str) -> list[str]:
+        return [ln.strip() for ln in (raw or "").splitlines() if ln.strip()]
+
+    new_override: dict[str, object] = {}
+    ap = _lines_to_list(addresses_problems)
+    if ap:
+        new_override["addresses_problems"] = ap
+    ta = _lines_to_list(target_audience)
+    if ta:
+        new_override["target_audience"] = ta
+    b = _lines_to_list(benefits)
+    if b:
+        new_override["benefits"] = b
+    kw = _lines_to_list(keywords)
+    if kw:
+        new_override["keywords"] = kw
+    sp = (sales_pitch or "").strip()
+    if sp:
+        new_override["sales_pitch"] = sp
+    cs = _lines_to_list(cross_sell)
+    if cs:
+        new_override["cross_sell"] = cs
+
+    translation = await repo.get_translation(profile_id, language)
+    if not translation:
+        await repo.upsert_translation(
+            profile_id, language, short_description="",
+            ckey_overrides={canonical_key: new_override} if new_override else {},
+        )
+    else:
+        overrides_all = dict(getattr(translation, "ckey_overrides", None) or {})
+        if new_override:
+            overrides_all[canonical_key] = new_override
+        else:
+            overrides_all.pop(canonical_key, None)
+        translation.ckey_overrides = overrides_all
+        await repo.session.flush()
+    return {"ok": True, "canonical_key": canonical_key, "language": language,
+            "overrides": new_override}
 
 
 # ── Edit translation (main editor) ────────────────────────────────
@@ -527,6 +605,7 @@ async def profile_edit_translation_submit(
     cross_sell: str = Form("[]"),
     duration_typical_min: str = Form(""),
     sales_pitch: str = Form(""),
+    ckey_overrides: str = Form("{}"),
 ):
     profile = await repo.get(profile_id)
     if not profile:
@@ -538,6 +617,14 @@ async def profile_edit_translation_submit(
             duration = int(duration_typical_min)
         except ValueError:
             pass
+
+    import json as _json
+    try:
+        overrides = _json.loads(ckey_overrides) if ckey_overrides.strip() else {}
+        if not isinstance(overrides, dict):
+            overrides = {}
+    except _json.JSONDecodeError:
+        overrides = {}
 
     await repo.upsert_translation(
         profile_id,
@@ -554,6 +641,7 @@ async def profile_edit_translation_submit(
         cross_sell=_parse_json_list(cross_sell),
         duration_typical_min=duration,
         sales_pitch=sales_pitch.strip() or None,
+        ckey_overrides=overrides,
     )
 
     # Update profile updated_at + save version

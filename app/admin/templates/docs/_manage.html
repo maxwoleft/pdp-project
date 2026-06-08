@@ -1,0 +1,167 @@
+{# Керування Сценаріями та Профілями #}
+<div class="prose prose-slate max-w-none">
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Сценарії (Scenarios)</h2>
+
+    <h3 class="text-base font-semibold text-slate-800 mt-3 mb-2">Що це</h3>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      Сценарій — це <strong>заготовлений тестовий діалог</strong> з очікуваною поведінкою AI. Використовується для
+      QA-тестування: чи AI коректно реагує на типові запити клієнтів.
+    </p>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      Кожен сценарій містить:
+    </p>
+    <ul class="text-sm text-slate-700 space-y-1 mt-2">
+      <li>• <strong>Slug</strong> — унікальний ID</li>
+      <li>• <strong>Description</strong> — короткий опис задачі</li>
+      <li>• <strong>Country</strong> — країна салону (ua/pl/gb)</li>
+      <li>• <strong>Turns[]</strong> — список повідомлень клієнта (по одному за раз)</li>
+      <li>• <strong>Expectations[]</strong> — що повинна містити відповідь AI (ключові слова/факти)</li>
+      <li>• <strong>Must_not[]</strong> — чого НЕ повинно бути (наприклад, вигадані послуги)</li>
+      <li>• <strong>Tags[]</strong> — категоризація для filter</li>
+      <li>• <strong>Preset_salon_id</strong> — конкретний салон у якому виконувати тест</li>
+    </ul>
+
+    <h3 class="text-base font-semibold text-slate-800 mt-4 mb-2">Як використовувати вручну</h3>
+    <ol class="text-sm text-slate-700 space-y-2">
+      <li>1. Перейти у розділ <a href="/admin/scenarios" class="text-violet-600 hover:underline">Scenarios</a></li>
+      <li>2. Натиснути <strong>"+ Новий сценарій"</strong>.</li>
+      <li>3. Заповнити поля. У <strong>Turns</strong> вписати реальні фрази клієнта (по одній за рядок).</li>
+      <li>4. У <strong>Expectations</strong> вказати що повинна містити фінальна відповідь AI
+        (наприклад: "корекція брів", "грн", "вільний час").</li>
+      <li>5. Зберегти. Натиснути <strong>"Run"</strong> щоб запустити сценарій проти живого AI.</li>
+      <li>6. Переглянути <strong>результат</strong>: pass/fail + повну розшифровку діалогу + які
+        expectations спрацювали або провалились.</li>
+    </ol>
+
+    <h3 class="text-base font-semibold text-slate-800 mt-4 mb-2">Коли створювати новий сценарій</h3>
+    <ul class="text-sm text-slate-700 space-y-1">
+      <li>• Користувач поскаржився що AI неправильно зрозумів запит — створи сценарій з тим запитом.</li>
+      <li>• Запустили нову послугу/бренд — додай сценарій "клієнт питає про <бренд>".</li>
+      <li>• Перед deploy нової версії — прогнати всі сценарії як smoke-test.</li>
+      <li>• Регулярно (раз на тиждень) — щоб впіймати regression від змін у CRM/контенті.</li>
+    </ul>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Профілі послуг (Service Profiles)</h2>
+
+    <h3 class="text-base font-semibold text-slate-800 mt-3 mb-2">Що це</h3>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      Профіль — <strong>концептуальне групування послуг</strong> однієї теми (наприклад "Манікюр",
+      "Фарбування Balmain", "Подологія"). Один профіль обʼєднує усі канонічні ключі (canonical_keys),
+      що належать до цього концепту.
+    </p>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      Profile несе <strong>expert-контент для AI</strong>: на які проблеми відповідає, кому підходить,
+      які переваги, ключові слова для пошуку. AI використовує це для семантичного матчингу запитів
+      клієнтів до правильної групи послуг.
+    </p>
+
+    <h3 class="text-base font-semibold text-slate-800 mt-4 mb-2">Структура профілю</h3>
+    <ul class="text-sm text-slate-700 space-y-2">
+      <li>
+        <strong>Name</strong> — людська назва ("Манікюр", "Фарбування La Biosthetique"). Бачить адмін.
+      </li>
+      <li>
+        <strong>Canonical key</strong> — primary ID профілю (унікальний у межах country).
+      </li>
+      <li>
+        <strong>Canonical keys[]</strong> — список ckeys що входять у profile. Кожен ckey представляє
+        конкретну реалізацію послуги (різні tier, brand, довжини, тощо).
+      </li>
+      <li>
+        <strong>Key descriptions</strong> — короткий intent-context per ckey, для AI: "коли клієнт згадує X — пропонувати цей ckey".
+      </li>
+      <li>
+        <strong>Translation</strong> (per language, default uk):
+        <ul class="ml-5 mt-1 space-y-1">
+          <li>— <em>Short description</em>: 1-2 речення про profile</li>
+          <li>— <em>Addresses problems</em>: список проблем що вирішує (для всіх ckeys profile сумарно)</li>
+          <li>— <em>Target audience</em>: кому підходить</li>
+          <li>— <em>Benefits</em>: що отримає клієнт</li>
+          <li>— <em>Keywords</em>: синоніми + niche-tokens (для search)</li>
+          <li>— <em>Cross-sell</em>: що порадити разом</li>
+          <li>— <em>Embedding</em>: vector усього контенту, для search_by_concern</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Ckey overrides</strong> — опціональний JSON у translation: для ckeys що мають
+        специфічні concerns відмінні від profile defaults (наприклад "фарбування коренів" має свою
+        проблему "відросли корені" окремо від загального "Фарбування").
+      </li>
+    </ul>
+
+    <h3 class="text-base font-semibold text-slate-800 mt-4 mb-2">Як редагувати вручну</h3>
+    <ol class="text-sm text-slate-700 space-y-2">
+      <li>1. Перейти у <a href="/admin/profiles" class="text-violet-600 hover:underline">Service Profiles</a>.</li>
+      <li>2. Знайти profile через пошук або список. Натиснути на name → відкривається detail.</li>
+      <li>3. Угорі — основні поля профілю + кнопка <strong>Edit translation</strong> для редагування
+        addresses_problems / target_audience / keywords / etc.</li>
+      <li>4. Внизу detail — список <strong>Канонічні ключі + послуги</strong>. Натиснути на ckey
+        щоб розкрити panel <strong>"Контент для AI пошуку"</strong>.</li>
+      <li>5. Заповнити поля специфічні саме для цього ckey (якщо відрізняються від profile defaults).
+        Зберегти.</li>
+    </ol>
+
+    <h3 class="text-base font-semibold text-slate-800 mt-4 mb-2">Коли треба втручатися вручну</h3>
+    <ul class="text-sm text-slate-700 space-y-1">
+      <li>• <strong>AI не знаходить послугу</strong> при типовому запиті → додати missing keywords у profile keywords.</li>
+      <li>• <strong>AI пропонує неправильний variant</strong> у профілі → додати specific overrides на конкретний ckey.</li>
+      <li>• <strong>Зʼявилися дві profiles з однаковим змістом</strong> (через зміну CRM) → merge через
+        скрипт <code>merge_profiles.py</code> або вручну.</li>
+      <li>• <strong>Profile містить чужі ckeys</strong> (наприклад "Чоловічі послуги" має жіночий ckey) →
+        видалити неправильний з canonical_keys[] вручну.</li>
+      <li>• <strong>Sales pitch застарів</strong> → редагувати у translation (хоча зараз sales_pitch
+        прибрано, бо однаковий для всіх variants не релевантний).</li>
+    </ul>
+
+    <h3 class="text-base font-semibold text-slate-800 mt-4 mb-2">Що відбувається автоматично</h3>
+    <ul class="text-sm text-slate-700 space-y-1">
+      <li>• <strong>Auto-linking</strong>: нові ckeys прив'язуються до profiles за brand + token-overlap + scope guards.</li>
+      <li>• <strong>LLM auto-fill</strong>: profiles без контенту автоматично заповнюються через
+        OpenAI gpt-5-mini після кожного синку.</li>
+      <li>• <strong>Keyword enrichment</strong>: distinctive токени з ckey-sample names auto-додаються
+        у profile.keywords.</li>
+      <li>• <strong>Re-embed</strong>: при зміні контенту translation embedding оновлюється.</li>
+    </ul>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Взаємодія Сценаріїв та Профілів</h2>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      Сценарії <strong>тестують</strong> чи правильно AI використовує дані Профілів. Workflow:
+    </p>
+    <ol class="text-sm text-slate-700 space-y-2 mt-2">
+      <li>1. Клієнт скаржиться "AI не зрозумів запит про X" → створюємо <strong>сценарій</strong> з цим запитом.</li>
+      <li>2. Запускаємо сценарій → fails → дивимось чому AI промахнувся.</li>
+      <li>3. Знаходимо що у <strong>Профілі</strong> бракує ключового слова / неправильні concerns.</li>
+      <li>4. Редагуємо Профіль → re-embed.</li>
+      <li>5. Повторно запускаємо сценарій → passes.</li>
+      <li>6. Сценарій залишається у наборі як <strong>regression test</strong> для майбутніх змін.</li>
+    </ol>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Швидкі дії</h2>
+    <div class="grid grid-cols-2 gap-3 mt-2">
+      <a href="/admin/scenarios" class="block bg-violet-50 hover:bg-violet-100 border border-violet-200 rounded-lg p-3 text-sm transition">
+        <div class="font-semibold text-violet-900">Сценарії</div>
+        <div class="text-xs text-violet-700 mt-1">Створити/запустити тестові діалоги</div>
+      </a>
+      <a href="/admin/profiles" class="block bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-lg p-3 text-sm transition">
+        <div class="font-semibold text-emerald-900">Профілі послуг</div>
+        <div class="text-xs text-emerald-700 mt-1">Редагувати expert-контент для AI</div>
+      </a>
+      <a href="/admin/services" class="block bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg p-3 text-sm transition">
+        <div class="font-semibold text-amber-900">Послуги</div>
+        <div class="text-xs text-amber-700 mt-1">Перегляд каталогу з фільтрами</div>
+      </a>
+      <a href="/admin/profiles/missing" class="block bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-lg p-3 text-sm transition">
+        <div class="font-semibold text-rose-900">Missing keys</div>
+        <div class="text-xs text-rose-700 mt-1">Ckeys без profile + auto-link log</div>
+      </a>
+    </div>
+  </section>
+</div>

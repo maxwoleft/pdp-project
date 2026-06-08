@@ -63,10 +63,27 @@ def clean_html(text: str | None) -> str:
 
 
 def is_addon(name: str | None) -> bool:
+    """True якщо назва послуги маркує її як add-on / modifier — пропускаємо при імпорті.
+
+    Покриває:
+      EN: "add-on", "addon", "add on"
+      UA: "додатков" ("додатково", "додаткові"), "(дод" дужки опційно
+      RU: "дополнит" ("дополнительно", "дополнительный")
+      PL: "dodatkow", "dodatkov"
+    """
     if not name:
         return False
     n = name.lower()
-    return "add-on" in n or "addon" in n
+    return (
+        "add-on" in n
+        or "addon" in n
+        or "add on" in n
+        or "додатков" in n
+        or "(дод" in n
+        or "дополнит" in n
+        or "dodatkow" in n
+        or "dodatkov" in n
+    )
 
 
 # Категорії, які не потрібні AI-чату (внутрішні + не-послуги)
@@ -121,6 +138,13 @@ async def cleanup_salon(session, salon_id: str, entities: set[str]) -> None:
 
     if "services" in entities:
         await session.execute(delete(Service).where(Service.salon_id == salon_id))
+        # Чистимо employee_position що посилаються на positions цього salon —
+        # інакше DELETE Position впаде на FK violation у режимі
+        # --entities services без employees.
+        salon_pos_ids = select(Position.id).where(Position.salon_id == salon_id).scalar_subquery()
+        await session.execute(
+            delete(EmployeePosition).where(EmployeePosition.position_id.in_(salon_pos_ids))
+        )
         await session.execute(delete(Position).where(Position.salon_id == salon_id))
 
     if "categories" in entities:
@@ -248,8 +272,16 @@ async def import_positions_and_services(
     seen: set[str] = set()
     count = 0
     skipped_missing_cat = 0
+    skipped_archived = 0
+    skipped_addon = 0
     for s in services_raw:
-        if s.get("archive") or s["id"] in seen or is_addon(s.get("name")):
+        if s["id"] in seen:
+            continue
+        if s.get("archive"):
+            skipped_archived += 1
+            continue
+        if is_addon(s.get("name")):
+            skipped_addon += 1
             continue
         seen.add(s["id"])
 
@@ -297,17 +329,27 @@ async def import_positions_and_services(
         count += 1
     await session.flush()
 
+    if skipped_archived:
+        print(f"  ⚠ services skipped (archive=true in CRM, removed from DB): {skipped_archived}")
+    if skipped_addon:
+        print(f"  ⚠ services skipped (add-on/додатково pattern): {skipped_addon}")
     return len(position_names), count, skipped_missing_cat
 
 
 async def import_employees(session, salon_id: str, raw: list[dict]) -> int:
     seen: set[str] = set()
     count = 0
+    skipped_archived = 0
+    skipped_service = 0
     for e in raw:
-        if e.get("archive") or e["id"] in seen:
+        if e["id"] in seen:
+            continue
+        if e.get("archive"):
+            skipped_archived += 1
             continue
         # Виключаємо службові
         if "співробітники" in (e.get("name") or "").casefold():
+            skipped_service += 1
             continue
         seen.add(e["id"])
 
@@ -321,6 +363,7 @@ async def import_employees(session, salon_id: str, raw: list[dict]) -> int:
             emails=e.get("email"),
             roles=e.get("roles"),
             comments=e.get("commentsPlainText") or e.get("comments"),
+            photo=e.get("photo") if e.get("photo_exists") else None,
             prepayment_required=bool(e.get("prepaymentRequired")),
             archive=False,
         ))
@@ -331,6 +374,10 @@ async def import_employees(session, salon_id: str, raw: list[dict]) -> int:
             ))
         count += 1
     await session.flush()
+    if skipped_archived:
+        print(f"  ⚠ employees skipped (archive=true in CRM, removed from DB): {skipped_archived}")
+    if skipped_service:
+        print(f"  ⚠ employees skipped (службові): {skipped_service}")
     return count
 
 

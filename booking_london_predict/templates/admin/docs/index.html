@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+{% block page_title %}Документація{% endblock %}
+
+{% block content %}
+<div style="max-width: 960px; padding: 24px;">
+  <h1 style="font-size: 24px; font-weight: 600; margin-bottom: 4px;">Документація</h1>
+  <p style="color: #64748b; font-size: 14px; margin-bottom: 24px;">Опис застосунку самозапису та його керування.</p>
+
+  <div style="border-bottom: 1px solid #e2e8f0; margin-bottom: 24px;">
+    <nav style="display: flex; gap: 24px;">
+      <a href="?tab=tech"
+         style="padding: 12px 0; font-size: 14px; font-weight: 500; text-decoration: none;
+                {% if active_tab == 'tech' %}color: #0f172a; border-bottom: 2px solid #0f172a; margin-bottom: -1px;
+                {% else %}color: #64748b; border-bottom: 2px solid transparent;{% endif %}">
+        Опис технології
+      </a>
+      <a href="?tab=manage"
+         style="padding: 12px 0; font-size: 14px; font-weight: 500; text-decoration: none;
+                {% if active_tab == 'manage' %}color: #0f172a; border-bottom: 2px solid #0f172a; margin-bottom: -1px;
+                {% else %}color: #64748b; border-bottom: 2px solid transparent;{% endif %}">
+        Керування
+      </a>
+    </nav>
+  </div>
+
+  {% if active_tab == 'tech' %}
+  {% include 'admin/docs/_tech.html' %}
+  {% elif active_tab == 'manage' %}
+  {% include 'admin/docs/_manage.html' %}
+  {% endif %}
+</div>
+{% endblock %}

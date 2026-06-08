@@ -1,0 +1,368 @@
+{# Опис технології — повний опис системи #}
+<div class="prose prose-slate max-w-none">
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Що це таке</h2>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      <strong>Beauty AI Chat</strong> — інтелектуальний помічник для салонів краси. Клієнт описує свою потребу
+      природньою мовою (українська, російська, англійська, польська), а AI підбирає конкретну послугу,
+      майстра та вільний час у салоні. Підтримує текст, голосові повідомлення та фото.
+    </p>
+  </section>
+
+  <!-- ── Архітектура AI ────────────────────────────────────────────────── -->
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-4">1. Тип бота</h2>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      <strong>Це AI-agent з функціями/інструментами + RAG-компонентом для пошуку знань.</strong>
+    </p>
+    <p class="text-sm text-slate-700 leading-relaxed mt-2">
+      Гібридна архітектура:
+    </p>
+    <ul class="text-sm text-slate-700 space-y-1 mt-2 ml-4">
+      <li>• <strong>AI-agent</strong> — LLM рішає які tools викликати на основі контексту розмови (не скриптовий потік).</li>
+      <li>• <strong>Function calling</strong> — LLM має 10 tools, кожен — функція що звертається до БД або CRM API (повний список нижче).</li>
+      <li>• <strong>RAG для пошуку</strong> — vector similarity search над embedding-ами послуг і концептів. Результати tool calls передаються назад у LLM як контекст.</li>
+      <li>• <strong>НЕ скриптовий</strong> — немає predefined flow tree. LLM сам визначає послідовність дій.</li>
+      <li>• <strong>НЕ intent-based</strong> — немає окремого intent-classifier. Намір розпізнається через семантичний пошук та reasoning LLM.</li>
+    </ul>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-4">1.1 Повний список tools (функцій LLM)</h2>
+    <p class="text-sm text-slate-700 leading-relaxed mb-3">
+      LLM викликає одну або кілька функцій за turn. Кожна повертає JSON з даних БД/CRM.
+    </p>
+    <div class="space-y-3">
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong class="font-mono text-violet-700">list_salons</strong><br>
+        <span class="text-slate-700">Повертає список салонів обраної країни. Викликається на початку розмови, щоб клієнт обрав салон. Можна фільтрувати за містом.</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong class="font-mono text-violet-700">list_categories</strong><br>
+        <span class="text-slate-700">Повертає категорії послуг конкретного салону. Без parent_id — кореневі. З parent_id — підкатегорії. Допомагає клієнту orientуватися у каталозі.</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong class="font-mono text-violet-700">search_services</strong><br>
+        <span class="text-slate-700">Шукає послуги салону за вільним запитом і/або категорією. Vector search по <code>service.name_embedding</code>. Використовується коли клієнт описує що хоче напряму ("манікюр з покриттям", "фарбування волосся"). Фільтри: brand, volume_ml, zones, session_minutes, ampules.</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong class="font-mono text-violet-700">search_by_concern</strong><br>
+        <span class="text-slate-700">Шукає послуги за описом <strong>проблеми або бажаного результату</strong> ("хочу щоб волосся сяяло", "часто облазить лак", "груба шкіра на стопах", "не хочу нарощування але хочу довгі вії"). Vector search по <code>profile.translation.embedding</code> — знаходить profile-кандидати з їх services + concerns.</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong class="font-mono text-violet-700">find_masters_for_service</strong><br>
+        <span class="text-slate-700">Повертає список майстрів салону що виконують конкретну послугу (за service_id). Включає imʼя, посаду, рейтинг.</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong class="font-mono text-violet-700">get_available_slots</strong><br>
+        <span class="text-slate-700">Повертає вільні часові вікна для послуги. Якщо master_id не вказано — шукає по всіх майстрах які виконують цю послугу. Дати у ISO форматі. Дані live з AIHelps API (TTL 45 сек у Redis).</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong class="font-mono text-violet-700">find_service_and_slots</strong><br>
+        <span class="text-slate-700">Комбінований tool — пошук послуг + майстрів + вільних слотів за один виклик. Заміна 3 окремих tools (search_services + find_masters + get_available_slots). Префернтний для booking flow коли клієнт описав і потребу/послугу, і дату ("хочу записатися на стрижку завтра після обіду").</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong class="font-mono text-violet-700">create_booking</strong><br>
+        <span class="text-slate-700">Створює запис у CRM після підтвердження клієнтом. Обовʼязково спочатку отримати імʼя і телефон. slot_ids беруться з результату <code>get_available_slots</code>. Після виклику: AIHelps API booking + Telegram нотифікація + email клієнту.</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong class="font-mono text-violet-700">get_client_bookings</strong><br>
+        <span class="text-slate-700">Повертає активні (майбутні) бронювання клієнта за номером телефону. Використовується коли клієнт хоче дізнатися "куди я записаний" або перед скасуванням.</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong class="font-mono text-violet-700">cancel_booking</strong><br>
+        <span class="text-slate-700">Скасовує запис і звільняє слоти у CRM. Перед викликом — обовʼязкове підтвердження клієнта. Сповіщає менеджера салону про скасування через Telegram.</span>
+      </div>
+    </div>
+    <p class="text-xs text-slate-500 mt-3">
+      Усі tools зареєстровані у <code>app/agents/tools/builder.py</code>. Кешуються у Redis (TTL 10 хв для каталогу, 45 сек для слотів).
+    </p>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-4">2. AI-моделі та платформа</h2>
+    <div class="space-y-3 text-sm">
+      <div class="bg-slate-50 rounded p-3">
+        <strong class="text-slate-900">Conversation (текст)</strong><br>
+        <span class="text-slate-700">OpenAI <code>GPT-5</code> — primary. Fallback <code>GPT-5-mini</code> через hybrid_router.</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3">
+        <strong class="text-slate-900">Голос (voice → text)</strong><br>
+        <span class="text-slate-700">OpenAI Whisper <code>whisper-1</code> — транскрипція аудіо (webm/ogg/mp3, до 25MB).</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3">
+        <strong class="text-slate-900">Зображення (image → text)</strong><br>
+        <span class="text-slate-700">OpenAI Vision <code>GPT-5</code> з image_url input — аналізує фото клієнта (стан волосся, нігтів, проблема шкіри), повертає опис.</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3">
+        <strong class="text-slate-900">Vector search</strong><br>
+        <span class="text-slate-700">OpenAI <code>text-embedding-3-small</code> (1536d, cosine similarity). Embeddings зберігаються у PostgreSQL через <code>pgvector</code>.</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3">
+        <strong class="text-slate-900">Query rewriter + LLM reranker</strong><br>
+        <span class="text-slate-700">OpenAI <code>GPT-4o-mini</code> — швидкий, дешевий (~200-400ms на виклик).</span>
+      </div>
+      <div class="bg-slate-50 rounded p-3">
+        <strong class="text-slate-900">Cron auto-fill (batch контент)</strong><br>
+        <span class="text-slate-700">OpenAI <code>GPT-5</code> + <code>GPT-5-mini</code> — генерація key_descriptions, profile-level concerns, translations.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-4">3. Логіка прийняття рішень</h2>
+    <p class="text-sm text-slate-700 leading-relaxed mb-3">
+      LLM (GPT-5) приймає рішення на основі:
+    </p>
+    <ol class="text-sm text-slate-700 space-y-2 ml-4">
+      <li><strong>1. System prompt</strong> — інструкції у <code>app/agents/instructions/</code>:
+        <ul class="ml-4 mt-1 text-slate-600">
+          <li>— <code>golden_rules.md</code>: правила безпеки і anti-hallucination</li>
+          <li>— <code>tools_reference.md</code>: коли який tool викликати</li>
+          <li>— <code>booking_flow.md</code>: етапи запису</li>
+          <li>— <code>persona.md</code> + <code>communication_style.md</code>: стиль майстра-сенсея</li>
+          <li>— <code>sales_dna.md</code>: продажні принципи</li>
+          <li>— <code>country_overrides/</code>: специфіка по країні (UA/PL/GB)</li>
+        </ul>
+      </li>
+      <li><strong>2. Контекст розмови</strong> — попередні turns зі сесії (Redis), salon_id, country, language.</li>
+      <li><strong>3. Останнє повідомлення клієнта</strong> + опціонально transcribed voice / image description.</li>
+      <li><strong>4. Tool calls</strong> — LLM вирішує що потрібно: пошук послуги? слотів? майстрів? Викликає tool → отримує JSON → синтезує відповідь.</li>
+      <li><strong>5. Multi-turn loop</strong> — LLM може зробити кілька tool calls в один turn (наприклад: search_services → find_masters → get_slots → синтез у одну відповідь).</li>
+    </ol>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-4">4. Визначення потреби клієнта</h2>
+    <ul class="text-sm text-slate-700 space-y-2 ml-4">
+      <li>• <strong>Semantic reasoning у LLM</strong> — GPT-5 з system prompt розуміє намір тексту.</li>
+      <li>• <strong>search_by_concern tool</strong> — клієнт описує проблему ("пігментація", "відросли корені") → vector cosine match по <code>profile.translation.embedding</code> (включає addresses_problems, target_audience, keywords).</li>
+      <li>• <strong>search_services tool</strong> — клієнт називає послугу напряму ("хочу манікюр") → vector match по <code>service.name_embedding</code>.</li>
+      <li>• <strong>Voice/image</strong> — додаткові модальності транскрибуються/аналізуються, текст іде у той же reasoning loop.</li>
+    </ul>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-4">5. Підбір категорії / послуги</h2>
+    <p class="text-sm text-slate-700 leading-relaxed mb-2">
+      Дворівневий пошук:
+    </p>
+    <div class="space-y-2">
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong>Рівень 1 — profile (концепт):</strong> AI бачить top-K profiles з найбільшим cosine match. Profile агрегує всі ckeys (canonical_keys) певної теми.
+      </div>
+      <div class="bg-slate-50 rounded p-3 text-sm">
+        <strong>Рівень 2 — конкретний service:</strong> з profile → запит services з salon_id + matched ckeys → отримує реальні <code>service.id</code> з ціною, тривалістю, brand-ом. LLM обирає один за <code>service.name</code> який найкраще відповідає запиту.
+      </div>
+    </div>
+    <p class="text-sm text-slate-700 leading-relaxed mt-3">
+      LLM-reranker (gpt-4o-mini) опціонально передоцінює top-K candidates для +5-10% accuracy на неоднозначних запитах.
+    </p>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-4">6. Робота з профілями послуг</h2>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      Профіль — концептуальне групування послуг ("Манікюр", "Фарбування Balmain", "Подологія").
+      Містить:
+    </p>
+    <ul class="text-sm text-slate-700 space-y-1 mt-2 ml-4">
+      <li>• <strong>canonical_keys[]</strong> — список ckeys (нормалізовані ID послуг)</li>
+      <li>• <strong>translation per language</strong> — addresses_problems, target_audience, benefits, keywords, cross_sell, embedding</li>
+      <li>• <strong>ckey_overrides</strong> — опціональний JSON: специфічні concerns для конкретного ckey (наприклад "корені" має свою проблему окремо від "повного фарбування")</li>
+    </ul>
+    <p class="text-sm text-slate-700 leading-relaxed mt-3">
+      AI шукає profile через embedding (search_by_concern) → profile дає набір services з salon → LLM обирає specific service. Per-ckey overrides додають точність коли variants мають різні concerns.
+    </p>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-4">7. База знань</h2>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      <strong>Так, бот використовує базу знань. Зберігається у PostgreSQL на DigitalOcean droplet</strong>:
+    </p>
+    <div class="bg-slate-50 rounded-lg p-3 font-mono text-xs leading-relaxed mt-2 space-y-1">
+      <div><strong>booking.salons</strong> — глобально, country-aware</div>
+      <div><strong>&lt;country&gt;.service</strong> — каталог послуг (ua, pl, gb)</div>
+      <div><strong>&lt;country&gt;.category</strong> — CRM-категорії</div>
+      <div><strong>&lt;country&gt;.employee</strong> — майстри з графіком</div>
+      <div><strong>public.service_profile</strong> — концептуальні групи</div>
+      <div><strong>public.service_profile_translation</strong> — expert-контент + embedding</div>
+    </div>
+    <p class="text-sm text-slate-700 leading-relaxed mt-3">
+      Інструкції для LLM (правила, стиль, flow) — Markdown-файли у <code>app/agents/instructions/</code>,
+      завантажуються при старті у system prompt.
+    </p>
+  </section>
+
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-4">8. Створення запису</h2>
+    <p class="text-sm text-slate-700 leading-relaxed">
+      <strong>Бот може самостійно створювати запис у CRM</strong> — НЕ лише консультує.
+    </p>
+    <p class="text-sm text-slate-700 leading-relaxed mt-2">
+      Через tool <code>create_appointment</code>:
+    </p>
+    <ol class="text-sm text-slate-700 space-y-1 mt-2 ml-4">
+      <li>1. Збирає від клієнта: послуга + майстер + час + телефон + ім'я.</li>
+      <li>2. Викликає AIHelps API → бронює слот.</li>
+      <li>3. Відправляє Telegram-сповіщення менеджеру салону.</li>
+      <li>4. Відправляє email-підтвердження клієнту (через SMTP).</li>
+      <li>5. Запис відображається у CRM салону одразу.</li>
+    </ol>
+  </section>
+
+  <!-- ── Інфраструктура ───────────────────────────────────────────────── -->
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-4">Інфраструктура</h2>
+
+    <div class="space-y-4">
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-1">1. Де розміщений чат</h3>
+        <p class="text-sm text-slate-700">
+          DigitalOcean droplet (Ubuntu 24.04, 2 vCPU / 2 GB RAM, Frankfurt) →
+          <code>https://ai-chat.p-de-p.com</code>. Stack: FastAPI + uvicorn (2 workers) під systemd
+          (<code>aichat.service</code>). Nginx + Let's Encrypt SSL.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-1">2. Де розміщена база знань</h3>
+        <p class="text-sm text-slate-700">
+          PostgreSQL 16 на тому ж droplet. Per-country schemas + pgvector extension.
+          Інструкції LLM — у коді репозиторію (<code>app/agents/instructions/*.md</code>).
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-1">3. Де розміщені профілі послуг</h3>
+        <p class="text-sm text-slate-700">
+          PostgreSQL: <code>public.service_profile</code> + <code>public.service_profile_translation</code>
+          (+ <code>service_profile_variant</code>, <code>service_profile_version</code> для версій).
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-1">4. Де зберігаються діалоги з клієнтами</h3>
+        <p class="text-sm text-slate-700">
+          <strong>Redis</strong> на droplet — активні розмови (<code>ConversationCache</code>),
+          TTL = ~24 год. Кожен діалог: history з ConversationTurn (role + content + has_image).
+          Логи дублюються у <code>/var/log/aichat/app.log</code> для аналітики.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-1">5. Як чат підключений до самозапису</h3>
+        <p class="text-sm text-slate-700">
+          Окремий сервіс <strong>pdpbooking</strong> (booking_london_predict, Flask на тому ж droplet,
+          <code>https://booking.p-de-p.com</code>). У booking-застосунку є CTA-банер що веде у AI чат
+          через <code>/chat/start?salon_id={uuid}</code> — клієнт одразу потрапляє у чат свого салону.
+          AI чат бронює слоти у тій самій CRM що використовує booking.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-1">6. Як чат отримує інформацію про салони, послуги, майстрів і вільний час</h3>
+        <p class="text-sm text-slate-700">
+          Двома способами:
+        </p>
+        <ul class="text-sm text-slate-700 mt-1 ml-4 space-y-1">
+          <li>• <strong>Кешований каталог у PG</strong> (послуги, майстри, категорії) — синхронізується з AIHelps CRM
+            cron-ом двічі на день (3:00 та 13:00).</li>
+          <li>• <strong>Live AIHelps API виклики</strong> — вільні слоти запитуються у реальному часі
+            через <code>get_available_slots</code> tool (TTL кешу 45 секунд у Redis).</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-1">7. Як відбувається створення запису</h3>
+        <p class="text-sm text-slate-700">
+          Tool <code>create_appointment</code>: збір даних → AIHelps API <code>POST /appointments</code>
+          → Telegram bot нотифікація менеджеру → SMTP email клієнту → запис у локальну <code>booking.appointmentsleads</code>
+          для аудиту.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-1">8. API та інтеграції</h3>
+        <ul class="text-sm text-slate-700 ml-4 space-y-1">
+          <li>• <strong>OpenAI API</strong> — chat completions (GPT-5/5-mini/4o-mini), embeddings, Whisper, Vision</li>
+          <li>• <strong>AIHelps CRM API</strong> — каталог послуг, майстри, слоти, створення запису (per salon database_code)</li>
+          <li>• <strong>Telegram Bot API</strong> — повідомлення менеджеру про новий запис (per salon bot/chat)</li>
+          <li>• <strong>SMTP</strong> — email-підтвердження (Gmail / per salon)</li>
+          <li>• <strong>Mailchimp</strong> — опц., маркетингові розсилки</li>
+          <li>• <strong>EasyTip</strong> — інтеграція платежів (через booking, не AI чат напряму)</li>
+          <li>• <strong>Redis</strong> — внутрішній API кешу tools</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-1">9. Доступи потрібні для роботи</h3>
+        <ul class="text-sm text-slate-700 ml-4 space-y-1">
+          <li>• <code>OPENAI_API_KEY</code> — для всіх AI операцій</li>
+          <li>• <code>AIHELPS_API_KEY</code> per salon (інтегрується через salon.database_code)</li>
+          <li>• <code>TELEGRAM_BOT_TOKEN</code> + <code>TELEGRAM_CHAT_ID</code> per salon</li>
+          <li>• <code>SMTP_*</code> credentials per salon (email)</li>
+          <li>• <code>POSTGRES_*</code> connection string</li>
+          <li>• <code>REDIS_URL</code></li>
+          <li>• SSH ключ до droplet (deploy + cron)</li>
+          <li>• DNS контроль над <code>p-de-p.com</code> (для subdomains)</li>
+          <li>• Конфіги: <code>/opt/aichat/app/.env</code> на droplet</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-slate-800 mb-1">10. Передача іншому розробнику</h3>
+        <p class="text-sm text-slate-700">
+          <strong>Так, проект підтримуваний.</strong> Що потрібно:
+        </p>
+        <ul class="text-sm text-slate-700 ml-4 space-y-1 mt-1">
+          <li>• Стандартний Python/FastAPI стек з типовими патернами (SQLAlchemy 2.0, async/await, Jinja2).</li>
+          <li>• Структурований код: <code>app/api/</code>, <code>app/agents/</code>, <code>app/adapters/</code>,
+            <code>app/domain/</code>, <code>app/infrastructure/</code>.</li>
+          <li>• Cron pipeline задокументований у <code>/etc/cron.d/aichat-sync</code> на droplet.</li>
+          <li>• Конфіг через env vars (<code>app/core/config.py</code>).</li>
+          <li>• Документація — цей розділ + README у репо + Markdown інструкції у <code>app/agents/instructions/</code>.</li>
+          <li>• Скрипти-утиліти у <code>scripts/</code> для типових операцій (sync, auto_link, fill content, тести).</li>
+          <li>• Тести: <code>scripts/test_chat_*</code> — e2e сценарії з anti-hallucination.</li>
+          <li>• <strong>Що передати новому розробнику</strong>: GitHub доступ + .env креди + SSH ключ + DNS + AIHelps/OpenAI/Telegram credentials.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Cron pipeline ─────────────────────────────────────────────────── -->
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Cron pipeline</h2>
+    <p class="text-sm text-slate-700 leading-relaxed mb-3">
+      Автоматизація 3:00 та 13:00:
+    </p>
+    <div class="bg-slate-50 rounded-lg p-4 font-mono text-xs leading-relaxed space-y-1">
+      <div>3:00 — <strong>sync_from_crm</strong>: повна синхронізація послуг/майстрів зі усіх AIHelps салонів</div>
+      <div>3:15 — <strong>cleanup_addon_categories</strong>: чистка add-on/modifier категорій</div>
+      <div>3:18 — <strong>cleanup_addon_services</strong>: чистка add-on послуг за name pattern</div>
+      <div>3:25 — <strong>auto_link_missing_keys</strong>: linking ckeys → profiles (brand-aware + scope guards)</div>
+      <div>3:27 — <strong>link_by_category</strong>: fallback linking за category-name</div>
+      <div>3:28 — <strong>llm_fill_key_descriptions</strong>: AI intent-detection описи per ckey</div>
+      <div>3:30 — <strong>embed_translations</strong>: оновлення translation.embedding</div>
+      <div>3:32 — <strong>llm_fill_new_overrides</strong>: AI заповнення expert-контенту нових profiles</div>
+      <div>3:34 — <strong>enrich_profile_keywords</strong>: auto-додавання niche-tokens з ckey samples</div>
+      <div>3:40 — <strong>compute_profile_salons</strong>: оновлення profile.salon_ids/cities</div>
+      <div class="border-t border-slate-300 pt-1 mt-2">13:00 — light midday repeat (sync + auto_link + enrich)</div>
+    </div>
+  </section>
+
+  <!-- ── Безпека ───────────────────────────────────────────────────────── -->
+  <section class="bg-white rounded-xl border border-slate-200 p-6 mb-5">
+    <h2 class="text-lg font-semibold text-slate-900 mb-3">Безпека та anti-hallucination</h2>
+    <ul class="text-sm text-slate-700 space-y-2">
+      <li>• <strong>System prompt</strong> у <code>golden_rules.md</code> явно забороняє вигадування цін, назв послуг, імен майстрів, вільних слотів.</li>
+      <li>• <strong>tools_reference.md</strong>: "tools — єдине джерело правди про послуги, майстрів, час".</li>
+      <li>• <strong>Порожній результат пошуку</strong> → AI каже клієнту "на жаль, такої послуги немає" і пропонує альтернативу.</li>
+      <li>• <strong>Per-language reply detection</strong> — AI відповідає тією мовою якою клієнт пише (uk/ru/en/pl).</li>
+      <li>• <strong>Multi-turn memory</strong> — Redis зберігає попередній контекст в межах сесії.</li>
+      <li>• <strong>Anti-hallucination tests</strong> — <code>scripts/test_chat_*</code> з NEGATIVE scenarios (вигадані послуги → AI має чесно сказати "немає").</li>
+    </ul>
+  </section>
+</div>

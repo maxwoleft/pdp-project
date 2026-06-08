@@ -82,6 +82,7 @@ async def lifespan(app: FastAPI):
     app.state.session_factory = session_factory
     app.state.redis = redis
     app.state.conversation_service = conversation_service
+    app.state.agent_factory = agent_factory
     app.state.message_batcher = message_batcher
     app.state.messenger_registry = messenger_registry
 
@@ -109,10 +110,20 @@ def create_app() -> FastAPI:
     from app.admin.profile_routes import profile_router
     from app.admin.service_routes import service_router
     from app.admin.category_group_routes import router as category_tree_router
+    from app.admin.docs_routes import docs_router
+    from app.admin.dialog_routes import dialog_router
+    from app.admin.settings_routes import settings_router
+    from app.admin.manager_request_routes import mgr_router
+    from app.admin.error_routes import error_router
     app.include_router(admin_router)
     app.include_router(profile_router)
     app.include_router(service_router)
     app.include_router(category_tree_router)
+    app.include_router(docs_router)
+    app.include_router(dialog_router)
+    app.include_router(settings_router)
+    app.include_router(mgr_router)
+    app.include_router(error_router)
 
     # Web chat (public)
     from app.api.chat.routes import router as chat_router

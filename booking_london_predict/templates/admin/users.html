@@ -1,0 +1,126 @@
+{% extends "admin/base.html" %}
+{% block title %}Користувачі{% endblock %}
+{% block page_title %}Користувачі{% endblock %}
+
+{% block content %}
+
+{% if message %}
+  <div class="alert alert-{{ message_type }}">{{ message }}</div>
+{% endif %}
+
+<div class="grid-2" style="align-items: start; margin-bottom: 20px;">
+
+  <!-- Форма додавання -->
+  <div class="card">
+    <div class="card-title">Додати адміністратора</div>
+    <form method="POST" action="{{ url_for('admin.users') }}">
+      <input type="hidden" name="action" value="add">
+
+      <div class="form-group">
+        <label class="form-label">Email (логін)</label>
+        <input type="email" name="email" class="form-control"
+               placeholder="user@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Пароль</label>
+        <input type="password" name="password" class="form-control"
+               placeholder="Мінімум 8 символів" minlength="8" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Роль</label>
+        <select name="role" class="form-control">
+          <option value="admin">Адміністратор</option>
+          <option value="superadmin">Супер-адміністратор</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Додати</button>
+    </form>
+  </div>
+
+  <!-- Ролі -->
+  <div class="card" style="background:#0000000D; border-style:dashed;">
+    <div class="card-title">Ролі доступу</div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">
+        Супер-адміністратор
+      </div>
+      <div style="font-size:13px; font-weight:500; color:#555; line-height:1.7;">
+        Повний доступ. Може додавати та деактивувати інших адміністраторів.
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">
+        Адміністратор
+      </div>
+      <div style="font-size:13px; font-weight:500; color:#555; line-height:1.7;">
+        Доступ до всіх розділів панелі, крім управління користувачами.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Список -->
+<div class="card">
+  <div class="card-title">Список адміністраторів</div>
+
+  {% if user_list %}
+  <table class="responsive-table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Роль</th>
+        <th>Статус</th>
+        <th>Дата</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in user_list %}
+      <tr>
+        <td data-label="Email" style="font-weight:700;">{{ u.email }}</td>
+        <td data-label="Роль">
+          <span class="badge badge-{{ u.role }}">
+            {{ 'Супер-адмін' if u.role == 'superadmin' else 'Адмін' }}
+          </span>
+        </td>
+        <td data-label="Статус">
+          <span class="badge badge-{{ 'active' if u.is_active else 'inactive' }}">
+            {{ 'Активний' if u.is_active else 'Неактивний' }}
+          </span>
+        </td>
+        <td data-label="Дата" style="color:#aaa; font-size:12px;">
+          {{ u.created_at.strftime('%d.%m.%Y') if u.created_at else '—' }}
+        </td>
+        <td data-label="">
+          {% if u.id != current_user_id %}
+          <form method="POST" style="display:inline;">
+            <input type="hidden" name="action" value="toggle">
+            <input type="hidden" name="user_id" value="{{ u.id }}">
+            <button
+              type="submit"
+              class="btn btn-ghost btn-sm"
+              onclick="return confirm('Змінити статус {{ u.email }}?')"
+            >
+              {{ 'Деактивувати' if u.is_active else 'Активувати' }}
+            </button>
+          </form>
+          {% else %}
+          <span style="font-size:12px; font-weight:500; color:#aaa;">Це ви</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">
+    <p>Адміністратори відсутні. Додайте першого за допомогою форми вище.</p>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

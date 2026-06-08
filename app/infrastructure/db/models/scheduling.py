@@ -56,7 +56,7 @@ class Client(Base):
 
     # ── ідентифікація ─────────────────────────────────────────────
     id: Mapped[str] = mapped_column(String(80), primary_key=True)  # f"{salon_id}:{crm_id}"
-    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("salon.id"), nullable=False, index=True)
+    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("booking.salons.id"), nullable=False, index=True)
     crm_id: Mapped[str] = mapped_column(String(80), nullable=False, index=True)  # оригінальний UUID з CRM
 
     # ── профіль (з clients_search.json) ───────────────────────────
@@ -117,7 +117,7 @@ class Booking(Base):
     client_id: Mapped[str] = mapped_column(String(80), ForeignKey("client.id"), nullable=False, index=True)
     employee_id: Mapped[str] = mapped_column(String(80), ForeignKey("employee.id"), nullable=False)
     service_id: Mapped[str] = mapped_column(String(80), ForeignKey("service.id"), nullable=False)
-    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("salon.id"), nullable=False)
+    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("booking.salons.id"), nullable=False)
 
     start_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, index=True)
     end_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
@@ -146,7 +146,7 @@ class ProductOrder(Base):
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
     client_id: Mapped[str] = mapped_column(String(80), ForeignKey("client.id"), nullable=False, index=True)
-    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("salon.id"), nullable=False)
+    salon_id: Mapped[str] = mapped_column(String(80), ForeignKey("booking.salons.id"), nullable=False)
 
     # позиції замовлення: [{"product_id": "...", "qty": 2, "price": 41.0}, ...]
     items: Mapped[list] = mapped_column(JSON, nullable=False)

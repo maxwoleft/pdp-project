@@ -1,0 +1,138 @@
+{# Booking: Керування #}
+<style>
+.doc-section{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:18px;}
+.doc-section h2{font-size:17px;font-weight:600;color:#0f172a;margin-bottom:10px;}
+.doc-section h3{font-size:14px;font-weight:600;color:#334155;margin:14px 0 6px;}
+.doc-section p,.doc-section li{font-size:13px;color:#475569;line-height:1.55;}
+.doc-section ul,.doc-section ol{margin:6px 0 6px 16px;}
+.doc-section code{background:#f1f5f9;padding:1px 5px;border-radius:3px;font-size:12px;font-family:ui-monospace,monospace;}
+.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px;}
+.doc-link-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px;text-decoration:none;color:inherit;}
+.doc-link-card:hover{background:#fff;border-color:#cbd5e1;}
+.doc-link-card strong{display:block;color:#0f172a;margin-bottom:4px;}
+.doc-link-card span{color:#64748b;font-size:12px;}
+</style>
+
+<section class="doc-section">
+  <h2>Дашборди</h2>
+  <p>
+    <a href="{{ url_for('admin.dashboard') }}">Дашборди</a> — статистика записів за період + фільтри по салонах.
+    Показує кількість записів, конверсію, топ-послуг.
+  </p>
+  <h3>Коли використовувати</h3>
+  <ul>
+    <li>Щоденний перегляд активності — скільки клієнтів записалося.</li>
+    <li>Аналіз популярних послуг — топ-5 за тиждень/місяць.</li>
+    <li>Виявлення проблем — раптовий спад записів = алярм.</li>
+  </ul>
+</section>
+
+<section class="doc-section">
+  <h2>Послуги</h2>
+  <p>
+    <a href="{{ url_for('admin.services') }}">Послуги</a> — каталог послуг конкретного салону + категорії.
+    Послуги синхронізуються з AIHelps CRM автоматично. У адмінці можна:
+  </p>
+  <ul>
+    <li>Редагувати <strong>описи</strong> (показуються клієнту на сторінці запису)</li>
+    <li>Завантажувати <strong>фото</strong> послуги</li>
+    <li>Налаштовувати <strong>рекомендації</strong> (cross-sell після обраної послуги)</li>
+    <li>Архівувати непотрібні послуги (приховує з UI без видалення з CRM)</li>
+  </ul>
+  <h3>Коли втручатися вручну</h3>
+  <ul>
+    <li>CRM повернула криві назви — переписати у адмінці description</li>
+    <li>Хочеться рекламувати конкретні послуги — додати їх до рекомендацій</li>
+    <li>Сезонні offer-и — додати/прибрати тимчасові послуги</li>
+  </ul>
+</section>
+
+<section class="doc-section">
+  <h2>Салони (Superadmin only)</h2>
+  <p>
+    <a href="{{ url_for('admin.salons') }}">Салони</a> — створення/редагування салонів + їх контактних даних.
+    Кожен салон має:
+  </p>
+  <ul>
+    <li><code>code</code> — короткий URL-код (наприклад <code>l1</code>, <code>kyiv-obolon</code>)</li>
+    <li><code>database_code</code> — ID у AIHelps CRM (для API запитів)</li>
+    <li><code>country</code>, <code>city</code>, <code>address_line</code></li>
+    <li><code>telegram_token</code> + <code>telegram_chat_id</code> — для нотифікацій</li>
+    <li><code>whatsapp_phone</code>, <code>instagram_url</code> — соцмережі</li>
+    <li><code>smtp_from_email</code> — від кого email-підтвердження</li>
+    <li><code>ai_chat_enabled</code> — toggle банера "AI чат" на сторінці салону</li>
+    <li><code>payment_enabled</code> — увімкнути EasyTip передоплату</li>
+    <li><code>status</code> — active / planned (приховує "заплановані")</li>
+  </ul>
+  <h3>Bulk операції</h3>
+  <ul>
+    <li><strong>AI чат bulk-toggle</strong> — увімкнути/вимкнути банер AI чату одночасно для всіх салонів.</li>
+  </ul>
+</section>
+
+<section class="doc-section">
+  <h2>Користувачі (Superadmin only)</h2>
+  <p>
+    <a href="{{ url_for('admin.users') }}">Користувачі</a> — облікові записи адмінів.
+  </p>
+  <h3>Ролі</h3>
+  <ul>
+    <li><strong>superadmin</strong> — повний доступ до всіх салонів, налаштувань, користувачів. Bulk-операції.</li>
+    <li><strong>admin</strong> — обмежений доступ: лише послуги + дашборди свого салону (передбачено через preset).</li>
+  </ul>
+  <h3>Як додати нового користувача</h3>
+  <ol>
+    <li>Користувачі → "Додати"</li>
+    <li>Логін + пароль + роль</li>
+    <li>Зберегти. Користувач одразу може ввійти на <code>/admin/login</code></li>
+  </ol>
+</section>
+
+<section class="doc-section">
+  <h2>Платіжні системи (Superadmin only)</h2>
+  <p>
+    <a href="{{ url_for('admin.payment_systems') }}">Платіжні системи</a> — налаштування EasyTip.
+    Кожен салон може мати власні credentials платіжного провайдера.
+  </p>
+  <ul>
+    <li>Привязка локацій до payment system (1 локація = 1 system)</li>
+    <li>Конфіг credentials (api_key, location_id)</li>
+    <li>Toggle <code>payment_enabled</code> у налаштуваннях салону → активує передоплату</li>
+  </ul>
+</section>
+
+<section class="doc-section">
+  <h2>Як саме все працює разом</h2>
+  <ol>
+    <li>Клієнт відкриває <strong>booking.p-de-p.com</strong> → обирає салон.</li>
+    <li>Бачить категорії і послуги (із <code>{country}.service</code> у Postgres — синхронізованих з CRM щодня).</li>
+    <li>Обирає послугу → майстра → слот (live з AIHelps API через <code>get_freetime</code>).</li>
+    <li>Заповнює контакти → AI чат банер (опц., якщо клієнт хоче клопотатися через чат).</li>
+    <li>Submit → <code>POST /{salon}/create_appointment</code> → AIHelps API booking → Telegram → email.</li>
+    <li>Запис відображається у CRM салону одразу. Локальна копія у <code>booking.appointmentsleads</code> для аудиту.</li>
+  </ol>
+</section>
+
+<section class="doc-section">
+  <h2>Швидкі дії</h2>
+  <div class="doc-grid">
+    <a href="{{ url_for('admin.dashboard') }}" class="doc-link-card">
+      <strong>📊 Дашборди</strong>
+      <span>Статистика записів</span>
+    </a>
+    <a href="{{ url_for('admin.services') }}" class="doc-link-card">
+      <strong>📋 Послуги</strong>
+      <span>Каталог + категорії + описи</span>
+    </a>
+    {% if admin_role == 'superadmin' %}
+    <a href="{{ url_for('admin.salons') }}" class="doc-link-card">
+      <strong>🏠 Салони</strong>
+      <span>Створення + контакти + AI toggle</span>
+    </a>
+    <a href="{{ url_for('admin.users') }}" class="doc-link-card">
+      <strong>👤 Користувачі</strong>
+      <span>Адміни + ролі</span>
+    </a>
+    {% endif %}
+  </div>
+</section>

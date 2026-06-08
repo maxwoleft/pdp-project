@@ -1,0 +1,34 @@
+{
+  "nameLocation": "South Kensington",
+  "name": "62 Old Brompton Road",
+  "codeLocation": "SW7 3LQ, London",
+  "telegram_token": "8097258835:AAGeiKBHjARK4ihpvTWeXPsDDy063fR5O9I",
+  "telegram_chat_id": "-1002646353157",
+  "database_code": "703835",
+  "payment_location_id": "3396",
+  "sidebar_image": "img/london2.jpg",
+  "image": "img/london2.jpg",
+  "areaIcon": "img/areaLondon.png",
+  "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2484.1004947249876!2d-0.1767201!3d51.4930233!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48760567e5a85271%3A0xa7d0dfd44c146037!2zNjIgT2xkIEJyb21wdG9uIFJkLCBTb3V0aCBLZW5zaW5ndG9uLCBMb25kb24gU1c3IDNMUSwg0JLQtdC70LjQutCwINCR0YDQuNGC0LDQvdGW0Y8!5e0!3m2!1suk!2sua!4v1761138377958!5m2!1suk!2sua",
+  "map_referrerpolicy": "no-referrer-when-downgrade",
+  "map_link": "https://www.google.com/maps?hl=uk&mat=CcC3gvuOvLAUElcBTVDHno4KGekCk_OAvE4kSV882WQev__TeksoCErnA_sm55iMGf1_1JRpVaVeB6ZYC0W53bcpibo7Nfp0XqygaZBnyDMGxGkDM2irN5tG59-5ADmDfhI&authuser=0&um=1&ie=UTF-8&fb=1&gl=pl&sa=X&geocode=KYMHL4TSBXZIMcvEjqERe9pi&daddr=62+Old+Brompton+Rd,+South+Kensington,+London+SW7+3LQ,+%D0%92%D0%B5%D0%BB%D0%B8%D0%BA%D0%B0+%D0%91%D1%80%D0%B8%D1%82%D0%B0%D0%BD%D1%96%D1%8F",
+  "address": {
+    "line": "62 Old Brompton Road, London, SW7 3LQ",
+    "phone_display": "+44 07775 449715",
+    "phone_link": "4407775449715",
+    "email": "office@p-de-p.co.uk"
+  },
+  "menu_links": {
+    "services": "https://example.com/services",
+    "salons": "https://example.com/locations",
+    "certificates": "https://example.com/giftcards",
+    "instagram": "https://instagram.com",
+    "telegram_bot": "https://t.me/yourbot",
+    "facebook": "https://facebook.com"
+  },
+  "languages": [
+    "en",
+    "ua",
+    "ru"
+  ]
+}

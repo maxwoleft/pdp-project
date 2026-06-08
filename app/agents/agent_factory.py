@@ -29,6 +29,10 @@ class AgentFactory:
         self._redis = redis
         self._cache: dict[str, SalesAgent] = {}
 
+    def clear_cache(self) -> None:
+        """Invalidate cached agents. Next get_agent() reloads instructions з disk."""
+        self._cache.clear()
+
     def get_agent(self, country: str) -> SalesAgent:
         country = country.lower()
         if country in self._cache:
@@ -64,6 +68,13 @@ class AgentFactory:
         "tools_reference.md",
     )
 
+    # Country-level variables, injected у system prompt.
+    COUNTRY_VARS: dict[str, dict[str, str]] = {
+        "ua": {"currency": "грн", "currency_code": "UAH", "country_name": "Україна", "lang_default": "uk"},
+        "pl": {"currency": "zł", "currency_code": "PLN", "country_name": "Polska", "lang_default": "pl"},
+        "gb": {"currency": "£", "currency_code": "GBP", "country_name": "United Kingdom", "lang_default": "en"},
+    }
+
     def _load_instructions(self, country: str) -> str:
         parts: list[str] = []
         for module in self.INSTRUCTION_MODULES:
@@ -75,4 +86,22 @@ class AgentFactory:
         if override_path.exists():
             parts.append(override_path.read_text(encoding="utf-8").strip())
 
-        return "\n\n---\n\n".join(parts)
+        # Dialogue examples — few-shot для типових ситуацій
+        examples_dir = INSTRUCTIONS_DIR / "dialogue_examples"
+        if examples_dir.exists():
+            example_files = sorted(examples_dir.glob("*.md"))
+            if example_files:
+                examples_block = "## DIALOGUE EXAMPLES\n\nНижче — приклади як AI має поводитись у типових ситуаціях. Використовуй як reference для тону, структури і логіки.\n\n"
+                for f in example_files:
+                    examples_block += f"### Example: {f.stem.replace('_', ' ')}\n\n"
+                    examples_block += f.read_text(encoding="utf-8").strip()
+                    examples_block += "\n\n"
+                parts.append(examples_block.strip())
+
+        full = "\n\n---\n\n".join(parts)
+
+        # Variable substitution: {currency}, {country_code}, {country_name}, {lang_default}
+        vars_map = self.COUNTRY_VARS.get(country, {})
+        for var_name, var_value in vars_map.items():
+            full = full.replace("{" + var_name + "}", var_value)
+        return full

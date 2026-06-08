@@ -1,0 +1,128 @@
+{% extends "admin/base.html" %}
+{% block title %}Дашборди{% endblock %}
+{% block page_title %}Дашборди{% endblock %}
+
+{% block content %}
+
+{% if not salons %}
+<div class="coming-soon">
+  <div class="coming-soon-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 8 12 8 12s8-6.75 8-12c0-4.42-3.58-8-8-8zm0 11a3 3 0 110-6 3 3 0 010 6z" fill="currentColor"/></svg>
+  </div>
+  <div class="coming-soon-title">Локація запланована</div>
+  <div class="coming-soon-text">Дані для локації «{{ current_location.name }}» ще не доступні. Вони з'являться після розгортання системи.</div>
+</div>
+{% else %}
+
+<!-- Filters -->
+<div class="filters-bar">
+  <select id="filterLocation" class="filter-select" onchange="loadDashboard()">
+    <option value="all">Всі салони</option>
+    {% for code, info in salons.items() %}
+    <option value="{{ code }}">{{ info.get('name', code) }}</option>
+    {% endfor %}
+  </select>
+
+  <input type="date" id="filterDateFrom" class="filter-input" onchange="loadDashboard()">
+  <span style="font-size:13px; font-weight:500; color:#888;">—</span>
+  <input type="date" id="filterDateTo" class="filter-input" onchange="loadDashboard()">
+
+  <button class="btn btn-ghost btn-sm" onclick="resetFilters()">Скинути</button>
+</div>
+
+<!-- Stat Cards -->
+<div class="grid-3" style="margin-bottom:24px;">
+  <div class="stat-card">
+    <div class="stat-label">Замовлень за період</div>
+    <div class="stat-value" id="statOrders">—</div>
+    <div class="stat-sub" id="statOrdersSub"></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Оплачено</div>
+    <div class="stat-value" id="statPaid">—</div>
+    <div class="stat-sub" id="statPaidSub"></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Середня кількість послуг</div>
+    <div class="stat-value" id="statAvgServices">—</div>
+    <div class="stat-sub">на одне замовлення</div>
+  </div>
+</div>
+
+<!-- Top Services -->
+<div class="card">
+  <div class="card-title">Топ послуг за кількістю замовлень</div>
+  <div id="topServicesList">
+    <div class="empty-state"><p>Завантаження...</p></div>
+  </div>
+</div>
+
+<script>
+  var today = new Date();
+  var thirtyDaysAgo = new Date(today);
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+  document.getElementById('filterDateFrom').value = thirtyDaysAgo.toISOString().split('T')[0];
+  document.getElementById('filterDateTo').value = today.toISOString().split('T')[0];
+
+  function resetFilters() {
+    document.getElementById('filterLocation').value = 'all';
+    document.getElementById('filterDateFrom').value = thirtyDaysAgo.toISOString().split('T')[0];
+    document.getElementById('filterDateTo').value = today.toISOString().split('T')[0];
+    loadDashboard();
+  }
+
+  function loadDashboard() {
+    var location = document.getElementById('filterLocation').value;
+    var dateFrom = document.getElementById('filterDateFrom').value;
+    var dateTo = document.getElementById('filterDateTo').value;
+
+    var params = new URLSearchParams();
+    if (location !== 'all') params.append('location', location);
+    if (dateFrom) params.append('date_from', dateFrom);
+    if (dateTo) params.append('date_to', dateTo);
+
+    fetch('/admin/api/dashboard?' + params.toString())
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        document.getElementById('statOrders').textContent = data.total_orders;
+        document.getElementById('statOrdersSub').textContent =
+          'Очікують: ' + data.orders_waiting + ' / Оплачено: ' + data.orders_paid;
+        document.getElementById('statPaid').textContent = data.orders_paid;
+        document.getElementById('statPaidSub').textContent =
+          data.orders_paid > 0 ? Math.round(data.orders_paid / data.total_orders * 100) + '% від загальної кількості' : '';
+        document.getElementById('statAvgServices').textContent = data.avg_services_per_order;
+
+        var svcContainer = document.getElementById('topServicesList');
+        if (data.top_services.length === 0) {
+          svcContainer.innerHTML = '<div class="empty-state"><p>Немає даних за обраний період</p></div>';
+        } else {
+          var html = '';
+          data.top_services.forEach(function(item, i) {
+            html += '<div class="rank-item">'
+              + '<div class="rank-num">' + (i + 1) + '</div>'
+              + '<div class="rank-name">' + escapeHtml(item.name) + '</div>'
+              + '<div class="rank-value">' + item.count + '</div>'
+              + '</div>';
+          });
+          svcContainer.innerHTML = html;
+        }
+      })
+      .catch(function() {
+        document.getElementById('topServicesList').innerHTML =
+          '<div class="empty-state"><p>Помилка завантаження</p></div>';
+      });
+  }
+
+  function escapeHtml(text) {
+    var el = document.createElement('span');
+    el.textContent = text;
+    return el.innerHTML;
+  }
+
+  loadDashboard();
+</script>
+
+{% endif %}{# salons check #}
+
+{% endblock %}

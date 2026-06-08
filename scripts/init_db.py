@@ -45,13 +45,22 @@ async def main() -> None:
                 {"code": code, "name": name, "tz": tz, "cur": currency, "lang": lang},
             )
 
-        # 2. Створюємо схему на кожну країну і всі country-specific таблиці
+        # 2. booking schema + booking.salons + всі інші booking таблиці
+        await conn.execute(text('CREATE SCHEMA IF NOT EXISTS booking'))
+        booking_tables = [
+            t for t in Base.metadata.sorted_tables if t.schema == "booking"
+        ]
+        for table in booking_tables:
+            await conn.run_sync(lambda c, t=table: t.create(c, checkfirst=True))
+
+        # 3. Створюємо схему на кожну країну і всі country-specific таблиці.
+        # Schema-less таблиці = country-local. booking.salons зберігається окремо.
         country_tables = [
             t for t in Base.metadata.sorted_tables if t.schema is None
         ]
         for code, *_ in COUNTRIES:
             await conn.execute(text(f'CREATE SCHEMA IF NOT EXISTS "{code}"'))
-            await conn.execute(text(f'SET search_path TO "{code}", public'))
+            await conn.execute(text(f'SET search_path TO "{code}", public, booking'))
             for table in country_tables:
                 await conn.run_sync(lambda c, t=table: t.create(c, checkfirst=True))
 

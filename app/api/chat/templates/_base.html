@@ -2,7 +2,7 @@
 <html lang="uk" class="h-full">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0f172a">
   <title>{% block title %}Mira — AI помічник{% endblock %}</title>
   <!-- Tailwind Play CDN: dev/prototyping only. Перед production замінити на build-time tailwind. -->
@@ -35,6 +35,10 @@
       -webkit-tap-highlight-color: transparent;
     }
     [x-cloak] { display: none !important; }
+    /* iOS Safari zooms input on focus коли font-size < 16px — фіксуємо */
+    input, textarea, select { font-size: 16px !important; }
+    /* Кнопки: при долгому тапі не виділяє сусідній текст */
+    button { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; touch-action: manipulation; }
     .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
     .scrollbar-thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
     .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #94a3b8; }

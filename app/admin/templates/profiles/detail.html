@@ -72,26 +72,110 @@
           </div>
         </summary>
         <div class="px-4 pb-3 pt-1 space-y-3">
-          <!-- Inline key description editor -->
-          <div class="bg-violet-50 border border-violet-200 rounded-lg p-3"
-               x-data='{ "desc": {{ kb.description|tojson }}, "saving": false, "saved": false }'>
-            <label class="block text-[10px] font-semibold text-violet-700 uppercase mb-1">
-              В яких випадках робиться (контекст для AI)
-            </label>
-            <textarea x-model="desc" rows="2" placeholder="Напр.: для шкіри обличчя 40 хв; підходить для делікатних зон..."
-                      class="w-full px-2 py-1.5 text-xs rounded border border-violet-300 focus:border-violet-500 outline-none mb-2"></textarea>
-            <button type="button" :disabled="saving"
-                    @click="saving=true; saved=false;
-                      fetch('/admin/profiles/{{ profile.id }}/key-description', {
-                        method:'POST',
-                        headers:{'Content-Type':'application/x-www-form-urlencoded'},
-                        body: new URLSearchParams({canonical_key:'{{ kb.canonical_key }}', description: desc})
-                      }).then(r=>r.json()).then(()=>{saving=false; saved=true; setTimeout(()=>saved=false,2000)})"
-                    class="px-3 py-1 bg-violet-600 hover:bg-violet-700 text-white text-xs rounded transition">
-              <span x-show="!saving && !saved">Зберегти</span>
-              <span x-show="saving">Зберігаю...</span>
-              <span x-show="saved" class="text-emerald-200">✓ Збережено</span>
+          <!-- Per-variant контент (concerns/audience/keywords/etc для цього ckey) -->
+          <div class="bg-amber-50 border border-amber-200 rounded-lg overflow-hidden"
+               x-data='{
+                 "addresses_problems": {{ (kb.overrides.addresses_problems or [])|tojson }}.join("\n"),
+                 "target_audience": {{ (kb.overrides.target_audience or [])|tojson }}.join("\n"),
+                 "benefits": {{ (kb.overrides.benefits or [])|tojson }}.join("\n"),
+                 "keywords": {{ (kb.overrides.keywords or [])|tojson }}.join("\n"),
+                 "sales_pitch": {{ (kb.overrides.sales_pitch or "")|tojson }},
+                 "cross_sell": {{ (kb.overrides.cross_sell or [])|tojson }}.join("\n"),
+                 "saving": false, "saved": false, "open": false,
+                 "has_data": {{ ((kb.overrides.addresses_problems or kb.overrides.target_audience or kb.overrides.benefits or kb.overrides.keywords or kb.overrides.sales_pitch or kb.overrides.cross_sell) and true or false)|tojson }}
+               }'>
+            <button type="button" @click="open = !open"
+                    class="w-full flex items-center justify-between px-4 py-3 hover:bg-amber-100 transition cursor-pointer text-left">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-amber-600 transition" :class="{'rotate-90': open}"
+                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/>
+                </svg>
+                <span class="text-sm font-semibold text-amber-900 uppercase tracking-wide">
+                  Контент для AI пошуку
+                </span>
+                <span x-show="has_data" class="text-[10px] px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded">✓ заповнено</span>
+                <span x-show="!has_data" class="text-[10px] px-1.5 py-0.5 bg-amber-200 text-amber-800 rounded">⚠ пусто</span>
+              </div>
+              <span class="text-xs text-amber-700">
+                <span x-show="!open">Натисни щоб відкрити</span>
+                <span x-show="open">Закрити</span>
+              </span>
             </button>
+            <div x-show="open" x-collapse class="px-4 pb-4 pt-1 space-y-3 border-t border-amber-200">
+              <p class="text-xs text-amber-800 leading-relaxed bg-amber-100 p-2 rounded">
+                <strong>Як це працює:</strong> AI чат шукає послугу за тим, що клієнт описує. Чим краще заповнено ці поля — тим точніше AI підбере. По одному рядку на пункт. Якщо порожньо — AI бере defaults з profile-рівня.
+              </p>
+              <div>
+                <label class="block text-xs font-semibold text-amber-900 mb-1">
+                  Які проблеми вирішує
+                  <span class="text-amber-600 font-normal">— скарги/потреби клієнта на які підходить ця послуга</span>
+                </label>
+                <textarea x-model="addresses_problems" rows="3" placeholder="відросли корені&#10;сивина&#10;тьмяний колір волосся"
+                          class="w-full px-3 py-2 text-sm rounded border border-amber-300 focus:border-amber-500 outline-none"></textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-amber-900 mb-1">
+                  Цільова аудиторія
+                  <span class="text-amber-600 font-normal">— для кого підходить</span>
+                </label>
+                <textarea x-model="target_audience" rows="3" placeholder="клієнти з відрослими коренями&#10;офісні працівники&#10;ті хто фарбує корені регулярно"
+                          class="w-full px-3 py-2 text-sm rounded border border-amber-300 focus:border-amber-500 outline-none"></textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-amber-900 mb-1">
+                  Переваги / результат
+                  <span class="text-amber-600 font-normal">— що клієнт отримає</span>
+                </label>
+                <textarea x-model="benefits" rows="3" placeholder="свіжий колір біля коренів&#10;однорідний відтінок&#10;підтримка кольору між основними фарбуваннями"
+                          class="w-full px-3 py-2 text-sm rounded border border-amber-300 focus:border-amber-500 outline-none"></textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-amber-900 mb-1">
+                  Ключові слова
+                  <span class="text-amber-600 font-normal">— за чим AI шукатиме (синоніми, розмовні форми)</span>
+                </label>
+                <textarea x-model="keywords" rows="3" placeholder="корені&#10;підкрашування коренів&#10;фарбування коріння"
+                          class="w-full px-3 py-2 text-sm rounded border border-amber-300 focus:border-amber-500 outline-none"></textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-amber-900 mb-1">
+                  Презентація послуги (sales pitch)
+                  <span class="text-amber-600 font-normal">— коротка фраза як подати клієнту</span>
+                </label>
+                <textarea x-model="sales_pitch" rows="2" placeholder="Швидке оновлення кольору біля коренів — підтримка свіжого вигляду без повного фарбування."
+                          class="w-full px-3 py-2 text-sm rounded border border-amber-300 focus:border-amber-500 outline-none"></textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-amber-900 mb-1">
+                  Cross-sell
+                  <span class="text-amber-600 font-normal">— що ще порадити разом</span>
+                </label>
+                <textarea x-model="cross_sell" rows="3" placeholder="Тонування&#10;Догляд для волосся&#10;Укладка"
+                          class="w-full px-3 py-2 text-sm rounded border border-amber-300 focus:border-amber-500 outline-none"></textarea>
+              </div>
+              <button type="button" :disabled="saving"
+                      @click="saving=true; saved=false;
+                        fetch('/admin/profiles/{{ profile.id }}/key-overrides', {
+                          method:'POST',
+                          headers:{'Content-Type':'application/x-www-form-urlencoded'},
+                          body: new URLSearchParams({
+                            canonical_key:'{{ kb.canonical_key }}',
+                            language:'{{ kb.override_lang }}',
+                            addresses_problems: addresses_problems,
+                            target_audience: target_audience,
+                            benefits: benefits,
+                            keywords: keywords,
+                            sales_pitch: sales_pitch,
+                            cross_sell: cross_sell
+                          })
+                        }).then(r=>r.json()).then(d=>{saving=false; saved=true; has_data=!!(d.overrides && Object.keys(d.overrides).length); setTimeout(()=>saved=false,2000)})"
+                      class="w-full px-4 py-2.5 bg-amber-600 hover:bg-amber-700 disabled:bg-amber-400 text-white text-sm font-semibold rounded-lg transition">
+                <span x-show="!saving && !saved">💾 Зберегти контент</span>
+                <span x-show="saving">Зберігаю...</span>
+                <span x-show="saved" class="text-emerald-100">✓ Збережено</span>
+              </button>
+            </div>
           </div>
 
           {% if kb.services %}

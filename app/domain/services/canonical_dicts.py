@@ -24,6 +24,8 @@ TYPO_FIXES: list[tuple[str, str]] = [
     (r"\bантицилюліт", "антицелюліт"),
     (r"\bантитсилюліт", "антицелюліт"),
     (r"\bантитселюліт", "антицелюліт"),
+    # антифриз (рос. написання) → антифріз (укр.)
+    (r"\bантифриз\b", "антифріз"),
     # Дефіс vs пробіл — уніфікуємо до пробілу
     (r"\bблонд-миття\b", "блонд миття"),
     # Apostrophes — три варіанти Unicode → один ASCII
@@ -55,6 +57,66 @@ SYNONYMS: list[tuple[str, str]] = [
     # Стрижка
     (r"\bhair cut\b", "стрижка"),
     (r"\bhaircut\b", "стрижка"),
+    # Endospheres / Endosphere (apparat — singular/plural variants)
+    (r"\bendospheres?\b|\bендосфер\w*\b", "endosphere"),
+    # Афро-кудрі / накрутка / кучері — один концепт
+    (r"\bафронакрутк\w*\b", "афрокудрі"),
+    (r"\bафрокучер\w*\b", "афрокудрі"),
+    (r"\bафро\s+кудр\w*\b", "афрокудрі"),
+    (r"\bафрокудр\w*\b", "афрокудрі"),
+    # Stem-level inflection collapses (UA word forms).
+    # Замість lemmatizer — для частих beauty-термінів мапимо word stem
+    # у канонічну форму. Розширюється коли cluster-аналіз знаходить нову
+    # spelling.
+    (r"\bнарощен\w*\b", "нарощений"),
+    (r"\bукладан\w*\b", "укладка"),
+    (r"\bукладк\w*\b", "укладка"),
+    (r"\bзачісок\b|\bзачіск\w*\b", "зачіска"),
+    (r"\bстрижк\w*\b|\bстриж[оаеи]\w*\b", "стрижка"),
+    (r"\bдоглядов\w*\b|\bдогляд\w*\b", "догляд"),
+    (r"\bлікувальн\w*\b|\bлікуван\w*\b", "лікування"),
+    (r"\bфарбу\w*\b", "фарбування"),
+    (r"\bтонуван\w*\b", "тонування"),
+    (r"\bмеліруван\w*\b|\bмелірован\w*\b", "мелірування"),
+    (r"\bрозфарбован\w*\b|\bрозфарбуван\w*\b", "розфарбування"),
+    (r"\bкорекц\w*\b", "корекція"),
+    (r"\bреконструкц\w*\b", "реконструкція"),
+    (r"\bвідновлен\w*\b|\bвідновлювальн\w*\b", "відновлення"),
+    (r"\bепіляц\w*\b", "епіляція"),
+    (r"\bдепіляц\w*\b", "депіляція"),
+    (r"\bваксин\w*\b", "вакс"),
+    (r"\bпокритт\w*\b", "покриття"),
+    (r"\bзняття\b|\bзнят\w*\b", "зняття"),
+    (r"\bдизайн\w*\b", "дизайн"),
+    (r"\bманікюр\w*\b", "манікюр"),
+    (r"\bпедикюр\w*\b", "педикюр"),
+    (r"\bпослуг\w*\b", "послуга"),
+    (r"\bмодел\w*\b", "моделювання"),
+    (r"\bкомплекс\w*\b", "комплекс"),
+    (r"\bритуал\w*\b", "ритуал"),
+    # Більше inflection collapses з cluster-аналізу
+    (r"\bнігт\w*\b|\bноготь\b|\bнігот\w*\b", "нігті"),
+    (r"\bпальц\w*\b", "пальці"),
+    (r"\bстоп[аиуеіо]\w*\b", "стопа"),
+    (r"\bруки\b|\bруц\w*\b", "руки"),
+    (r"\bволосс?я\w*\b|\bволос\w*\b", "волосся"),
+    (r"\bобличч\w*\b|\bлиц[аеоі]\w*\b", "обличчя"),
+    (r"\bкоренів\b|\bкорінн\w*\b|\bкорен\w*\b|\bкорінь\b", "корінь"),
+    (r"\bбров[аиуеоі]\w*\b|\bбрів\b|\bбров\b", "брови"),
+    (r"\bвії\b|\bвіям?\b|\bвіями\b", "вії"),
+    (r"\bголов[аиуеоі]\w*\b|\bголів\b", "голова"),
+    (r"\bспин[аиуеоі]\w*\b", "спина"),
+    (r"\bтіл[аиуоеіо]\w*\b|\bтіло\b", "тіло"),
+    # Функціональні слова — strip
+    (r"\bвх?одит\w*\b|\bвходять\b", ""),
+    (r"\boption[123]\b", ""),
+    # Typos
+    (r"\bмелируван\w*\b", "мелірування"),
+    (r"\bкоктельн\w*\b", "коктейльний"),
+    # Babylights spelling variants
+    (r"\bbaby\s+lights\b|\bbabylights\b|\bбебі\s*лайтс\b", "babylights"),
+    # Наклейки / наліпки — синоніми
+    (r"\bналіпк\w*\b|\bнаклейк\w*\b|\bстікер\w*\b", "наклейка"),
 ]
 
 # ── Бренди ────────────────────────────────────────────────────────
@@ -68,14 +130,26 @@ SYNONYMS: list[tuple[str, str]] = [
 # Порядок важливий: специфічніші серії (наприклад "tokio inkarami")
 # мають бути перед загальним брендом ("inkarami" / "lebel").
 BRANDS: list[tuple[str, list[str]]] = [
-    # Багатослівні серії — перші
+    # Багатослівні серії — перші (приоритет над short brand)
     ("brae bond angel", [r"\bbrae\s+bond\s+angel\b", r"\bbond\s+angel\b"]),
     ("brae power dose", [r"\bbrae\s+power\s+dose\b", r"\bpower\s+dose\b"]),
     ("tokio inkarami", [r"\btokio\s+inkarami\b"]),
     ("dr.sorbie", [r"\bdr\.?\s*sorbie\b"]),
-    ("la biosthetique", [r"\bla\s+biosthetique\b"]),
+    ("la biosthetique", [r"\bla\s*biosthetique\b", r"\blabiosthetique\b"]),
     ("biologique recherche", [r"\bbiologique\s+recherche\b"]),
     ("hadat cosmetics", [r"\bhadat\s+cosmetics\b", r"\bhadat\b"]),
+    # Sub-brand / product line patterns (приоритет над generic brand parent)
+    ("color&gloss", [r"\bcolor\s*&\s*gloss\b"]),
+    ("tint&tone", [r"\btint\s*&\s*tone\b"]),
+    ("shine&tone", [r"\bshine\s*&\s*tone\b"]),
+    ("vibrance", [r"\bvibrance\b"]),
+    ("simsens", [r"\bsimsens\b|\bsim\s*sens\b"]),
+    ("tempting", [r"\btempting\b"]),
+    ("amethyste", [r"\bamethyste\b"]),
+    ("спецблонд", [r"\bспецблонд\b|\bspetsblond\b"]),
+    ("yellow", [r"\byellow\b"]),
+    ("alfaparf", [r"\balfaparf\b"]),
+    ("goldwell", [r"\bgoldwell\b"]),
     # Однослівні бренди (за алфавітом)
     ("balmain", [r"\bbalmain\b"]),
     ("brae", [r"\bbrae\b"]),

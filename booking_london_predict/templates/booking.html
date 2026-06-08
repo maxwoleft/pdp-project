@@ -1,0 +1,278 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ translations["pageTitle"] }}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"> 
+  <link rel="stylesheet" href="{{ url_for('static', filename='fonts/GothamPro/stylesheet.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MJXE9RQ9HK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MJXE9RQ9HK');
+</script>
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1215998746246028');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
+/></noscript>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KGWKC25K');</script>
+<!-- End Google Tag Manager -->
+
+<!-- TikTok Pixel Code Start -->
+<script>
+!function (w, d, t) {
+  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+
+
+  ttq.load('D2HDRVRC77U9U4KDPM10');
+  ttq.page();
+}(window, document, 'ttq');
+</script>
+<!-- TikTok Pixel Code End -->
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGWKC25K"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+ {% include 'header.html' %}
+  <div class="booking-header">
+    {% if salon_info.get('ai_chat_enabled') %}
+    <a class="ai-chat-cta" href="https://ai-chat.p-de-p.com/chat/start?salon_id={{ salon_info.get('id', '') }}" target="_blank" rel="noopener">
+      <div class="ai-chat-cta-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a8 8 0 0 1 8 8v3a4 4 0 0 1-4 4h-1l-3 3v-3H10a8 8 0 0 1 0-15Z"/>
+          <circle cx="9" cy="11" r="1" fill="currentColor"/>
+          <circle cx="13" cy="11" r="1" fill="currentColor"/>
+          <circle cx="17" cy="11" r="1" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="ai-chat-cta-text">
+        <span class="ai-chat-cta-title">{{ translations["aiChatTitle"] or "Зробіть замовлення через AI чат" }}</span>
+        <span class="ai-chat-cta-sub">{{ translations["aiChatSub"] or "Опишіть послугу — AI підбере час" }}</span>
+      </div>
+      <span class="ai-chat-cta-arrow" aria-hidden="true">&rsaquo;</span>
+    </a>
+    {% endif %}
+    <h2 class="location-title">{{ translations["locationTitle"] }}</h2>
+    <div class="salon-picker" id="salonPicker">
+      <button type="button" class="salon-picker-button" id="salonPickerButton" aria-haspopup="listbox" aria-expanded="false">
+        <span class="salon-picker-label" id="salonPickerLabel"></span>
+        <span class="salon-picker-chevron" aria-hidden="true">&#9662;</span>
+      </button>
+      <div class="salon-picker-panel" id="salonPickerPanel" role="menu" aria-hidden="true">
+        <div class="salon-picker-header" id="salonPickerBack" style="display:none;">
+          <button type="button" class="salon-picker-back-btn" aria-label="Back">&#8592;</button>
+          <span class="salon-picker-crumbs" id="salonPickerCrumbs"></span>
+        </div>
+        <ul class="salon-picker-list" id="salonPickerList" role="menu"></ul>
+      </div>
+    </div>
+    {% if salon_info.get('payment_enabled') %}
+    <p class="prepayment-text">{{ translations["prepaymentInfo"] }}</p>
+    {% endif %}
+  </div>
+  <script>
+    window.salonsHierarchy = {{ salons_hierarchy|tojson }};
+    window.salonCountryNames = {
+      {% for country in salons_hierarchy %}
+      "{{ country.country }}": {{ (translations[country.country_key] or country.country)|tojson }},
+      {% endfor %}
+    };
+  </script>
+<div id="reservationTimer" class="reservation-timer" style="display:none;"></div>
+
+  <div id="loadingOverlay" class="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+  <section class="booking" id="booking">
+
+  <!-- Левая колонка: выбор уровня мастера и списка категорий -->
+  <div class="leftSide">
+    <h2 class="service-titlePhone">{{translations["servicesTitle"]}}</h2>
+    <!-- Список главных категорий (будет заполнен JS) -->
+    <div id="mobileCategoryDropdown">
+      <!-- Сюда JS будет вставлять <select> со списком категорий -->
+    </div>
+    
+    <div class="categoryList" id="category-list">
+      <!-- JS заполнит этот блок -->
+    </div>
+    <!-- Вибір рівня майстра видалено - тепер рівень вибирається автоматично при виборі часу -->
+  </div>
+
+  <!-- Центральная колонка: подкатегории и услуги выбранной категории -->
+  <div class="middleSide">
+    <!-- Блок выбора длины волос (скрыт по умолчанию). 
+        Показываем только если в услугах есть приставки. -->
+    <div class="hairLengthSelector" id="hairLengthSelector" style="display: none;">
+      <h3>ОБЕРІТЬ ВАШУ ДОВЖИНУ ВОЛОССЯ</h3>
+      <div class="hairLengthOptions" id="hairLengthOptions">
+        <!-- Иконки добавит JS -->
+      </div>
+    </div>
+
+    <!-- Список услуг (будет фильтроваться при выборе длины) -->
+    <div class="services-block" id="servicesList">
+      <!-- Сюда JS добавит услуги -->
+    </div>
+
+  </div>
+
+  <!-- Правая колонка: информация о салоне -->
+  <div class="rightSide">
+    <!-- БЛОК КОРЗИНЫ -->
+    <div class="cartBox" id="cartBox">
+    
+      <!-- Заполненная корзина (скрыта по умолчанию) -->
+      <div class="cartFilled" id="cartFilled" style="display: none;">
+        <!-- Список выбранных услуг -->
+        <div class="cartItems" id="cartItemsContainer">
+          <!-- Пример структуры для одной услуги (добавится динамически JS):
+              <div class="cartItem">
+                <div class="cartServiceName"></div>
+                <div class="cartServiceMaster"></div>
+                <div class="cartServiceDuration"></div>
+                <div class="cartServicePrice"></div>
+              </div>
+          -->
+        </div>
+        <!-- Итоговая стоимость -->
+        <div class="cartTotal" id="cartTotal"></div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="Step-1-image" align="center">
+          {% if salon_info['sidebar_image'] %}
+          <img src="{{ url_for('static', filename=salon_info['sidebar_image']) }}" width="100%" alt="">
+          {% endif %}
+        </div>
+
+        <div class="sidebarText">
+          <div class="Step-2-centerandaddress">
+            {% if salon_info['address']['line'] %}<p>{{ salon_info['address']['line'] }}</p>{% endif %}
+            {% if salon_info['address']['phone_link'] %}
+            <p>Phone: <a onclick="gtag('event', 'click', { 'event_category': 'tel', 'event_action': 'click' });" href="tel:{{ salon_info['address']['phone_link'] }}">{{ salon_info['address']['phone_display'] or salon_info['address']['phone_link'] }}</a></p>
+            {% endif %}
+            {% if salon_info['address']['email'] %}
+            <p>Email: <a href="mailto:{{ salon_info['address']['email'] }}">{{ salon_info['address']['email'] }}</a></p>
+            {% endif %}
+          </div>
+          <div class="Step-3-PhoneandEmail">
+
+          </div>
+          {% if salon_info.get('hours_value') or salon_info.get('hours_label') %}
+          <div class="Step-4-CenterHours">
+            <h3>{{ salon_info.get('hours_label') or 'Opening Hours' }}</h3>
+            <p>{{ salon_info.get('hours_value') or '' }}</p>
+          </div>
+          {% endif %}
+          {% if salon_info.get('instagram_url') %}
+          <div class="socialLinks">
+            <img src="{{ url_for('static', filename='img/instagramIcon-sidebar.png') }}" alt="Instagram" width="25px">
+            <a onclick="dataLayer.push({event: 'click', event_category: 'link', event_action: 'instagram'});" href="{{ salon_info['instagram_url'] }}" target="_blank">Folow us on Instagram</a>
+          </div>
+          {% endif %}
+          <div class="Step-5-CancellationPolicy">
+            <h3>Cancellation Policy</h3>
+            <p>All reservations require a deposit payable at the time of booking...</p>
+          </div>
+        </div>
+      </div>
+    <!-- КОНЕЦ БЛОКА КОРЗИНЫ -->
+  </div>
+
+</section>
+
+
+
+
+<!-- Передаём category_tree из Flask в JS -->
+<script>
+  window.appLang = "{{ lang|default('EN') }}";
+  window.salon = "{{ salon }}";
+  // Country code (gb/ua/pl) — для unit conversion (дюйми vs см) у hair-length filter
+  window.salonCountry = "{% for c in salons_hierarchy %}{% for city in c.cities %}{% for s in city.salons %}{% if s.code == salon %}{{ c.country }}{% endif %}{% endfor %}{% endfor %}{% endfor %}";
+    window.translations = {{ translations|tojson }};
+    
+    // Можно сразу написать helper-функцию
+    window.t = function(key) {
+      // Если ключ есть в словаре — вернём его, иначе — сам ключ
+      return (window.translations && window.translations[key]) 
+             ? window.translations[key] 
+             : key;
+    };
+
+
+  window.categoriesData = [];
+  // Per-salon contact info (для "Зателефонувати" + WhatsApp кнопок у JS)
+  window.salonContact = {
+    phone_link: {{ (salon_info.get('address', {}).get('phone_link') or '')|tojson }},
+    phone_display: {{ (salon_info.get('address', {}).get('phone_display') or '')|tojson }},
+    whatsapp_phone: {{ (salon_info.get('whatsapp_phone') or '')|tojson }},
+    email: {{ (salon_info.get('address', {}).get('email') or '')|tojson }},
+    instagram_url: {{ (salon_info.get('instagram_url') or '')|tojson }}
+  };
+</script>
+<script>
+  // Передаём путь к изображению в глобальную переменную (или локальную, как вам удобнее)
+  const trashUrl = "{{ url_for('static', filename='img/trash.png') }}";
+  const phoneIcon = "{{ url_for('static', filename='img/phone.png') }}";
+  const emailIcon = "{{ url_for('static', filename='img/email.png') }}";
+  const userIcon = "{{ url_for('static', filename='img/user.png') }}";
+  const salonPhoto = "{{ url_for('static', filename=salon_info['image']) if salon_info['image'] else '' }}";
+  const heartIcon = "{{ url_for('static', filename='img/heart.png') }}";
+  const arrowdown = "{{ url_for('static', filename='img/arrowdown.svg') }}";
+  const arrowup = "{{ url_for('static', filename='img/arrowup.svg') }}";
+
+  const addServiceIcon = "{{ url_for('static', filename='img/addServiceIcon.svg') }}";
+  const dateTimeServiceIcon = "{{ url_for('static', filename='img/dateTimeServiceIcon.svg') }}";
+  const priceServiceIcon = "{{ url_for('static', filename='img/priceServiceIcon.png') }}";
+
+  const returnCategoryIcon = "{{ url_for('static', filename='img/returnCategory.png') }}";
+  const avatar = "{{ url_for('static', filename='img/avatar.png') }}";
+  const plus = "{{ url_for('static', filename='img/plus.svg') }}";
+  const check = "{{ url_for('static', filename='img/check.svg') }}";
+
+  const addServiceMore = "{{ url_for('static', filename='img/addServiceMore.svg') }}";
+  const backTo = "{{ url_for('static', filename='img/backTo.svg') }}";
+
+  const callme = "{{ url_for('static', filename='img/callme.svg') }}";
+  const whatsappIcon = "{{ url_for('static', filename='img/whatsappIcon.svg') }}";
+</script>
+
+<!-- Подключаем JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.9/jquery.inputmask.min.js"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dataappointments.js') }}"></script>
+
+
+</body>
+</html>

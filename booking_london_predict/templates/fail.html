@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Спасибо за бронирование</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='fonts/GothamPro/stylesheet.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='fonts/Arsenica_Trial_Italic/stylesheet.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+ <style>
+    
+    .booking-success {
+        padding: 40px;
+    }
+
+    .successPhoto {
+        position: relative;
+    }
+
+    .i1, .i2, .i3 {
+        position: absolute;
+    }
+
+    .i1 {
+        left: 16px;
+        bottom: 16px;
+    }
+
+    .i2 {
+        left: 50%;
+        bottom: 16px;
+        transform: translateX(-50%);
+    }
+
+    .i3 {
+        right: 16px;
+        bottom: 16px;
+    }
+
+    .successPhoto i {
+        font-family: 'Arsenica Trial';
+        font-weight: 400;
+        font-style: italic;
+        font-size: 18.64px;
+        line-height: 114%;
+        text-transform: lowercase;
+        color: white;
+    }
+
+    @media (max-width: 769px) {
+        .booking-success {
+            padding: 0;
+            width: 100%;
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+        }
+
+        .right-column-topPhone {
+            text-align: center;
+        }
+    }
+ </style>
+
+</head>
+<body>
+  <section class="booking-success">
+    <div class="success-page-container spcDesctop">
+      <div class="left-column">
+        <div class="successPhoto">
+            <img class="salonPhotoDesctop" src="{{ url_for('static', filename='img/success.jpg') }}" alt="Фото салона" style="width: 100%;">
+            <i class="i1">час</i>
+            <i class="i2">почистити</i>
+            <i class="i3">пiр’ячко</i>
+        </div>
+        <div class="salon-map" style="width: 100%;">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.7547599389413!2d-0.14319042337927976!3d51.51771507181563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b146058a8a9%3A0xe200468b46d82427!2sPIED-DE-POULE%2067%20Mortimer%20Street!5e0!3m2!1sru!2sua!4v1741038191571!5m2!1sru!2sua" width="100%" height="400px" style="border:0;" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="right-column" style="flex: 2; min-width: 300px; padding: 10px;">
+        <div class="right-column-top">
+          <img src="{{ url_for('static', filename='img/pdp.svg') }}" alt="Heart" style="width: 100%; max-width: 48px;">
+          <h2 style="text-transform: uppercase;"><span class="nameOfClient">{{ customerName }}</span>, ваш візит заброньовано!</h2>
+          <p>Із нетерпінням чекаємо нашої зустрічі.<br>У разі потреби, адміністратор сконтактує<br>з вами для уточнення деталей.</p>
+        </div>
+        <div class="selected-services-summary">
+          {{ servicesSummary|safe }}
+        </div>
+        <div class="success-buttons">
+          <button class="btn-home" onclick="window.location.href='/'">На головну</button>
+          <button class="btn-add-calendar" onclick="addToCalendar()">Додати в календар</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="success-page-container spcPhone">
+      <div class="left-column">
+        <div class="successPhoto">
+            <img class="salonPhotoDesctop" src="{{ url_for('static', filename='img/success.jpg') }}" alt="Фото салона" style="width: 100%;">
+            <i class="i1">час</i>
+            <i class="i2">почистити</i>
+            <i class="i3">пiр’ячко</i>
+        </div>        
+        <img class="pdpLogo" src="{{ url_for('static', filename='img/pdp.svg') }}" alt="Heart" style="width: 100%; max-width: 48px;">
+    </div>
+      <div class="right-columnPhone">
+        <div class="right-column-topPhone">
+          <h2 style="text-transform: uppercase;">Дякуємо, <span class="nameOfClient">{{ customerName }}</span>, що обираєте нас!</h2>
+          <p>Ваш візит заброньовано, та ми з нетерпінням чекаємо нашої зустрічі.</p>
+        </div>
+        <div class="selected-services-summary">
+          {{ servicesSummary|safe }}
+        </div>
+        <div class="salon-map" style="width: 100%;">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.7547599389413!2d-0.14319042337927976!3d51.51771507181563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b146058a8a9%3A0xe200468b46d82427!2sPIED-DE-POULE%2067%20Mortimer%20Street!5e0!3m2!1sru!2sua!4v1741038191571!5m2!1sru!2sua" width="100%" height="400px" style="border:0;" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="success-buttonsPhone">
+          <button class="btn-home" onclick="window.location.href='/'">На головну</button>
+          <button class="btn-add-calendar" onclick="addToCalendar()">Додати в календар</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="{{ url_for('static', filename='js/dataappointments.js') }}"></script>
+  <script>
+    // Функция форматирования даты для ICS
+    function formatDateForICS(dateObj) {
+      const pad = num => num.toString().padStart(2, '0');
+      return dateObj.getUTCFullYear().toString() +
+             pad(dateObj.getUTCMonth() + 1) +
+             pad(dateObj.getUTCDate()) + "T" +
+             pad(dateObj.getUTCHours()) +
+             pad(dateObj.getUTCMinutes()) +
+             pad(dateObj.getUTCSeconds()) + "Z";
+    }
+
+    // Определяем, используется ли iOS или Android
+    function isIOS() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+    function isAndroid() {
+      return /Android/.test(navigator.userAgent);
+    }
+
+    // Функция скачивания ICS файла
+    function downloadICSFileForEvents(events) {
+      let icsContent = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Your Company//Your Product//EN\r\nCALSCALE:GREGORIAN\r\n";
+      events.forEach(event => {
+        icsContent += "BEGIN:VEVENT\r\n";
+        icsContent += "SUMMARY:" + event.title + "\r\n";
+        icsContent += "DTSTART:" + event.start + "\r\n";
+        icsContent += "DTEND:" + event.end + "\r\n";
+        icsContent += "LOCATION:" + event.location + "\r\n";
+        icsContent += "DESCRIPTION:" + event.description + "\r\n";
+        icsContent += "END:VEVENT\r\n";
+      });
+      icsContent += "END:VCALENDAR";
+      const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "booking_events.ics";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Функция открытия события в Google Calendar
+    function openGoogleCalendar(event) {
+      const start = event.start.replace(/[-:]/g, "");
+      const end = event.end.replace(/[-:]/g, "");
+      const url = "https://calendar.google.com/calendar/r/eventedit?" +
+                  "text=" + encodeURIComponent(event.title) +
+                  "&dates=" + start + "/" + end +
+                  "&details=" + encodeURIComponent(event.description) +
+                  "&location=" + encodeURIComponent(event.location);
+      window.open(url, "_blank");
+    }
+
+    window.cartData = {{ cartData|tojson }};
+    // Функция добавления в календарь с использованием данных из глобального cartData
+    function addToCalendar() {
+      // Предполагается, что cartData хранится глобально и содержит объекты услуг с полями:
+      // date, time, duration, name, master и т.д.
+      if (!window.cartData || window.cartData.length === 0) {
+        alert("Нет оформленных услуг для добавления в календарь.");
+        return;
+      }
+      const events = window.cartData.map(service => {
+        const startDate = new Date(service.date + "T" + service.time + ":00");
+        const durationMinutes = parseInt(service.duration, 10) || 0;
+        const endDate = new Date(startDate.getTime() + durationMinutes * 60000);
+        return {
+          title: "Book service " + service.name,
+          start: formatDateForICS(startDate),
+          end: formatDateForICS(endDate),
+          location: "PIED-DE-POULE, London",
+          description: "Service booked with " + service.master
+        };
+      });
+      if (isAndroid() && events.length === 1) {
+        openGoogleCalendar(events[0]);
+      } else {
+        downloadICSFileForEvents(events);
+      }
+    }
+
+    // Если функция initAccordionTogglesForSummary уже определена в подключаемом JS‑файле, достаточно её вызвать:
+  document.addEventListener("DOMContentLoaded", function() {
+    initAccordionTogglesForSummary();
+  });
+  </script>
+</body>
+</html>

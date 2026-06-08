@@ -1,0 +1,32 @@
+[Unit]
+Description=PiedDePoule Booking Flask app (gunicorn)
+After=network.target postgresql.service aichat.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=aichat
+Group=aichat
+WorkingDirectory=/opt/pdpbooking/app
+Environment="PATH=/opt/pdpbooking/venv/bin:/usr/bin:/bin"
+EnvironmentFile=/opt/pdpbooking/app/.env
+ExecStart=/opt/pdpbooking/venv/bin/gunicorn \
+    --workers 3 \
+    --bind 127.0.0.1:5050 \
+    --timeout 120 \
+    --access-logfile /var/log/pdpbooking/access.log \
+    --error-logfile /var/log/pdpbooking/error.log \
+    --capture-output \
+    app:app
+Restart=on-failure
+RestartSec=5s
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/pdpbooking /var/log/pdpbooking /tmp
+
+[Install]
+WantedBy=multi-user.target

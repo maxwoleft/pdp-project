@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="{{ lang.lower() }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ translations["locationTitle"] }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='fonts/GothamPro/stylesheet.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MJXE9RQ9HK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MJXE9RQ9HK');
+  </script>
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1215998746246028');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
+/></noscript>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KGWKC25K');</script>
+<!-- End Google Tag Manager -->
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KGWKC25K" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  <main class="location-selection">
+    <div class="location-logo">
+      <img src="{{ url_for('static', filename='img/email/Mask.png') }}" alt="PIED-DE-POULE">
+    </div>
+    <h2 class="select-title">{{ translations["locationTitle"] }}</h2>
+
+    <div class="country-picker-wrap">
+      <div class="salon-picker country-picker" id="countryPicker">
+        <button type="button" class="salon-picker-button" id="countryPickerButton"
+                aria-haspopup="listbox" aria-expanded="false">
+          <span class="salon-picker-label" id="countryPickerLabel">
+            {% for country in salons_hierarchy %}{% if country.country == active_country %}{{ translations[country.country_key] or country.country }}{% endif %}{% endfor %}
+          </span>
+          <span class="salon-picker-chevron" aria-hidden="true">&#9662;</span>
+        </button>
+        <div class="salon-picker-panel" id="countryPickerPanel" role="menu" aria-hidden="true">
+          <ul class="salon-picker-list" id="countryPickerList">
+            {% for country in salons_hierarchy %}
+            <li class="salon-picker-item {% if country.country == active_country %}is-current{% endif %}"
+                data-country="{{ country.country }}">
+              {{ translations[country.country_key] or country.country }}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {% for country in salons_hierarchy %}
+      {% if country.country == active_country %}
+      <section class="country-panel is-active" data-country="{{ country.country }}">
+        {% for city in country.cities %}
+        <div class="city-section">
+          <h3 class="city-section-title">{{ city.city }}</h3>
+          <div class="salon-options salon-options-grid">
+            {% for salon in city.salons %}
+            <a class="salon-option" href="{{ url_for('booking_salon_lang', salon=salon.code, lang=lang.lower()) }}">
+              {% if salon.image %}
+              <img class="salon-image" src="{{ url_for('static', filename=salon.image) }}"
+                   alt="{{ salon.name }}"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="salon-image salon-image-placeholder" style="display:none">
+                <span class="salon-initial">{{ salon.name[0] }}</span>
+              </div>
+              {% else %}
+              <div class="salon-image salon-image-placeholder">
+                <span class="salon-initial">{{ salon.name[0] }}</span>
+              </div>
+              {% endif %}
+              <div class="salon-name-container">
+                <p class="salon-name">{{ salon.name }}</p>
+                {% if salon.address_full %}
+                <p class="salon-code">{{ salon.address_full }}</p>
+                {% endif %}
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </section>
+      {% endif %}
+    {% endfor %}
+  </main>
+
+  <script>
+    (function initCountryPicker() {
+      const picker = document.getElementById('countryPicker');
+      const button = document.getElementById('countryPickerButton');
+      const panel = document.getElementById('countryPickerPanel');
+      const items = document.querySelectorAll('#countryPickerList .salon-picker-item');
+      if (!picker || !button || !panel) return;
+
+      function open() {
+        panel.classList.add('is-open');
+        panel.setAttribute('aria-hidden', 'false');
+        button.setAttribute('aria-expanded', 'true');
+      }
+      function close() {
+        panel.classList.remove('is-open');
+        panel.setAttribute('aria-hidden', 'true');
+        button.setAttribute('aria-expanded', 'false');
+      }
+
+      button.addEventListener('click', e => {
+        e.stopPropagation();
+        if (panel.classList.contains('is-open')) close();
+        else open();
+      });
+      items.forEach(li => {
+        li.addEventListener('click', e => {
+          e.stopPropagation();
+          const code = li.dataset.country;
+          const url = new URL(window.location.href);
+          url.searchParams.set('country', code);
+          window.location.href = url.toString();
+        });
+      });
+      document.addEventListener('click', e => {
+        if (e.target && !e.target.isConnected) return;
+        if (!picker.contains(e.target)) close();
+      });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') close();
+      });
+    })();
+  </script>
+</body>
+</html>

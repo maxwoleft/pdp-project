@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(ls:*)",
+      "Bash(curl:*)",
+      "Bash(xargs ls:*)",
+      "Bash(wc:*)",
+      "Bash(grep:*)",
+      "Bash(git -C /Users/maxwoleft/Documents/PiedDePoule/booking_london_predict log --oneline)",
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(source:*)",
+      "Bash(node --check:*)",
+      "Bash(node -e:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

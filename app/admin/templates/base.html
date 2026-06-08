@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uk" class="h-full bg-slate-50">
+<html lang="uk" class="h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +7,128 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
   <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     [x-cloak] { display: none !important; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #f5f5f5; color: #0f172a; }
     .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
-    .scrollbar-thin::-webkit-scrollbar-track { background: #f1f5f9; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
     .scrollbar-thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
     .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* ─── BOOKING-STYLE SIDEBAR ────────────────────────────────── */
+    .bk-sidebar {
+      width: 220px; flex-shrink: 0;
+      background: #fff;
+      border-right: 1px solid rgba(0,0,0,0.05);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; height: 100vh; z-index: 100;
+    }
+    .bk-logo {
+      padding: 18px 16px 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .bk-logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0;
+    }
+    .bk-logo-text { font-size: 14px; font-weight: 700; color: #000; line-height: 1.2; }
+    .bk-logo-label { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #888; margin-top: 2px; }
+
+    .bk-nav { flex: 1; padding: 8px 0; overflow-y: auto; }
+    .bk-nav-section-label {
+      padding: 14px 16px 4px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #aaa;
+    }
+    .bk-nav-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px;
+      font-size: 13px; font-weight: 500; color: #555;
+      border-left: 2px solid transparent;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap; text-decoration: none;
+    }
+    .bk-nav-link svg { flex-shrink: 0; width: 16px; height: 16px; }
+    .bk-nav-link:hover { background: rgba(0,0,0,0.04); color: #000; }
+    .bk-nav-link.active {
+      background: rgba(2,125,239,0.1);
+      color: #027DEF;
+      border-left-color: #027DEF;
+      font-weight: 700;
+    }
+
+    .bk-footer { padding: 14px 16px; border-top: 1px solid rgba(0,0,0,0.05); }
+    .bk-footer-label { font-size: 10px; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .bk-footer-email { font-size: 12px; font-weight: 500; color: #555; word-break: break-all; margin-bottom: 8px; }
+    .bk-footer-logout {
+      font-size: 11px; font-weight: 700; color: #027DEF;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      background: none; border: none; cursor: pointer; padding: 0;
+    }
+
+    /* ─── MAIN AREA ─────────────────────────────────────────── */
+    .bk-main {
+      margin-left: 220px;
+      flex: 1; display: flex; flex-direction: column;
+      min-height: 100vh; min-width: 0;
+    }
+
+    /* ─── BOOKING-STYLE CARDS (square, light border) ────── */
+    .bk-card { background: #fff; border: 1px solid rgba(0,0,0,0.05); padding: 20px; margin-bottom: 16px; }
+    .bk-card-title {
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: #000;
+      margin-bottom: 14px; padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    /* ─── BOOKING-STYLE BUTTONS ────────────────────────── */
+    .bk-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 38px; padding: 0 16px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; cursor: pointer; border: none;
+      text-decoration: none; transition: opacity 0.15s;
+    }
+    .bk-btn:hover { opacity: 0.85; }
+    .bk-btn-primary { background: #027DEF; color: #fff; }
+    .bk-btn-danger { background: #c0392b; color: #fff; }
+    .bk-btn-ghost { background: rgba(0,0,0,0.05); color: #000; }
+
+    /* Override standard Tailwind elements to look more booking-ish */
+    .rounded-xl { border-radius: 0 !important; }
+    .rounded-2xl { border-radius: 0 !important; }
+    .rounded-lg { border-radius: 4px !important; }
+
+    /* Native select — браузерна стрілка налазить на текст. Прибираємо її + малюємо власну. */
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 12px;
+      padding-right: 30px !important;
+    }
+    select::-ms-expand { display: none; }
+
+    @media (max-width: 768px) {
+      .bk-sidebar { width: 60px; }
+      .bk-sidebar .bk-logo-text, .bk-sidebar .bk-logo-label,
+      .bk-sidebar .bk-nav-link span, .bk-sidebar .bk-nav-section-label,
+      .bk-sidebar .bk-footer-email, .bk-sidebar .bk-footer-label { display: none; }
+      .bk-main { margin-left: 60px; }
+      .bk-nav-link { justify-content: center; padding: 12px 0; }
+    }
   </style>
 </head>
-<body class="h-full antialiased text-slate-800">
+<body class="h-full antialiased">
 {% block body %}{% endblock %}
 </body>
 </html>

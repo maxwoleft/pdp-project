@@ -1,0 +1,119 @@
+{% extends "_layout.html" %}
+{% block title %}Налаштування AI{% endblock %}
+
+{% block main %}
+<div class="px-8 py-7 max-w-5xl">
+  <header class="mb-6 flex items-start justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-semibold text-slate-900">Налаштування AI</h1>
+      <p class="text-sm text-slate-500 mt-1">
+        Інструкції за якими працює AI чат. Зміни застосовуються одразу для наступних розмов.
+      </p>
+    </div>
+    <form method="post" action="/admin/settings/reload">
+      <button type="submit" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm rounded-lg border border-slate-300">
+        ↻ Перезавантажити AI
+      </button>
+    </form>
+  </header>
+
+  <section class="mb-6">
+    <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Ядро (CORE)</h2>
+    <p class="text-xs text-slate-500 mb-3">Найвищий пріоритет. Формує характер AI, головні правила, продажні принципи, anti-hallucination.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {% for f in sections.core %}
+      <a href="/admin/settings/edit/{{ f.path }}"
+         class="block bg-white border border-slate-200 hover:border-slate-400 rounded-lg p-4 transition">
+        <div class="flex items-start gap-3">
+          <span class="text-2xl">📜</span>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-slate-900 text-sm">{{ f.title }}</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">{{ f.description }}</p>
+            <p class="text-[10px] text-slate-400 mt-2 font-mono">{{ f.path }} · {{ f.size }} б</p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-6">
+    <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Сценарії дій (FLOW)</h2>
+    <p class="text-xs text-slate-500 mb-3">Як AI веде клієнта через типові процеси: бронювання, скасування.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {% for f in sections.flow %}
+      <a href="/admin/settings/edit/{{ f.path }}"
+         class="block bg-white border border-slate-200 hover:border-slate-400 rounded-lg p-4 transition">
+        <div class="flex items-start gap-3">
+          <span class="text-2xl">🔄</span>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-slate-900 text-sm">{{ f.title }}</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">{{ f.description }}</p>
+            <p class="text-[10px] text-slate-400 mt-2 font-mono">{{ f.path }} · {{ f.size }} б</p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-6">
+    <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Стиль</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {% for f in sections.style %}
+      <a href="/admin/settings/edit/{{ f.path }}"
+         class="block bg-white border border-slate-200 hover:border-slate-400 rounded-lg p-4 transition">
+        <div class="flex items-start gap-3">
+          <span class="text-2xl">🎨</span>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-slate-900 text-sm">{{ f.title }}</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">{{ f.description }}</p>
+            <p class="text-[10px] text-slate-400 mt-2 font-mono">{{ f.path }} · {{ f.size }} б</p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-6">
+    <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Країнні налаштування</h2>
+    <p class="text-xs text-slate-500 mb-3">Override-и для конкретної країни: мова, валюта, культурні особливості.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      {% for f in sections.country %}
+      <a href="/admin/settings/edit/{{ f.path }}"
+         class="block bg-white border border-slate-200 hover:border-slate-400 rounded-lg p-4 transition">
+        <div class="flex items-start gap-3">
+          <span class="text-2xl">🌍</span>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-slate-900 text-sm">{{ f.title }}</h3>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">{{ f.description }}</p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-6">
+    <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Приклади діалогів (training examples)</h2>
+    <p class="text-xs text-slate-500 mb-3">Приклади як AI повинен поводитись у типових ситуаціях. Використовуються як few-shot training.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+      {% for f in sections.examples %}
+      <a href="/admin/settings/edit/{{ f.path }}"
+         class="block bg-slate-50 border border-slate-200 hover:bg-white hover:border-slate-400 rounded-lg px-3 py-2 transition flex items-center gap-2 text-sm">
+        <span>💬</span>
+        <span class="text-slate-700">{{ f.title }}</span>
+        <span class="text-[10px] text-slate-400 ml-auto font-mono">{{ f.size }} б</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-xs text-amber-900 mt-6">
+    <strong>⚠ Як це працює:</strong> Інструкції — це Markdown тексти що склеюються в один system prompt для GPT.
+    Кожен файл відповідає за окремий аспект поведінки AI. При збереженні кеш агента автоматично очищається —
+    наступний клієнт побачить оновлену поведінку. Перед редагуванням AI робить backup поточної версії (<code>*.md.bak</code>).
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,434 @@
+[
+    {
+        "id": "88dd1f50-80c6-9bd9-573d-35f861396896",
+        "name": "AquaPure",
+        "parent": "88d4d676-7f57-57ad-2d2b-79790e77c0ad",
+        "picture": null,
+        "archive": false,
+        "parentName": "Косметологія"
+    },
+    {
+        "id": "88da5e7a-3c08-cb34-5e85-01a756bd527e",
+        "name": "DMK",
+        "parent": "88d4d676-7f57-57ad-2d2b-79790e77c0ad",
+        "picture": null,
+        "archive": false,
+        "parentName": "Косметологія"
+    },
+    {
+        "id": "88dda2c7-92ce-651b-4c24-ebae5002eda7",
+        "name": "Endospheres",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dd1aac-adb8-fe92-038e-1ddb50bb38ba",
+        "name": "ForLLe`d",
+        "parent": "88d4d676-7f57-57ad-2d2b-79790e77c0ad",
+        "picture": null,
+        "archive": false,
+        "parentName": "Косметологія"
+    },
+    {
+        "id": "88de3977-b91e-76d3-0084-0ff81be7b761",
+        "name": "Icoone Laser",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88ddd5a2-4660-6e95-1ab4-979511fa2a96",
+        "name": "Біозавивка",
+        "parent": "88d4d676-54f9-0ecd-2d2b-7979771a76f1",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88d4d679-0201-f2e2-2d2b-79795397c803",
+        "name": "Борода та вуса",
+        "parent": "88d4d678-ac52-6a52-2d2b-797936d588d8",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88d4d678-eef8-e9f2-2d2b-79793eed9098",
+        "name": "Брови",
+        "parent": "88d4d678-9c19-1ab2-2d2b-79793ecac8ed",
+        "picture": null,
+        "archive": false,
+        "parentName": "Чоловічі Послуги"
+    },
+    {
+        "id": "88dcffe3-ac85-e75e-73cf-e7fa73de2529",
+        "name": "Брови",
+        "parent": "88d4d678-eef8-e9f2-2d2b-79793eed9098",
+        "picture": null,
+        "archive": false,
+        "parentName": "Брови"
+    },
+    {
+        "id": "88dc8637-0667-573d-0750-0d0547198c8d",
+        "name": "Брови, вії",
+        "parent": "88d4d676-692d-987d-2d2b-79793ff0978b",
+        "picture": null,
+        "archive": false,
+        "parentName": "Макіяж, брови, вії"
+    },
+    {
+        "id": "88d4d678-ac52-6a52-2d2b-797936d588d8",
+        "name": "Волосся",
+        "parent": "88d4d678-9c19-1ab2-2d2b-79793ecac8ed",
+        "picture": null,
+        "archive": false,
+        "parentName": "Чоловічі Послуги"
+    },
+    {
+        "id": "88d4d676-54f9-0ecd-2d2b-7979771a76f1",
+        "name": "Волосся",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88d4d6c1-627a-1ae7-7a30-09194ad016ac",
+        "name": "Воскова депіляція",
+        "parent": "88d4d676-7f57-57ad-2d2b-79790e77c0ad",
+        "picture": null,
+        "archive": false,
+        "parentName": "Косметологія"
+    },
+    {
+        "id": "88dcffe4-659a-8ea0-73cf-e7fa7e435392",
+        "name": "Депіляція воском",
+        "parent": "88d4d678-9c19-1ab2-2d2b-79793ecac8ed",
+        "picture": null,
+        "archive": false,
+        "parentName": "Чоловічі Послуги"
+    },
+    {
+        "id": "88dd1f46-2a52-8fd1-573d-35f81c7d6018",
+        "name": "Інші косметологічні послуги",
+        "parent": "88d4d676-7f57-57ad-2d2b-79790e77c0ad",
+        "picture": null,
+        "archive": false,
+        "parentName": "Косметологія"
+    },
+    {
+        "id": "88ddd5a2-4ca8-9a88-1ab4-979505c2b1fa",
+        "name": "Кератин",
+        "parent": "88d4d676-54f9-0ecd-2d2b-7979771a76f1",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88dc8636-45c1-2818-0750-0d0504aa0119",
+        "name": "Консультація",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dd28c9-9fca-e6e2-0930-d8727417c9ac",
+        "name": "Консультація",
+        "parent": "88d4d676-7f57-57ad-2d2b-79790e77c0ad",
+        "picture": null,
+        "archive": false,
+        "parentName": "Косметологія"
+    },
+    {
+        "id": "88d4d676-7f57-57ad-2d2b-79790e77c0ad",
+        "name": "Косметологія",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc8636-962b-3087-0750-0d056fe890ba",
+        "name": "Ламінування брів",
+        "parent": "88d4d676-692d-987d-2d2b-79793ff0978b",
+        "picture": null,
+        "archive": false,
+        "parentName": "Макіяж, брови, вії"
+    },
+    {
+        "id": "88dc8636-8c7b-311d-0750-0d057831820a",
+        "name": "Ламінування вій",
+        "parent": "88d4d676-692d-987d-2d2b-79793ff0978b",
+        "picture": null,
+        "archive": false,
+        "parentName": "Макіяж, брови, вії"
+    },
+    {
+        "id": "88d4d677-38a6-7333-2d2b-79797a85b703",
+        "name": "Лікування волося",
+        "parent": "88d4d676-54f9-0ecd-2d2b-7979771a76f1",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88dc8638-ffa8-038b-0750-0d055ae0130c",
+        "name": "Лікування чоловічі",
+        "parent": "88d4d678-ac52-6a52-2d2b-797936d588d8",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88dc8636-824b-7dd9-0750-0d051862e0d2",
+        "name": "Макіяж",
+        "parent": "88d4d676-692d-987d-2d2b-79793ff0978b",
+        "picture": null,
+        "archive": false,
+        "parentName": "Макіяж, брови, вії"
+    },
+    {
+        "id": "88d4d676-692d-987d-2d2b-79793ff0978b",
+        "name": "Макіяж, брови, вії",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc8634-0e68-99b1-0750-0d054db6fcdb",
+        "name": "Манікюр",
+        "parent": "88d4d676-65b7-4fbd-2d2b-79791c44399f",
+        "picture": null,
+        "archive": false,
+        "parentName": "Нігтьовий сервіс"
+    },
+    {
+        "id": "88dc8638-0b6d-e342-0750-0d053c5ae5f9",
+        "name": "Манікюр чоловічий",
+        "parent": "88d4d678-b2bd-18e2-2d2b-797973adea91",
+        "picture": null,
+        "archive": false,
+        "parentName": "Нігтьовий сервіс"
+    },
+    {
+        "id": "88d4d676-950c-f49d-2d2b-797929ae8bd9",
+        "name": "Масаж",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dd28c9-9194-a266-0930-d87254934c30",
+        "name": "Масаж обличча",
+        "parent": "88d4d676-7f57-57ad-2d2b-79790e77c0ad",
+        "picture": null,
+        "archive": false,
+        "parentName": "Косметологія"
+    },
+    {
+        "id": "88daade3-8604-52e9-158b-22c1273f192f",
+        "name": "Нарощування вій",
+        "parent": "88d4d676-692d-987d-2d2b-79793ff0978b",
+        "picture": null,
+        "archive": false,
+        "parentName": "Макіяж, брови, вії"
+    },
+    {
+        "id": "88dc8633-74a1-2ed3-0750-0d0501787a63",
+        "name": "Нарощування волосся",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc8635-70c6-2d2e-0750-0d0561d90725",
+        "name": "Нарощування нігтів",
+        "parent": "88d4d676-65b7-4fbd-2d2b-79791c44399f",
+        "picture": null,
+        "archive": false,
+        "parentName": "Нігтьовий сервіс"
+    },
+    {
+        "id": "88dc8635-17d7-dab3-0750-0d051ef3076e",
+        "name": "Нігтьовий сервіс",
+        "parent": "88d4d676-65b7-4fbd-2d2b-79791c44399f",
+        "picture": null,
+        "archive": false,
+        "parentName": "Нігтьовий сервіс"
+    },
+    {
+        "id": "88d4d676-65b7-4fbd-2d2b-79791c44399f",
+        "name": "Нігтьовий сервіс",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88d4d678-b2bd-18e2-2d2b-797973adea91",
+        "name": "Нігтьовий сервіс",
+        "parent": "88d4d678-9c19-1ab2-2d2b-79793ecac8ed",
+        "picture": null,
+        "archive": false,
+        "parentName": "Чоловічі Послуги"
+    },
+    {
+        "id": "88dd75aa-58a3-e608-4609-3589427c0be4",
+        "name": "Обгортання",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88de178d-c046-936e-2ab9-205a363bf04a",
+        "name": "Обгортання АРОША",
+        "parent": "88dd75aa-58a3-e608-4609-3589427c0be4",
+        "picture": null,
+        "archive": false,
+        "parentName": "Обгортання"
+    },
+    {
+        "id": "88dc8634-4cbf-9543-0750-0d0528ebc1da",
+        "name": "Педикюр",
+        "parent": "88d4d676-65b7-4fbd-2d2b-79791c44399f",
+        "picture": null,
+        "archive": false,
+        "parentName": "Нігтьовий сервіс"
+    },
+    {
+        "id": "88dc8638-2dfe-8b97-0750-0d050e625d09",
+        "name": "Педикюр чоловічий",
+        "parent": "88d4d678-b2bd-18e2-2d2b-797973adea91",
+        "picture": null,
+        "archive": false,
+        "parentName": "Нігтьовий сервіс"
+    },
+    {
+        "id": "88dc8638-2021-587a-0750-0d051c4ad415",
+        "name": "Педикюр чоловічий",
+        "parent": "88d4d678-b2bd-18e2-2d2b-797973adea91",
+        "picture": null,
+        "archive": false,
+        "parentName": "Нігтьовий сервіс"
+    },
+    {
+        "id": "88dd28c9-5a5a-69a2-0930-d8723c8c34fa",
+        "name": "Пілінги",
+        "parent": "88d4d676-7f57-57ad-2d2b-79790e77c0ad",
+        "picture": null,
+        "archive": false,
+        "parentName": "Косметологія"
+    },
+    {
+        "id": "88db6c31-52d9-cda2-2725-5da25709c1e6",
+        "name": "Подологія",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dc944e-6f5d-d0e3-0e98-59a513ade2ad",
+        "name": "Пудрове напилення",
+        "parent": "88d4d676-692d-987d-2d2b-79793ff0978b",
+        "picture": null,
+        "archive": false,
+        "parentName": "Макіяж, брови, вії"
+    },
+    {
+        "id": "88dc8636-cfb4-9e56-0750-0d053feeb6ae",
+        "name": "Спа візаж",
+        "parent": "88d4d676-692d-987d-2d2b-79793ff0978b",
+        "picture": null,
+        "archive": false,
+        "parentName": "Макіяж, брови, вії"
+    },
+    {
+        "id": "88dc8634-8885-2f8b-0750-0d0523abcae7",
+        "name": "Спа манікюр/педикюр",
+        "parent": "88d4d676-65b7-4fbd-2d2b-79791c44399f",
+        "picture": null,
+        "archive": false,
+        "parentName": "Нігтьовий сервіс"
+    },
+    {
+        "id": "88dc8633-61ec-b919-0750-0d0571e4ef13",
+        "name": "Стрижки",
+        "parent": "88d4d676-54f9-0ecd-2d2b-7979771a76f1",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88dc8638-833f-5406-0750-0d0533556470",
+        "name": "Стрижки чоловічі",
+        "parent": "88d4d678-ac52-6a52-2d2b-797936d588d8",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88ddd57f-4012-a72b-632c-e843285a008f",
+        "name": "Техніки висвітлення",
+        "parent": "88d4d676-54f9-0ecd-2d2b-7979771a76f1",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88d4d676-d1b2-359d-2d2b-7979231c810d",
+        "name": "Укладки",
+        "parent": "88d4d676-54f9-0ecd-2d2b-7979771a76f1",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88dc8638-99a9-9472-0750-0d0538b46567",
+        "name": "Укладки чоловічі",
+        "parent": "88d4d678-ac52-6a52-2d2b-797936d588d8",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88d4d676-f238-ade3-2d2b-797929d92c97",
+        "name": "Фарбування",
+        "parent": "88d4d676-54f9-0ecd-2d2b-7979771a76f1",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88dc8638-c6e7-5d62-0750-0d051d9c54da",
+        "name": "Фарбування чоловічі",
+        "parent": "88d4d678-ac52-6a52-2d2b-797936d588d8",
+        "picture": null,
+        "archive": false,
+        "parentName": "Волосся"
+    },
+    {
+        "id": "88d4d678-9c19-1ab2-2d2b-79793ecac8ed",
+        "name": "Чоловічі Послуги",
+        "parent": null,
+        "picture": null,
+        "archive": false,
+        "parentName": null
+    },
+    {
+        "id": "88dd0009-8c04-e9b9-73cf-e7fa43aaa28f",
+        "name": "Шугаринг",
+        "parent": "88d4d676-7f57-57ad-2d2b-79790e77c0ad",
+        "picture": null,
+        "archive": false,
+        "parentName": "Косметологія"
+    }
+]

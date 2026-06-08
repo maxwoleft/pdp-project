@@ -93,12 +93,19 @@ async def dashboard(
     request: Request,
     user: AdminUser = Depends(current_admin_user),
     repo: EvalScenarioRepository = Depends(get_scenario_repo),
+    days: int = 30,
 ):
+    from app.admin.deps import get_session as _get_session
+    from app.admin.dashboard_metrics import compute_metrics
     stats = await repo.stats()
+    # Use session manually (Depends fragmented)
+    sf = request.app.state.session_factory
+    async with sf() as s:
+        metrics = await compute_metrics(s, days=days)
     return templates.TemplateResponse(
         request,
         "dashboard.html",
-        {"user": user, "stats": stats},
+        {"user": user, "stats": stats, "metrics": metrics, "days": days},
     )
 
 

@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "imghdr": "^0.1.6",
+    "jinja2": "^0.0.1",
+    "requests": "^0.3.0"
+  }
+}

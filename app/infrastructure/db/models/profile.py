@@ -115,6 +115,14 @@ class ServiceProfileTranslation(Base):
     duration_typical_min: Mapped[int | None] = mapped_column(Integer, nullable=True)
     sales_pitch: Mapped[str | None] = mapped_column(Text, nullable=True)
 
+    # Per-ckey overrides: {"<canonical_key>": {"addresses_problems": [...],
+    #   "target_audience": [...], "benefits": [...], "keywords": [...],
+    #   "sales_pitch": "...", "cross_sell": [...], "procedure_steps": [...],
+    #   "contraindications": [...], "aftercare_advice": "..."}}
+    # Якщо overrides[ckey][field] відсутнє/null/[] → fallback на translation default.
+    # Дозволяє один profile тримати кілька variants з різними concerns.
+    ckey_overrides: Mapped[dict[str, dict]] = mapped_column(JSON, nullable=False, default=dict)
+
     embedding: Mapped[list[float] | None] = mapped_column(Vector(1536), nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(

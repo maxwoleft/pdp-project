@@ -1,0 +1,1320 @@
+[
+    {
+        "id": "88ddb885-4f9e-bb39-580b-29a81078274c",
+        "name": "",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc767a-7ea6-e9d3-109f-40197b20d184"
+        ],
+        "position_names": [
+            "Administrator & Receptionist"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddaff8-2a49-08ab-7473-76a94f49aae6",
+        "name": "Aftanas Olha",
+        "title": "",
+        "phone": [
+            "+44 (7918) 556617"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/e68e5553-d0cd-4c94-b1da-87a49d134ede",
+        "positions": [
+            "88dc7677-1bd9-716b-109f-401903781660",
+            "88dda74d-8e34-915e-112f-78a305b93bd0",
+            "88dda74b-f892-be62-112f-78a307477558"
+        ],
+        "position_names": [
+            "Nail Technician",
+            "Pedicure",
+            "Nail Extension"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddc89a-dbe9-ea5b-51bd-495f6cd5adcd",
+        "name": "Andrew Kanivets",
+        "title": "",
+        "phone": [
+            "+44 (7876) 812836"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/39382fa7-0375-447c-943a-0c0c5bd9f478",
+        "positions": [
+            "88dc7670-0d74-316d-109f-40196a4697b4",
+            "88ddcdce-4182-b5c4-17b4-f6482e61213e",
+            "88dda749-7f2b-ccf2-112f-78a35399ede1"
+        ],
+        "position_names": [
+            "Hair Stylist",
+            "Colorists toning",
+            "Hairstyle( bunch hair)"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddaff5-1ad2-5b75-7473-76a961ce567c",
+        "name": "Bagrade Tatjana",
+        "title": "",
+        "phone": [
+            "+44 (7414) 726898"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/6feff612-9b94-401a-a615-687abfdc01c8",
+        "positions": [
+            "88dc7670-0d74-316d-109f-40196a4697b4",
+            "88dda748-ada0-d178-112f-78a360f6872b",
+            "88dda749-7f2b-ccf2-112f-78a35399ede1",
+            "88ddb26a-045a-03cf-338f-fb3f6505f00c",
+            "88ddcdce-4182-b5c4-17b4-f6482e61213e",
+            "88ddcdce-16bf-34c7-17b4-f6484e702c34"
+        ],
+        "position_names": [
+            "Hair Stylist",
+            "Haircut Stylists short/man",
+            "Hairstyle( bunch hair)",
+            "Colorist lighting techniques",
+            "Colorists toning",
+            "Colorist roots+toning"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd979b-ddf3-ab95-6b04-073e123d147e",
+        "name": "BeautyPro",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc7415-d82c-6654-5274-ddd06fdebfbf"
+        ],
+        "position_names": [
+            "Франчази"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddaff7-eb8c-63fd-7473-76a9314755bb",
+        "name": "Belei Marianna",
+        "title": "",
+        "phone": [
+            "+44 (7887) 304264"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/453df95c-0f6d-4f88-adc5-e5896f3b097b",
+        "positions": [
+            "88dc7677-1bd9-716b-109f-401903781660",
+            "88dda74e-3f82-63b0-112f-78a35bc14b2a",
+            "88dda74d-8e34-915e-112f-78a305b93bd0",
+            "88dda74b-f892-be62-112f-78a307477558"
+        ],
+        "position_names": [
+            "Nail Technician",
+            "Nail MAN",
+            "Pedicure",
+            "Nail Extension"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de62fd-b984-d7c0-63cd-73c52b46f7cb",
+        "name": "Colorist",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88ddb26a-045a-03cf-338f-fb3f6505f00c",
+            "88ddcdce-16bf-34c7-17b4-f6484e702c34",
+            "88ddcdce-4182-b5c4-17b4-f6482e61213e"
+        ],
+        "position_names": [
+            "Colorist lighting techniques",
+            "Colorist roots+toning",
+            "Colorists toning"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddaff2-ddcf-160a-7473-76a932ef6c72",
+        "name": "Hachak Khrystyna",
+        "title": "",
+        "phone": [
+            "+44 (7448) 071790"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/3327d9d3-772b-4d68-93c4-a53e3a94a915",
+        "positions": [
+            "88dc7670-0d74-316d-109f-40196a4697b4",
+            "88dda749-7f2b-ccf2-112f-78a35399ede1",
+            "88ddcdce-4182-b5c4-17b4-f6482e61213e",
+            "88ddcdce-16bf-34c7-17b4-f6484e702c34",
+            "88dda748-ada0-d178-112f-78a360f6872b"
+        ],
+        "position_names": [
+            "Hair Stylist",
+            "Hairstyle( bunch hair)",
+            "Colorists toning",
+            "Colorist roots+toning",
+            "Haircut Stylists short/man"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿работает с открытия, Хорошие укладки стрижки по колористике нужно пройти повішение",
+        "commentsPlainText": "работает с открытия, Хорошие укладки стрижки по колористике нужно пройти повішение"
+    },
+    {
+        "id": "88de5845-8b0d-6b09-0033-e09a2f285121",
+        "name": "Houlunska Tania",
+        "title": "",
+        "phone": [
+            "+44 (7349) 676778"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/c979c8b2-96bb-4e02-8d4f-d03faf257261",
+        "positions": [
+            "88dc7677-1bd9-716b-109f-401903781660",
+            "88dda74e-3f82-63b0-112f-78a35bc14b2a",
+            "88dda74d-8e34-915e-112f-78a305b93bd0"
+        ],
+        "position_names": [
+            "Nail Technician",
+            "Nail MAN",
+            "Pedicure"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dde406-1c6f-bbb8-473a-8da07659369a",
+        "name": "Hrabovych Vira",
+        "title": "",
+        "phone": [
+            "+44 (7448) 141989"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/b3c14fa4-62f4-4d91-a12d-54ff8fb257bd",
+        "positions": [
+            "88ddb26a-045a-03cf-338f-fb3f6505f00c",
+            "88ddcdce-16bf-34c7-17b4-f6484e702c34",
+            "88dc7670-0d74-316d-109f-40196a4697b4",
+            "88dda748-ada0-d178-112f-78a360f6872b",
+            "88ddcdce-4182-b5c4-17b4-f6482e61213e"
+        ],
+        "position_names": [
+            "Colorist lighting techniques",
+            "Colorist roots+toning",
+            "Hair Stylist",
+            "Haircut Stylists short/man",
+            "Colorists toning"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddb406-f8d8-eab8-5224-ff652db5a199",
+        "name": "Hryntsiv Anna",
+        "title": "",
+        "phone": [
+            "+44 (7927) 562351"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/e2c12185-3243-46ee-b207-866c3aa4bdbb",
+        "positions": [
+            "88dc7675-31f0-281b-109f-40194bd5414f"
+        ],
+        "position_names": [
+            "Makeup Artist"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dde660-c38f-8745-5a56-1cc83fd5f2c8",
+        "name": "Israieltian Zoya",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/41dda5db-4ac4-41af-a9ce-b50cb15c8577",
+        "positions": [
+            "88ddb580-416d-bbaf-6c3b-c91b1abdf383",
+            "88ddb556-74ff-7548-0533-46544a3aafde"
+        ],
+        "position_names": [
+            "Icoone",
+            "Stratosphere"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de3063-efae-ac8d-4c1f-2ce43aa70775",
+        "name": "Karachyna Tetiana",
+        "title": "",
+        "phone": [
+            "+44 (7747) 459635"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/7c2725a8-d017-42c2-a1b4-e907a7c03b53",
+        "positions": [
+            "88dc7677-1bd9-716b-109f-401903781660",
+            "88dda74d-8e34-915e-112f-78a305b93bd0",
+            "88dda74b-f892-be62-112f-78a307477558"
+        ],
+        "position_names": [
+            "Nail Technician",
+            "Pedicure",
+            "Nail Extension"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de7e31-edd5-eebc-0dfd-a1f34be5373f",
+        "name": "Khliustov Oleksandr",
+        "title": "",
+        "phone": [
+            "+44 (7510) 506215"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dde177-2e9c-92d4-53ca-a5c17bf63209",
+            "88ddb7e4-4013-68ab-0fd4-b10e72ae90fc",
+            "88dde177-4c5e-1c77-53ca-a5c16438369b"
+        ],
+        "position_names": [
+            "Massage 1",
+            "Massage 2",
+            "Massage 4"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "﻿Короткий опис (для сайту) <br/><br/>Майстер ручного масажу з понад 8-річним досвідом.<br/>Має понад 20 років спортивного досвіду та 11 років роботи персональним тренером у преміальних фітнес-клубах. Працює з різними техніками масажу - від лікувального глибокого масажу (deep tissue) і спортивного до релакс-технік та антицелюлітних програм. Поєднує знання анатомії, досвід у спорті та індивідуальний підхід, підбираючи оптимальну техніку під потреби кожного клієнта.",
+        "commentsPlainText": "Короткий опис (для сайту) Майстер ручного масажу з понад 8-річним досвідом.Має понад 20 років спортивного досвіду та 11 років роботи персональним тренером у преміальних фітнес-клубах. Працює з різними техніками масажу - від лікувального глибокого масажу (deep tissue) і спортивного до релакс-технік та антицелюлітних програм. Поєднує знання анатомії, досвід у спорті та індивідуальний підхід, підбираючи оптимальну техніку під потреби кожного клієнта."
+    },
+    {
+        "id": "88dde660-b0a3-9f58-5a56-1cc81baa944c",
+        "name": "Kostenko Diana",
+        "title": "",
+        "phone": [
+            "+44 (7551) 558258"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/8d078a08-2fc3-44bd-8977-58d76c75e011",
+        "positions": [
+            "88dc7675-31f0-281b-109f-40194bd5414f"
+        ],
+        "position_names": [
+            "Makeup Artist"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de2459-fb49-e0be-69e1-f058494e9e47",
+        "name": "Kravchuk Iwanna",
+        "title": "",
+        "phone": [
+            "+44 (7786) 011553"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/0e8968f5-213a-48de-a9fe-15ff9b7fad65",
+        "positions": [
+            "88dc7670-0d74-316d-109f-40196a4697b4",
+            "88ddb26a-045a-03cf-338f-fb3f6505f00c",
+            "88ddcdce-4182-b5c4-17b4-f6482e61213e",
+            "88ddcdce-16bf-34c7-17b4-f6484e702c34",
+            "88dda748-ada0-d178-112f-78a360f6872b"
+        ],
+        "position_names": [
+            "Hair Stylist",
+            "Colorist lighting techniques",
+            "Colorists toning",
+            "Colorist roots+toning",
+            "Haircut Stylists short/man"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de79fa-2314-7371-3301-7561661b2d50",
+        "name": "Lasitsa Tatiana",
+        "title": "",
+        "phone": [
+            "+44 (7438) 971991"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/039e9713-e5e6-4cd4-a10c-d839b04a80b4",
+        "positions": [
+            "88ddb580-416d-bbaf-6c3b-c91b1abdf383"
+        ],
+        "position_names": [
+            "Icoone"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "﻿﻿﻿﻿﻿Прошйла практику по Акуну тіло, має ще допройти по обличчю",
+        "commentsPlainText": "Прошйла практику по Акуну тіло, має ще допройти по обличчю"
+    },
+    {
+        "id": "88ddf817-f09b-4642-116e-777f6031b0cb",
+        "name": "Liza Kryvonos",
+        "title": "",
+        "phone": [
+            "+44 (7541) 519283"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc767a-7ea6-e9d3-109f-40197b20d184"
+        ],
+        "position_names": [
+            "Administrator & Receptionist"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddcdfd-c3f6-d785-1c5f-f9102e8a5d31",
+        "name": "Maria Boianju",
+        "title": "",
+        "phone": [
+            "+44 (7902) 066958"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/26d3b6ca-c6f2-4ea7-831d-209ec032016e",
+        "positions": [
+            "88dc7677-1bd9-716b-109f-401903781660",
+            "88dda74e-3f82-63b0-112f-78a35bc14b2a",
+            "88dda74d-8e34-915e-112f-78a305b93bd0",
+            "88dda74b-f892-be62-112f-78a307477558"
+        ],
+        "position_names": [
+            "Nail Technician",
+            "Nail MAN",
+            "Pedicure",
+            "Nail Extension"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddaff7-96b8-6183-7473-76a97d35ec72",
+        "name": "Markush Olesia",
+        "title": "",
+        "phone": [
+            "+44 (7513) 560559"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/79a70cf7-66eb-49e7-bb7b-a143d2dc3a5f",
+        "positions": [
+            "88dc7677-1bd9-716b-109f-401903781660",
+            "88dda74b-f892-be62-112f-78a307477558",
+            "88dda74e-3f82-63b0-112f-78a35bc14b2a",
+            "88dda74d-8e34-915e-112f-78a305b93bd0"
+        ],
+        "position_names": [
+            "Nail Technician",
+            "Nail Extension",
+            "Nail MAN",
+            "Pedicure"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddeb81-326d-590a-7512-f590511348e0",
+        "name": "Martyniuk Anna",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88ddeb81-2802-4416-7512-f590357b46fd"
+        ],
+        "position_names": [
+            "Уборка"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddb4ce-e0d3-547c-56b7-30b52ac10365",
+        "name": "Marushchak Zoriana",
+        "title": "",
+        "phone": [
+            "+44 (7487) 376772"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/868c01f1-2749-41da-9187-77c68bdb5fc4",
+        "positions": [
+            "88ddb580-416d-bbaf-6c3b-c91b1abdf383",
+            "88ddb556-74ff-7548-0533-46544a3aafde"
+        ],
+        "position_names": [
+            "Icoone",
+            "Stratosphere"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddaff7-730c-3727-7473-76a9738ec813",
+        "name": "Melnyk Anastasia",
+        "title": "",
+        "phone": [
+            "+44 (7746) 296395"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/ff5a7ae2-b23c-482a-a7e6-feb07c4b60d6",
+        "positions": [
+            "88dc7677-1bd9-716b-109f-401903781660",
+            "88dda74e-3f82-63b0-112f-78a35bc14b2a",
+            "88dda74b-f892-be62-112f-78a307477558",
+            "88dda74d-8e34-915e-112f-78a305b93bd0"
+        ],
+        "position_names": [
+            "Nail Technician",
+            "Nail MAN",
+            "Nail Extension",
+            "Pedicure"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddff69-7870-58a8-1d0c-13063a313fe4",
+        "name": "Miroshnychenko Natalia",
+        "title": "",
+        "phone": [
+            "+44 (7533) 061661"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/900d8f5b-7840-46ce-8565-02f44a813908",
+        "positions": [
+            "88dc7677-1bd9-716b-109f-401903781660",
+            "88dda74d-8e34-915e-112f-78a305b93bd0",
+            "88dda74b-f892-be62-112f-78a307477558",
+            "88dda74e-3f82-63b0-112f-78a35bc14b2a"
+        ],
+        "position_names": [
+            "Nail Technician",
+            "Pedicure",
+            "Nail Extension",
+            "Nail MAN"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de46b5-9a3a-8db6-353b-75683c3adc67",
+        "name": "Mortimer Liza",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc767a-7ea6-e9d3-109f-40197b20d184"
+        ],
+        "position_names": [
+            "Administrator & Receptionist"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de68f0-f6ba-fa15-47d2-7b5a79e1aabe",
+        "name": "Prokopenko Yuliia",
+        "title": "",
+        "phone": [
+            "+44 (7340) 499416"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc767a-7ea6-e9d3-109f-40197b20d184"
+        ],
+        "position_names": [
+            "Administrator & Receptionist"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dde615-8880-c442-1bbb-286a015ca3ca",
+        "name": "Ptashka Olena",
+        "title": "",
+        "phone": [
+            "+44 (7767) 594307"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/b61b39c7-b947-4cd3-ab13-0ef572347664",
+        "positions": [
+            "88ddb26a-045a-03cf-338f-fb3f6505f00c",
+            "88dc7670-0d74-316d-109f-40196a4697b4",
+            "88dda748-ada0-d178-112f-78a360f6872b",
+            "88ddcdce-16bf-34c7-17b4-f6484e702c34",
+            "88ddcdce-4182-b5c4-17b4-f6482e61213e"
+        ],
+        "position_names": [
+            "Colorist lighting techniques",
+            "Hair Stylist",
+            "Haircut Stylists short/man",
+            "Colorist roots+toning",
+            "Colorists toning"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dde65c-53e4-038a-5a56-1cc871b87575",
+        "name": "Serebrianska Oleksandra",
+        "title": "",
+        "phone": [
+            "+44 (7493) 543893"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/ac3dd97e-f056-4593-9aed-13577e4b08fa",
+        "positions": [
+            "88dc7670-0d74-316d-109f-40196a4697b4"
+        ],
+        "position_names": [
+            "Hair Stylist"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de0bcd-3660-72cd-6cf3-322910fc3eff",
+        "name": "Serebrianska Oleksandra",
+        "title": "",
+        "phone": [
+            "+44 (7493) 543893"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc767a-7ea6-e9d3-109f-40197b20d184"
+        ],
+        "position_names": [
+            "Administrator & Receptionist"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de281d-5f0d-8780-4531-b6ea5ae42d97",
+        "name": "Slobodian Oksana",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88ddeb81-2802-4416-7512-f590357b46fd"
+        ],
+        "position_names": [
+            "Уборка"
+        ],
+        "roles": [
+            "technicalStaff"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dddcf9-ec3d-9954-10c1-8339156681ab",
+        "name": "Tsymbaliuk Karina",
+        "title": "",
+        "phone": [
+            "+44 (7836) 797886"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/110fca12-ef3f-4538-ba1c-0e0b837fd27a",
+        "positions": [
+            "88dd5111-218a-22e0-5795-4d7e5c5c4a7e",
+            "88dda74b-f892-be62-112f-78a307477558",
+            "88dda74e-3f82-63b0-112f-78a35bc14b2a",
+            "88dda74d-8e34-915e-112f-78a305b93bd0"
+        ],
+        "position_names": [
+            "Senior Nail Technician",
+            "Nail Extension",
+            "Nail MAN",
+            "Pedicure"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddcb5a-c7c4-425d-1e6a-42f6424c3cd4",
+        "name": "Viktoria Levchuk",
+        "title": "",
+        "phone": [
+            "+44 (7453) 122224"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/00133fe2-d926-4749-b7cc-abdd1bf09846",
+        "positions": [
+            "88ddb580-416d-bbaf-6c3b-c91b1abdf383",
+            "88ddb7e4-4013-68ab-0fd4-b10e72ae90fc",
+            "88dde177-2e9c-92d4-53ca-a5c17bf63209",
+            "88ddb556-74ff-7548-0533-46544a3aafde"
+        ],
+        "position_names": [
+            "Icoone",
+            "Massage 2",
+            "Massage 1",
+            "Stratosphere"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dde65c-db73-3c48-5a56-1cc808d83e02",
+        "name": "Voloshyna Alevtyna",
+        "title": "",
+        "phone": [
+            "+44 (7707) 051406"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/6d2bcd29-eb13-4717-9c94-d9a8db66496f",
+        "positions": [
+            "88dc7677-1bd9-716b-109f-401903781660",
+            "88dda74d-8e34-915e-112f-78a305b93bd0",
+            "88dda74b-f892-be62-112f-78a307477558"
+        ],
+        "position_names": [
+            "Nail Technician",
+            "Pedicure",
+            "Nail Extension"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de2602-cfa9-5fe9-0892-8fec731c4c84",
+        "name": "Zharobay Aiya",
+        "title": "",
+        "phone": [
+            "+44 (7788) 404147"
+        ],
+        "email": [],
+        "photo_exists": true,
+        "photo": "https://documents.aihelps.com/703835/6b3f13ce-ff69-4df9-8f41-84239c073f35",
+        "positions": [
+            "88dd5111-218a-22e0-5795-4d7e5c5c4a7e",
+            "88dda74b-f892-be62-112f-78a307477558",
+            "88dda74d-8e34-915e-112f-78a305b93bd0"
+        ],
+        "position_names": [
+            "Senior Nail Technician",
+            "Nail Extension",
+            "Pedicure"
+        ],
+        "roles": [
+            "professional"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de631e-a2e7-5d9d-343b-c68a1753d145",
+        "name": "Іщук Катерина",
+        "title": "",
+        "phone": [
+            "+380 (63) 357 53 64"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc7415-d82c-6654-5274-ddd06fdebfbf"
+        ],
+        "position_names": [
+            "Франчази"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd97a0-5c71-8f5d-5bd7-50690a3ff886",
+        "name": "Іщук Яна",
+        "title": "",
+        "phone": [
+            "+380 (50) 106 86 87"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc7415-d82c-6654-5274-ddd06fdebfbf"
+        ],
+        "position_names": [
+            "Франчази"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd9873-ae39-0bc0-755a-a4b162a702ad",
+        "name": "Аліна",
+        "title": "",
+        "phone": [
+            "0664264376"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc7415-d82c-6654-5274-ddd06fdebfbf"
+        ],
+        "position_names": [
+            "Франчази"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd979b-4aa5-5187-7240-e1924198c3f7",
+        "name": "Анна",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dd979b-4aa0-fee7-7240-e19230ac8a4c"
+        ],
+        "position_names": [
+            "Owner"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddac2d-7d98-e752-18c8-1edc1f8f90d9",
+        "name": "Дювенжи Катерина",
+        "title": "",
+        "phone": [
+            "+44 (7832) 639211"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc766b-acd9-a82d-109f-401903a40378"
+        ],
+        "position_names": [
+            "Директор"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd9855-8130-80bb-093d-a21f6686e1ae",
+        "name": "Женя",
+        "title": "",
+        "phone": [
+            "+380 (63) 232 28 52"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc7415-d82c-6654-5274-ddd06fdebfbf"
+        ],
+        "position_names": [
+            "Франчази"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddba2f-3c12-eb9e-6e83-d25d694c7c28",
+        "name": "Лещенко Виктория",
+        "title": "",
+        "phone": [
+            "+380 (63) 953 82 94"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc767a-7ea6-e9d3-109f-40197b20d184"
+        ],
+        "position_names": [
+            "Administrator & Receptionist"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddb97c-018b-5cff-1553-fed71256d473",
+        "name": "Лозовіцька Яна",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc7415-d82c-6654-5274-ddd06fdebfbf"
+        ],
+        "position_names": [
+            "Франчази"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de2536-c65d-5ff4-5721-e9a33ab6e0b6",
+        "name": "Максим",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dd979b-4aa0-fee7-7240-e19230ac8a4c"
+        ],
+        "position_names": [
+            "Owner"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd9873-debb-e102-755a-a4b134fe9708",
+        "name": "Марина",
+        "title": "",
+        "phone": [
+            "0978377117"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc7415-d82c-6654-5274-ddd06fdebfbf"
+        ],
+        "position_names": [
+            "Франчази"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88de373d-2807-f157-08eb-54b65f031524",
+        "name": "Модель",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc767a-7ea6-e9d3-109f-40197b20d184"
+        ],
+        "position_names": [
+            "Administrator & Receptionist"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddb894-b2bc-a21d-74b7-5fc4078b9348",
+        "name": "Полина",
+        "title": "",
+        "phone": [
+            "+44 (7428) 348862"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc767a-7ea6-e9d3-109f-40197b20d184"
+        ],
+        "position_names": [
+            "Administrator & Receptionist"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddba2e-a41c-17eb-6e83-d25d12cc941f",
+        "name": "Порохня Анастасия",
+        "title": "",
+        "phone": [
+            "+48 (792) 449 200"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc767a-7ea6-e9d3-109f-40197b20d184"
+        ],
+        "position_names": [
+            "Administrator & Receptionist"
+        ],
+        "roles": [
+            "administrator"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddbad2-2bb4-7ba0-6b49-3f707d66460d",
+        "name": "Сторожук Кирилл",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc7415-d82c-6654-5274-ddd06fdebfbf"
+        ],
+        "position_names": [
+            "Франчази"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88ddb878-c55b-f83a-3f66-a80b20866572",
+        "name": "Шевчук Виктория",
+        "title": "",
+        "phone": [],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc7415-d82c-6654-5274-ddd06fdebfbf"
+        ],
+        "position_names": [
+            "Франчази"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd9873-7a88-b866-755a-a4b1354e435e",
+        "name": "Юра",
+        "title": "",
+        "phone": [
+            "0731247024"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc7415-d82c-6654-5274-ddd06fdebfbf"
+        ],
+        "position_names": [
+            "Франчази"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    },
+    {
+        "id": "88dd9873-35fe-403c-755a-a4b173417faa",
+        "name": "Яніна",
+        "title": "",
+        "phone": [
+            "0967854539"
+        ],
+        "email": [],
+        "photo_exists": false,
+        "photo": null,
+        "positions": [
+            "88dc7415-d82c-6654-5274-ddd06fdebfbf"
+        ],
+        "position_names": [
+            "Франчази"
+        ],
+        "roles": [
+            "owner"
+        ],
+        "archive": false,
+        "prepaymentRequired": false,
+        "comments": "",
+        "commentsPlainText": ""
+    }
+]

@@ -7,8 +7,15 @@ tools з обраним salon_id.
 import hashlib
 import json
 import logging
+import re
 from datetime import datetime, timedelta, timezone
 from typing import Any
+
+_ADDON_NAME_RE = re.compile(r"додатков|дополнит|dodatkow|dodatkov|add[\-\s]?on", re.IGNORECASE)
+
+
+def _is_addon_name(*names: str | None) -> bool:
+    return any(name and _ADDON_NAME_RE.search(name) for name in names)
 
 from redis.asyncio import Redis
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
@@ -101,7 +108,13 @@ def build_tool_registry(
             city = args.get("city")
             salons = await (repo.list_by_city(city) if city else repo.list_all())
             return [
-                {"salon_id": s.id, "name": s.name, "city": s.city, "address": s.address, "phone": s.phone}
+                {
+                    "salon_id": s.id,
+                    "name": s.name,
+                    "city": s.city,
+                    "address": s.address_line,
+                    "phone": s.phone_display,
+                }
                 for s in salons
             ]
         return await with_session(_do)
@@ -135,7 +148,11 @@ def build_tool_registry(
                 if parent_id
                 else await repo.list_roots(args["salon_id"])
             )
-            return [{"id": c.id, "name": c.name, "parent_id": c.parent_id} for c in cats]
+            return [
+                {"id": c.id, "name": c.name, "parent_id": c.parent_id}
+                for c in cats
+                if not _is_addon_name(c.name)
+            ]
         return await with_session(_do)
 
     registry.register(
@@ -193,6 +210,10 @@ def build_tool_registry(
                     "category": s.category.name if s.category else None,
                 }
                 for s in services
+                if not _is_addon_name(
+                    s.name, s.name_uk, s.name_ru, s.name_en, s.name_pl,
+                    s.category.name if s.category else None,
+                )
             ]
         return await with_session(_do)
 
@@ -260,14 +281,15 @@ def build_tool_registry(
                     # Fallback: same-city salons
                     from sqlalchemy import text as sql_text
                     city_row = await session.execute(sql_text(
-                        f"SELECT city FROM {country}.salon WHERE id = :sid"
+                        "SELECT city FROM booking.salons WHERE id = :sid"
                     ), {"sid": salon_id})
                     city = city_row.scalar()
                     if city:
                         sib_rows = await session.execute(sql_text(
-                            f"SELECT id FROM {country}.salon "
-                            f"WHERE city = :c AND id != :sid AND archive = false"
-                        ), {"c": city, "sid": salon_id})
+                            "SELECT id FROM booking.salons "
+                            "WHERE city = :c AND id != :sid AND archive = false "
+                            "AND country = :country"
+                        ), {"c": city, "sid": salon_id, "country": country})
                         sibling_ids = [r[0] for r in sib_rows.all()]
                         for sid in sibling_ids:
                             sib_results = await repo.search_by_concern_v2(
@@ -295,7 +317,7 @@ def build_tool_registry(
                     sql = sql_text(
                         f"""
                         SELECT id, name, name_uk, name_ru, name_en, name_pl,
-                               duration_min, price, price_currency
+                               duration_min, price, price_currency, canonical_key
                         FROM {country}.service
                         WHERE profile_id = :pid
                           AND salon_id = :salon_id
@@ -307,7 +329,30 @@ def build_tool_registry(
                     rows = await session.execute(
                         sql, {"pid": str(profile_id), "salon_id": target_salon}
                     )
+                    # Resolved profile views per-ckey — для merge override з profile defaults.
+                    ckey_overrides_all = dict(item.get("ckey_overrides") or {})
+                    profile_defaults = {
+                        "addresses_problems": item.get("addresses_problems", []),
+                        "target_audience": item.get("target_audience", []),
+                        "benefits": item.get("benefits", []),
+                        "sales_pitch": item.get("sales_pitch"),
+                        "cross_sell": item.get("cross_sell", []),
+                        "procedure_steps": item.get("procedure_steps", []),
+                        "contraindications": item.get("contraindications", []),
+                        "aftercare_advice": item.get("aftercare_advice"),
+                    }
                     for r in rows.fetchall():
+                        if _is_addon_name(r[1], r[2], r[3], r[4], r[5]):
+                            continue
+                        ck = r[9]
+                        override = ckey_overrides_all.get(ck) or {}
+                        svc_concerns = {}
+                        for field, default in profile_defaults.items():
+                            ov = override.get(field)
+                            if ov not in (None, [], "", {}):
+                                svc_concerns[field] = ov
+                            else:
+                                svc_concerns[field] = default
                         all_services.append({
                             "service_id": r[0],
                             "name": {
@@ -319,9 +364,15 @@ def build_tool_registry(
                             "duration_min": r[6],
                             "price": float(r[7]) if r[7] else 0,
                             "currency": r[8],
+                            "canonical_key": ck,
+                            # Resolved concerns/audience for цього ckey — override якщо є.
+                            "concerns": svc_concerns,
+                            "has_override": bool(override),
                         })
 
                     if not all_services:
+                        continue
+                    if _is_addon_name(item.get("category"), item.get("option_name")):
                         continue
 
                     response.append({
@@ -511,13 +562,23 @@ def build_tool_registry(
                         ids = [r[0] for r in rows.fetchall()]
                         for sid in ids:
                             svc = await svc_repo.get_by_id(sid)
-                            if svc:
+                            if svc and not _is_addon_name(
+                                svc.name, svc.name_uk, svc.name_ru, svc.name_en, svc.name_pl,
+                                svc.category.name if svc.category else None,
+                            ):
                                 service_candidates.append(svc)
 
                 if not service_candidates:
                     service_candidates = await svc_repo.search(
                         salon_id=salon_id, query=query, limit=5,
                     )
+                    service_candidates = [
+                        s for s in service_candidates
+                        if not _is_addon_name(
+                            s.name, s.name_uk, s.name_ru, s.name_en, s.name_pl,
+                            s.category.name if s.category else None,
+                        )
+                    ]
 
                 if not service_candidates:
                     return {"error": "no services matched"}
@@ -784,6 +845,58 @@ def build_tool_registry(
             },
         },
         _cancel_booking,
+    )
+
+    # ──────────────────────────────────────────────────────────────
+    # 11. request_manager_callback — менеджер передзвонить клієнту
+    # ──────────────────────────────────────────────────────────────
+    async def _request_manager_callback(args: dict[str, Any]) -> Any:
+        from sqlalchemy import text as _sql_text
+        salon_id = args.get("salon_id") or ""
+        client_name = (args.get("client_name") or "").strip()[:255]
+        client_phone = (args.get("client_phone") or "").strip()[:40]
+        client_question = (args.get("client_question") or "").strip()
+        if not client_phone:
+            return {"ok": False, "error": "Потрібен телефон клієнта."}
+        try:
+            async with session_factory() as s:
+                await s.execute(_sql_text("""
+                    INSERT INTO public.manager_request
+                      (country, salon_id, client_name, client_phone, client_question, status)
+                    VALUES (:c, :s, :n, :p, :q, 'new')
+                """), {
+                    "c": country, "s": salon_id,
+                    "n": client_name, "p": client_phone, "q": client_question,
+                })
+                await s.commit()
+        except Exception as exc:
+            import logging
+            logging.getLogger("manager_request").warning("save failed: %s", exc)
+            return {"ok": False, "error": "Не вдалося зберегти запит."}
+        return {"ok": True, "message": "Запит передано менеджеру. Зв'яжемось найближчим часом."}
+
+    registry.register(
+        {
+            "name": "request_manager_callback",
+            "description": (
+                "ВИКЛИКАЙ ТІЛЬКИ КОЛИ ти не можеш відповісти на питання (нестандартне, потребує рішення менеджера). "
+                "Наприклад: 'чи може майстер вийти раніше', 'індивідуальні умови', 'групове бронювання', "
+                "'умови співпраці', 'скарга/повернення'. "
+                "Перед викликом — отримай від клієнта: імʼя, телефон, коротко суть питання. "
+                "Не використовуй якщо клієнт просто питає про послуги/ціни/слоти — це твоя задача."
+            ),
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "salon_id": {"type": "string", "description": "ID салону клієнта"},
+                    "client_name": {"type": "string", "description": "Імʼя клієнта"},
+                    "client_phone": {"type": "string", "description": "Телефон у будь-якому форматі"},
+                    "client_question": {"type": "string", "description": "Суть нестандартного питання"},
+                },
+                "required": ["client_phone", "client_question"],
+            },
+        },
+        _request_manager_callback,
     )
 
     return registry

@@ -1,0 +1,105 @@
+{# Booking: Опис технології #}
+<style>
+.doc-section{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:18px;}
+.doc-section h2{font-size:17px;font-weight:600;color:#0f172a;margin-bottom:10px;}
+.doc-section h3{font-size:14px;font-weight:600;color:#334155;margin:14px 0 6px;}
+.doc-section p,.doc-section li{font-size:13px;color:#475569;line-height:1.55;}
+.doc-section ul{margin:6px 0 6px 16px;}
+.doc-section code{background:#f1f5f9;padding:1px 5px;border-radius:3px;font-size:12px;font-family:ui-monospace,monospace;}
+.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.doc-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px;}
+.doc-box strong{display:block;color:#0f172a;margin-bottom:4px;font-size:13px;}
+</style>
+
+<section class="doc-section">
+  <h2>Що це таке</h2>
+  <p>
+    <strong>Pied de Poule Booking</strong> — веб-застосунок самозапису для клієнтів салонів краси.
+    Клієнт обирає салон → послугу → майстра → час → залишає контакти → отримує запис у CRM.
+    Працює паралельно з AI чатом і використовує ту ж базу даних.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2>Стек технологій</h2>
+  <div class="doc-grid">
+    <div class="doc-box">
+      <strong>Backend</strong>
+      <p>Python 3.12 + <code>Flask</code> + <code>gunicorn</code> (3 workers) під systemd.
+      <code>psycopg2-binary</code> для PostgreSQL. <code>MySQL</code>-fallback для legacy.</p>
+    </div>
+    <div class="doc-box">
+      <strong>Frontend</strong>
+      <p>Jinja2 + vanilla JavaScript. Без React/Vue. Інтeрактивний DOM.
+      Анімації CSS. <code>intl-tel-input</code> для phone input. Auto cache-busting через mtime.</p>
+    </div>
+    <div class="doc-box">
+      <strong>База даних</strong>
+      <p>PostgreSQL 16 — спільна з AI чатом. Таблиці: <code>booking.salons</code>,
+      <code>booking.appointmentsleads</code>, <code>{country}.service</code>, <code>{country}.employee</code>.</p>
+    </div>
+    <div class="doc-box">
+      <strong>Інтеграції</strong>
+      <p><code>AIHelps CRM API</code> — слоти, employees, створення записів.
+      <code>EasyTip</code> — платежі. <code>Telegram bot</code> — нотифікації. <code>SMTP</code> — email.</p>
+    </div>
+  </div>
+</section>
+
+<section class="doc-section">
+  <h2>Архітектура застосунку</h2>
+  <h3>Public-частина (клієнти)</h3>
+  <ul>
+    <li><code>GET /</code> → перенаправлення на онбординг (вибір країни)</li>
+    <li><code>GET /{country}</code> → список салонів країни</li>
+    <li><code>GET /{salon-code}/{lang}</code> → сторінка салону (наприклад <code>/l1/UA</code>): категорії → послуги → майстри → слоти → форма даних</li>
+    <li><code>POST /{salon}/create_appointment</code> → створення запису через AIHelps + Telegram + SMTP email</li>
+    <li><code>POST /reserve_slot</code> / <code>POST /release_slot</code> → тимчасове блокування слоту перед оплатою</li>
+  </ul>
+
+  <h3>Admin-частина</h3>
+  <ul>
+    <li><code>GET /admin/login</code> → форма входу</li>
+    <li><code>GET /admin/dashboard</code> → статистика записів</li>
+    <li><code>GET /admin/services</code> → каталог послуг + редагування описів/категорій</li>
+    <li><code>GET /admin/salons</code> → керування салонами (superadmin only)</li>
+    <li><code>GET /admin/users</code> → керування користувачами адмінки</li>
+    <li><code>GET /admin/payment_systems</code> → платіжні системи</li>
+  </ul>
+</section>
+
+<section class="doc-section">
+  <h2>Інфраструктура</h2>
+  <ul>
+    <li>• <strong>Hosting:</strong> DigitalOcean droplet (<code>167.172.100.158</code>) — спільний з AI чатом</li>
+    <li>• <strong>Шлях:</strong> <code>/opt/pdpbooking/app/</code></li>
+    <li>• <strong>Service:</strong> systemd <code>pdpbooking.service</code></li>
+    <li>• <strong>Port:</strong> gunicorn слухає <code>127.0.0.1:5050</code></li>
+    <li>• <strong>Nginx:</strong> <code>booking.p-de-p.com</code> → 5050, з Let's Encrypt SSL</li>
+    <li>• <strong>Логи:</strong> <code>/var/log/pdpbooking/access.log</code> + <code>error.log</code></li>
+    <li>• <strong>Cron:</strong> щоденний sync даних з AIHelps (через AI chat pipeline — спільна БД)</li>
+  </ul>
+</section>
+
+<section class="doc-section">
+  <h2>Flow запису клієнта</h2>
+  <ol style="margin-left:16px;">
+    <li>Клієнт обирає <strong>країну</strong> → <strong>салон</strong> (multi-level dropdown по містах)</li>
+    <li>Бачить <strong>категорії послуг</strong> у sidebar (Волосся / Манікюр / Брови / Подологія тощо)</li>
+    <li>Обирає <strong>послугу</strong>; для деяких — додаткові параметри (довжина волосся, тип tier)</li>
+    <li>Обирає <strong>майстра</strong> (або "будь-який доступний")</li>
+    <li>Обирає <strong>день</strong> і <strong>час</strong> з вільних слотів (live з AIHelps)</li>
+    <li>Заповнює <strong>контакти</strong> (ім'я + телефон з intl-tel-input)</li>
+    <li>(Опц.) Здійснює передоплату через EasyTip</li>
+    <li><strong>POST create_appointment</strong> → AIHelps API → Telegram → email → запис у БД</li>
+  </ol>
+</section>
+
+<section class="doc-section">
+  <h2>Інтеграція з AI чатом</h2>
+  <p>
+    На сторінці кожного салону відображається банер <strong>"Зробіть замовлення через AI чат"</strong>
+    (якщо <code>salon.ai_chat_enabled = true</code>). Натискання → <code>ai-chat.p-de-p.com/chat/start?salon_id={uuid}</code>.
+    AI чат бронює слоти у тій же CRM — обидві системи бачать єдиний потік записів.
+  </p>
+</section>

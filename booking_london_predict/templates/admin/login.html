@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вхід — PIED-DE-POULE Admin</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='fonts/GothamPro/stylesheet.css') }}">
+  <style>
+    html, body, div, h1, h2, p, form, input, button, label {
+      margin: 0; padding: 0; border: 0;
+      font-family: 'Gotham Pro', sans-serif;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .login-wrap { width: 100%; max-width: 360px; padding: 20px; }
+
+    /* Logo */
+    .login-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .login-logo svg { display: inline-block; }
+
+    .login-logo .admin-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-top: 8px;
+    }
+
+    /* Card */
+    .login-card {
+      background: #fff;
+      border: 1px solid #0000000D;
+      padding: 32px;
+    }
+
+    .login-card h2 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    /* Error */
+    .error-msg {
+      background: rgba(192, 57, 43, 0.08);
+      border-left: 3px solid #c0392b;
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #922b21;
+      margin-bottom: 20px;
+    }
+
+    /* Form */
+    .form-group { margin-bottom: 16px; }
+
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      border: 1px solid #0000000D;
+      font-family: 'Gotham Pro', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #000;
+      background: #fff;
+      outline: none;
+      border-radius: 0;
+      -webkit-appearance: none;
+      transition: border-color 0.15s;
+    }
+
+    input:focus { border-color: #027DEF; }
+
+    button[type="submit"] {
+      width: 100%;
+      height: 48px;
+      background: #027DEF;
+      color: #fff;
+      border: none;
+      font-family: 'Gotham Pro', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.15s;
+    }
+
+    button[type="submit"]:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <div class="login-wrap">
+
+    <div class="login-logo">
+      <svg fill="none" xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 27.125 125 25.374999999999996" width="125" height="25.375">
+        <path fill="#0E0D0A" d="M36.5 35.3v-1.43h4.35v1.42H36.5zM66.58 35.3v-1.43h4.36v1.42h-4.36zM0 38.95v-8.7h4.53c2.2 0 3.38.84 3.38 2.9 0 2.07-1.19 3.02-3.38 3.02H2.2V39L0 38.95zm4.35-4.66c.98 0 1.57-.24 1.57-1.08 0-.85-.62-1.09-1.57-1.09H2.2v2.17h2.15zM9.73 38.95v-8.7h2.1v8.7h-2.1zM14 38.95v-8.7h7.42v1.88h-5.34v1.54h4.7v1.62h-4.7v1.67h5.51v1.94l-7.6.05zM23.73 38.95v-8.7h4.4c3.49 0 5.06 1.85 5.06 4.35 0 2.5-2 4.35-5.05 4.35h-4.41zm4.22-1.93c1.73 0 3.05-.66 3.05-2.4 0-1.74-1.18-2.52-3.05-2.52h-2.12v4.92h2.12zM44.07 38.95v-8.7h4.4c3.49 0 5.06 1.85 5.06 4.35 0 2.5-2 4.35-5.06 4.35h-4.4zm4.22-1.93c1.73 0 3.05-.66 3.05-2.4 0-1.74-1.18-2.52-3.05-2.52H46.2v4.92h2.09zM55.67 38.95v-8.7h7.42v1.88h-5.32v1.54h4.7v1.62h-4.7v1.67h5.51v1.94l-7.61.05zM74.25 38.95v-8.7h4.53c2.2 0 3.38.84 3.38 2.9 0 2.07-1.19 3.02-3.38 3.02h-2.3V39l-2.23-.04zm4.35-4.66c.98 0 1.57-.24 1.57-1.08 0-.85-.62-1.09-1.57-1.09H76.5v2.17h2.11zM89.24 39.13c-2.99 0-5.32-1.74-5.32-4.46 0-2.71 2.12-4.63 5.32-4.63s5.37 1.92 5.37 4.63c0 2.72-2.26 4.46-5.37 4.46zm0-7.14c-1.81 0-3.19 1.01-3.19 2.68 0 1.68 1.41 2.55 3.19 2.55 1.77 0 3.18-.88 3.18-2.55 0-1.66-1.34-2.68-3.18-2.68zM103.3 30.23h2.1v5.37c0 2.7-2.2 3.56-4.4 3.56-2.21 0-4.42-.88-4.42-3.56v-5.37h2.09v5.23c0 1.14.77 1.8 2.35 1.8 1.59 0 2.35-.66 2.35-1.8l-.08-5.23zM107.52 38.97v-8.7h2.1v6.82h5.2V39l-7.3-.04zM116.93 38.97v-8.7h7.43v1.88h-5.38v1.55h4.7v1.62h-4.7v1.73h5.51V39l-7.56-.03z"/>
+      </svg>
+      <div class="admin-label">Admin Panel</div>
+    </div>
+
+    <div class="login-card">
+      <h2>Вхід в систему</h2>
+
+      {% if error %}
+        <div class="error-msg">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST" action="{{ url_for('admin.login') }}">
+        <div class="form-group">
+          <label for="email">Логін</label>
+          <input type="text" id="email" name="email"
+                 placeholder="bookadm"
+                 required autocomplete="username"
+                 autocapitalize="off" autocorrect="off" spellcheck="false">
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input type="password" id="password" name="password"
+                 placeholder="••••••••"
+                 required autocomplete="current-password">
+        </div>
+        <button type="submit">Увійти</button>
+      </form>
+    </div>
+
+  </div>
+</body>
+</html>

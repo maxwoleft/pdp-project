@@ -311,6 +311,8 @@ class ServiceProfileRepository:
                 "aftercare_advice": translation.aftercare_advice,
                 "canonical_keys": list(profile.canonical_keys or []),
                 "key_descriptions": dict(profile.key_descriptions or {}),
+                # Per-ckey overrides — builder.py merge на запит конкретного matched_service.
+                "ckey_overrides": dict(getattr(translation, "ckey_overrides", None) or {}),
                 "score": round(score, 3),
             })
 

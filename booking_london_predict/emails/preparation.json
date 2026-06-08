@@ -1,0 +1,168 @@
+{
+  "NAILS": {
+    "ua": [
+      "Якщо у вас є попереднє покриття (гелеве або акрилове), повідомте заздалегідь, щоб ми врахували час на зняття.",
+      "Не використовуйте масла чи креми для рук за кілька годин до манікюру.",
+      "Повідомте нас, якщо маєте алергію або чутливість до гель-лаку чи інших засобів."
+    ],
+    "ru": [
+      "Если у вас есть предыдущее покрытие (гель или акрил), сообщите заранее, чтобы мы учли время на снятие.",
+      "Не используйте масла или кремы для рук за несколько часов до маникюра.",
+      "Сообщите нам, если у вас есть аллергия или чувствительность к гель-лаку или другим средствам."
+    ],
+    "en": [
+      "If you have a previous coating (gel or acrylic), please let us know in advance so that we can take the time to remove it.",
+      "Do not use oils or hand creams for several hours before the manicure.",
+      "Let us know if you have any allergies or sensitivities to gel polish or other products."
+    ],
+    "pl": [
+      "Jeśli masz poprzednią powłokę (żel lub akryl), poinformuj nas z wyprzedzeniem, abyśmy uwzględnili czas na jej usunięcie.",
+      "Nie stosuj olejków ani kremów do rąk na kilka godzin przed manicure.",
+      "Poinformuj nas, jeśli masz alergię lub wrażliwość na lakier hybrydowy lub inne produkty."
+    ]
+  },
+  "COSMETOLOGY": {
+    "ua": [
+      "Не використовуйте активну косметику (кислоти, ретинол) за 24 години до процедури.",
+      "Прийдіть з чистою шкірою, без макіяжу.",
+      "Повідомте косметолога, якщо приймаєте ліки або маєте алергію."
+    ],
+    "ru": [
+      "Не используйте активную косметику (кислоты, ретинол) за 24 часа до процедуры.",
+      "Приходите с чистой кожей без макияжа.",
+      "Сообщите косметологу, если принимаете лекарства или имеете аллергию."
+    ],
+    "en": [
+      "Avoid active skincare (acids, retinol) 24 hours before your appointment.",
+      "Arrive with clean skin, no makeup.",
+      "Let your cosmetologist know if you’re taking any medications or have allergies."
+    ],
+    "pl": [
+      "Unikaj aktywnej pielęgnacji (kwasy, retinol) na 24 godziny przed wizytą.",
+      "Przyjdź z czystą skórą, bez makijażu.",
+      "Poinformuj kosmetologa, jeśli przyjmujesz leki lub masz alergie."
+    ]
+  },
+  "HAIR": {
+    "ua": [
+      "Перед фарбуванням не мийте голову принаймні 24 години та не використовуйте засоби глибокого очищення.",
+      "Для стрижки чи укладки приходьте з чистим висушеним волоссям (якщо не домовилися з майстром про інше).",
+      "Підготуйте фото з прикладом зачіски, які вам подобаються."
+    ],
+    "ru": [
+      "Перед окрашиванием не мойте голову минимум 24 часа и не используйте средства глубокого очищения.",
+      "Для стрижки или укладки приходите с чистыми сухими волосами (если не договорились с мастером об ином).",
+      "Подготовьте фото с примерами причесок, которые вам нравятся."
+    ],
+    "en": [
+      "Do not wash your hair for at least 24 hours before coloring, and avoid deep cleansing products.",
+      "For haircuts or styling, come with clean, dry hair (unless agreed otherwise).",
+      "Bring reference photos of the hairstyles you like."
+    ],
+    "pl": [
+      "Nie myj włosów przez co najmniej 24 godziny przed farbowaniem i unikaj produktów głęboko oczyszczających.",
+      "Na strzyżenie lub stylizację przyjdź z czystymi, suchymi włosami (chyba że umówiono inaczej).",
+      "Przygotuj zdjęcia z przykładami fryzur, które Ci się podobają."
+    ]
+  },
+  "MALE_SERVICES": {
+    "ua": [
+      "Якщо маєте бажаний образ, підготуйте фото.",
+      "Не наносьте засоби для укладки перед стрижкою чи фарбуванням.",
+      "Якщо ви записані на манікюр, не користуйтеся кремами безпосередньо перед сеансом."
+    ],
+    "ru": [
+      "Если у вас есть желаемый образ, подготовьте фото.",
+      "Не наносите средства для укладки перед стрижкой или окрашиванием.",
+      "Если вы записаны на маникюр, не используйте кремы непосредственно перед сеансом."
+    ],
+    "en": [
+      "If you have a desired look, prepare a photo.",
+      "Do not apply styling products before a haircut or coloring.",
+      "If you are scheduled for a manicure, do not use creams immediately before the session."
+    ],
+    "pl": [
+      "Jeśli masz wymarzoną fryzurę, przygotuj zdjęcie.",
+      "Nie nakładaj produktów do stylizacji przed strzyżeniem lub farbowaniem.",
+      "Jeśli masz umówiony manicure, nie używaj kremów bezpośrednio przed zabiegiem."
+    ]
+  },
+  "HAIR_REMOVAL": {
+    "ua": [
+      "Не варто записуватися на епіляцію, якщо у вас є ранки, порізи, запалення. Потрібно почекати до їх повного загоєння.",
+      "Уникайте солярію та сонячних опіків.",
+      "Поголіться за день до лазерної епіляції.",
+      "Врахуйте протипоказання. Для лазерної епіляції: хронічні захворювання шкіри, інфекційні хвороби, вагітність, татуювання в місці зросту волосся. Для воскової епіляції та шугарингу: цукровий діабет (декомпенсована стадія), ВІЛ, СНІД, онкологія, герпес, варикоз."
+    ],
+    "ru": [
+      "Не записывайтесь на эпиляцию, если у вас есть ранки, порезы, воспаления. Нужно дождаться полного заживления.",
+      "Избегайте солярия и солнечных ожогов.",
+      "Побрейтесь за день до лазерной эпиляции.",
+      "Учитывайте противопоказания. Для лазерной эпиляции: хронические заболевания кожи, инфекционные болезни, беременность, татуировки в месте роста волос. Для восковой эпиляции и шугаринга: сахарный диабет (декомпенсированная стадия), ВИЧ, СПИД, онкология, герпес, варикоз."
+    ],
+    "en": [
+      "You should not sign up for hair removal if you have wounds, cuts, inflammation. You need to wait until they are completely healed.",
+      "Avoid tanning booths and sunburn.",
+      "Shave the day before laser hair removal.",
+      "Be cautious if you have risk factors. For laser hair removal: chronic skin diseases, infectious diseases, pregnancy, tattoos in the place of hair growth. For waxing and sugaring: diabetes (decompensated stage), HIV, AIDS, oncology, herpes, varicose veins."
+    ],
+    "pl": [
+      "Nie zapisuj się na depilację, jeśli masz rany, skaleczenia lub stany zapalne. Poczekaj na ich całkowite zagojenie.",
+      "Unikaj solarium i oparzeń słonecznych.",
+      "Ogol się dzień przed depilacją laserową.",
+      "Weź pod uwagę przeciwwskazania. Depilacja laserowa: przewlekłe choroby skóry, choroby zakaźne, ciąża, tatuaże w miejscu wzrostu włosów. Depilacja woskiem i pasta cukrowa: cukrzyca (stadium dekompensacji), HIV, AIDS, onkologia, opryszczka, żylaki."
+    ]
+  },
+  "MASSAGE": {
+    "ua": [
+      "Прийміть душ, але не використовуйте лосьйони чи олії.",
+      "Не їжте важку їжу за 1-2 години до сеансу.",
+      "Одягніть зручний одяг.",
+      "Повідомте масажиста про хронічні хвороби чи алергії."
+    ],
+    "ru": [
+      "Примите душ, но не используйте лосьоны или масла.",
+      "Не ешьте тяжелую пищу за 1-2 часа до сеанса.",
+      "Наденьте удобную одежду.",
+      "Сообщите массажисту о хронических заболеваниях или аллергиях."
+    ],
+    "en": [
+      "Take a shower, but do not use lotions or oils.",
+      "Do not eat a heavy meal 1-2 hours before the session.",
+      "Wear comfortable clothing.",
+      "Inform the massage therapist about any chronic illnesses or allergies."
+    ],
+    "pl": [
+      "Weź prysznic, ale nie stosuj balsamów ani olejków.",
+      "Nie jedz ciężkich posiłków na 1-2 godziny przed zabiegiem.",
+      "Ubierz się wygodnie.",
+      "Poinformuj masażystę o chorobach przewlekłych lub alergiach."
+    ]
+  },
+  "MACHINE_MASSAGE": {
+    "ua": [
+      "Прийміть душ у день процедури, але не використовуйте креми, лосьйони чи олії для тіла.",
+      "Уникайте важкої їжі за кілька годин до сеансу.",
+      "Якщо у вас є хронічні захворювання та алергії, обов’язково попередьте майстра.",
+      "Одягніть легкий та зручний одяг. Для процедури ми надамо спеціальний костюм."
+    ],
+    "ru": [
+      "Примите душ в день процедуры, но не используйте кремы, лосьоны или масла для тела.",
+      "Избегайте тяжелой пищи за несколько часов до сеанса.",
+      "Если у вас есть хронические заболевания или аллергии, обязательно предупредите мастера.",
+      "Наденьте легкую и удобную одежду. Для процедуры мы предоставим специальный костюм."
+    ],
+    "en": [
+      "Take a shower on the day of the procedure, but do not apply any creams, lotions, or body oils.",
+      "Avoid eating heavy meals for a couple of hours before your session.",
+      "Inform your therapist about any chronic conditions or allergies.",
+      "Wear light, comfortable clothes. A special treatment suit will be provided during the session."
+    ],
+    "pl": [
+      "Weź prysznic w dniu zabiegu, ale nie nakładaj kremów, balsamów ani olejków na ciało.",
+      "Unikaj ciężkich posiłków na kilka godzin przed zabiegiem.",
+      "Poinformuj terapeutę o chorobach przewlekłych lub alergiach.",
+      "Ubierz się lekko i wygodnie. Na czas zabiegu zapewnimy specjalny kostium."
+    ]
+  }
+}

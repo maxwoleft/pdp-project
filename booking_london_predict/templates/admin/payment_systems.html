@@ -1,0 +1,228 @@
+{% extends "admin/base.html" %}
+{% block title %}Платіжні системи{% endblock %}
+{% block page_title %}Платіжні системи{% endblock %}
+
+{% block extra_head %}
+<style>
+  .ps-card {
+    background: #fff;
+    border: 1px solid #0000000D;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+  }
+  .ps-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .ps-card-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+  }
+  .ps-card-provider {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #888;
+    margin-top: 2px;
+  }
+  .ps-card-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .ps-badge {
+    padding: 3px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .ps-badge.active { background: #027DEF1A; color: #027DEF; }
+  .ps-badge.inactive { background: #0000000D; color: #888; }
+
+  .ps-config {
+    background: #f9f9f9;
+    border: 1px solid #0000000D;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #555;
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+
+  .ps-config-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 6px;
+  }
+
+  /* Add form */
+  .ps-form {
+    background: #fff;
+    border: 1px solid #0000000D;
+    border-top: 3px solid #027DEF;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .ps-form-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #000;
+    margin-bottom: 16px;
+  }
+  .ps-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 12px;
+    align-items: end;
+  }
+
+  .ps-status {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 12px;
+  }
+  .ps-status.ok { color: #27ae60; }
+  .ps-status.err { color: #c0392b; }
+
+  @media (max-width: 768px) {
+    .ps-form-row { grid-template-columns: 1fr; }
+    .ps-card-top { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="section-header">
+  <h2>Платіжні системи</h2>
+</div>
+
+{% if admin_role == 'superadmin' %}
+<div class="ps-form">
+  <div class="ps-form-title">Додати платіжну систему</div>
+  <div class="ps-form-row">
+    <div class="form-group" style="margin:0">
+      <label class="form-label">Назва</label>
+      <input class="form-control" id="psName" placeholder="EasyTip UK">
+    </div>
+    <div class="form-group" style="margin:0">
+      <label class="form-label">Провайдер</label>
+      <select class="form-control" id="psProvider">
+        <option value="easytip">EasyTip</option>
+        <option value="stripe">Stripe</option>
+        <option value="liqpay">LiqPay</option>
+        <option value="other">Інший</option>
+      </select>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="addPaymentSystem()">Додати</button>
+  </div>
+  <div class="ps-status" id="psAddStatus"></div>
+</div>
+{% endif %}
+
+<div id="psList">
+{% if not payment_systems %}
+<div class="coming-soon" style="min-height:200px;">
+  <div class="coming-soon-title">Немає платіжних систем</div>
+  <div class="coming-soon-text">Додайте першу платіжну систему для підключення оплати в салонах.</div>
+</div>
+{% else %}
+{% for ps in payment_systems %}
+<div class="ps-card" id="psCard_{{ ps.id }}">
+  <div class="ps-card-top">
+    <div>
+      <div class="ps-card-name">{{ ps.name }}</div>
+      <div class="ps-card-provider">{{ ps.provider }}</div>
+      <span class="ps-badge {{ ps.status }}" style="margin-top:6px;">{{ ps.status }}</span>
+    </div>
+    <div class="ps-card-actions">
+      {% if admin_role == 'superadmin' %}
+      <button class="btn btn-ghost btn-sm" onclick="togglePsStatus({{ ps.id }}, '{{ ps.status }}')">
+        {{ 'Вимкнути' if ps.status == 'active' else 'Увімкнути' }}
+      </button>
+      {% endif %}
+    </div>
+  </div>
+  {% if ps.config %}
+  <div class="ps-config-label">Конфігурація</div>
+  <div class="ps-config">{{ ps.config | tojson(indent=2) }}</div>
+  {% endif %}
+</div>
+{% endfor %}
+{% endif %}
+</div>
+
+<script>
+function addPaymentSystem() {
+  const name = document.getElementById('psName').value.trim();
+  const provider = document.getElementById('psProvider').value;
+  const statusEl = document.getElementById('psAddStatus');
+
+  if (!name) {
+    statusEl.className = 'ps-status err';
+    statusEl.textContent = 'Введіть назву';
+    return;
+  }
+
+  fetch('/admin/api/payment-systems', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, provider, config: {} })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) {
+      statusEl.className = 'ps-status err';
+      statusEl.textContent = data.error;
+    } else {
+      window.location.reload();
+    }
+  })
+  .catch(() => {
+    statusEl.className = 'ps-status err';
+    statusEl.textContent = 'Помилка збереження';
+  });
+}
+
+function togglePsStatus(id, currentStatus) {
+  const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+  fetch('/admin/api/payment-systems/' + id, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: newStatus })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (!data.error) window.location.reload();
+    else alert(data.error);
+  });
+}
+
+function deletePsSystem(id) {
+  if (!confirm('Видалити цю платіжну систему?')) return;
+  fetch('/admin/api/payment-systems/' + id, {
+    method: 'DELETE'
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (!data.error) window.location.reload();
+    else alert(data.error);
+  });
+}
+</script>
+
+{% endblock %}
